@@ -31,7 +31,7 @@
 				<configuration>
 					<argLine>
 						-server
-						-Xmx4g 
+						-Xmx4g
 					</argLine>
 					<includes>
 						<include>**/Benchmark*</include>
@@ -57,6 +57,16 @@
 			<groupId>org.eclipse.imp</groupId>
 			<artifactId>org.eclipse.imp.pdb.values</artifactId>
 			<version>0.3.2.qualifier</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.imp</groupId>
+			<artifactId>org.eclipse.imp.pdb.values.persistent.clojure</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.imp</groupId>
+			<artifactId>org.eclipse.imp.pdb.values.persistent.scala</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

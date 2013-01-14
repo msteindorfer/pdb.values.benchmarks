@@ -34,5 +34,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/pdb.values.persistent.clojure"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/pdb.values.persistent.scala"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

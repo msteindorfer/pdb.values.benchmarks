@@ -18,10 +18,8 @@ import java.net.URL;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IRelation;
-import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
-import org.eclipse.imp.pdb.facts.impl.fast.ValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.eclipse.imp.pdb.facts.type.TypeStore;
 import org.junit.After;
@@ -34,8 +32,10 @@ import org.junit.Test;
 public class BenchmarkModelAggregation {
 
 	private static TypeStore typeStore = new TypeStore();
-	private static IValueFactory valueFactory = ValueFactory.getInstance();	// TODO: inject ValueFactory
-	
+	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();	// TODO: inject ValueFactory
+//	private static IValueFactory valueFactory = new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();
+//	private static IValueFactory valueFactory = new org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory();
+		
 	private static IValue[] values;
 	
 	@BeforeClass
@@ -77,56 +77,42 @@ public class BenchmarkModelAggregation {
 	}
 	
 	public void doTest() {
-//		String[] relationNames = new String[] { 
-//				"methodBodies",
-//				"classes",
-//				"methodDecls",
-//				"packages",
-//				"fieldDecls",
-//				"implements",
-//				"methods",
-//				"declaredFields",
-//				"calls",
-//				"variables",
-//				"declaredMethods",
-//				"types",
-//				"modifiers",
-//				"declaredTopTypes"
-//		};
+		String[] relationNames = new String[] { 
+				"methodBodies",
+				"classes",
+				"methodDecls",
+				"packages",
+				"fieldDecls",
+				"implements",
+				"methods",
+				"declaredFields",
+				"calls",
+				"variables",
+				"declaredMethods",
+				"types",
+				"modifiers",
+//				"declaredTopTypes" // ISet
+		};
 		
-		IRelation methodBodies = valueFactory.relation();
-		IRelation classes = valueFactory.relation();
-		IRelation methodDecls = valueFactory.relation();
-		IRelation packages = valueFactory.relation();
-		IRelation fieldDecls = valueFactory.relation();
-		IRelation _implements = valueFactory.relation();
-		IRelation methods = valueFactory.relation();
-		IRelation declaredFields = valueFactory.relation();
-		IRelation calls = valueFactory.relation();
-		IRelation variables = valueFactory.relation();
-		IRelation declaredMethods = valueFactory.relation();
-		IRelation types = valueFactory.relation();
-		IRelation modifiers = valueFactory.relation();
-		ISet declaredTopTypes = valueFactory.relation();
+		IRelation[] relations = new IRelation[relationNames.length];
+		for (int i = 0; i < relations.length; i++) {
+			relations[i] = valueFactory.relation();
+		}
+		
+//		ISet declaredTopTypes = valueFactory.relation();
 				
 		for (IValue value : values) {
 			IConstructor constructor = (IConstructor) value;
 
-			methodBodies = methodBodies.union((IRelation) constructor.getAnnotation("methodBodies"));
-			classes = classes.union((IRelation) constructor.getAnnotation("classes"));
-			methodDecls = methodDecls.union((IRelation) constructor.getAnnotation("methodDecls"));
-			packages = packages.union((IRelation) constructor.getAnnotation("packages"));
-			fieldDecls = fieldDecls.union((IRelation) constructor.getAnnotation("fieldDecls"));
-			_implements = _implements.union((IRelation) constructor.getAnnotation("implements"));
-			methods = methods.union((IRelation) constructor.getAnnotation("methods"));
-			declaredFields = declaredFields.union((IRelation) constructor.getAnnotation("declaredFields"));
-			calls = calls.union((IRelation) constructor.getAnnotation("calls"));
-			variables = variables.union((IRelation) constructor.getAnnotation("variables"));
-			declaredMethods = declaredMethods.union((IRelation) constructor.getAnnotation("declaredMethods"));
-			types = types.union((IRelation) constructor.getAnnotation("types"));
-			modifiers = modifiers.union((IRelation) constructor.getAnnotation("modifiers"));
+			for (int i = 0; i < relations.length; i++) {
+				String relationName = relationNames[i];
+				IRelation one = relations[i];
+				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				
+				relations[i] = one.union(two); 
+			}
 			
-			declaredTopTypes = declaredTopTypes.union((ISet) constructor.getAnnotation("declaredTopTypes"));
+//			declaredTopTypes = declaredTopTypes.union((ISet) constructor.getAnnotation("declaredTopTypes"));
 		}
 	}
 

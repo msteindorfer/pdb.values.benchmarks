@@ -18,6 +18,7 @@ import java.net.URL;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IRelation;
+import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
@@ -27,22 +28,32 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class BenchmarkModelAggregation {
 
 	private static TypeStore typeStore = new TypeStore();
-	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();	// TODO: inject ValueFactory
+	// TODO: inject ValueFactory
+//	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();
+//	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance();
 //	private static IValueFactory valueFactory = new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();
-//	private static IValueFactory valueFactory = new org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory();
+	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance();
 		
 	private static IValue[] values;
+	private static ISet[] singleValueSets;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		URL folderOfTestDataURL = BenchmarkModelAggregation.class.getResource("./model-aggregation");		
-		
+		URL folderOfTestDataURL = BenchmarkModelAggregation.class.getResource("./model-aggregation");
 		values = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
+	
+		int singleValueSetsCount = 1_000_000;
+		singleValueSets = new ISet[singleValueSetsCount];
+		for (int i = 0; i < singleValueSets.length; i++) {
+			singleValueSets[i] = valueFactory.set(valueFactory.integer(i));
+		}
 	}
 
 	@AfterClass
@@ -72,11 +83,23 @@ public class BenchmarkModelAggregation {
 	}
 
 	@Test
-	public void test() {
-		for (int i = 0; i < 100; i++) doTest();
+	public void testRelationAggregation() throws Exception {
+		Runtime runtime = Runtime.getRuntime();
+		Logger logger = LoggerFactory.getLogger(BenchmarkModelAggregation.class);
+
+		long startTime = System.nanoTime();
+		long startMemory = (runtime.totalMemory() - runtime.freeMemory());
+		
+		for (int i = 0; i < 100; i++) doRelationAggregation();
+
+	    long estimatedTime = System.nanoTime() - startTime;
+		long estimatedMemory = (runtime.totalMemory() - runtime.freeMemory()) - startMemory;
+
+	    logger.info("Duraction: {} seconds", estimatedTime / 1_000_000_000);
+		logger.info("Memory used: {} mb", estimatedMemory / (1024 * 1024));		
 	}
 	
-	public void doTest() {
+	public IRelation[] doRelationAggregation() throws Exception {
 		String[] relationNames = new String[] { 
 				"methodBodies",
 				"classes",
@@ -114,6 +137,41 @@ public class BenchmarkModelAggregation {
 			
 //			declaredTopTypes = declaredTopTypes.union((ISet) constructor.getAnnotation("declaredTopTypes"));
 		}
+		
+//		// Writing output to file
+//		for (int i = 0; i < relations.length; i++) {
+//			try (OutputStream outputStream = new FileOutputStream("_union_of_" + relationNames[i])) {
+//				
+//				BinaryWriter binaryWriter = new BinaryWriter(relations[i], outputStream, typeStore);
+//				binaryWriter.serialize();
+//			}
+//		}
+		
+		return relations;
 	}
 
+	@Test
+	public void testUnionSingleElementIntegerSets() {
+		Runtime runtime = Runtime.getRuntime();
+		Logger logger = LoggerFactory.getLogger(BenchmarkModelAggregation.class);
+
+		long startTime = System.nanoTime();
+		long startMemory = (runtime.totalMemory() - runtime.freeMemory());
+		
+		doUnionSingleElementIntegerSets();
+		
+	    long estimatedTime = System.nanoTime() - startTime;
+		long estimatedMemory = (runtime.totalMemory() - runtime.freeMemory()) - startMemory;
+
+	    logger.info("Duraction: {} seconds", estimatedTime / 1_000_000_000);
+		logger.info("Memory used: {} mb", estimatedMemory / (1024 * 1024));
+	}	
+	
+	public ISet doUnionSingleElementIntegerSets() {
+		ISet testSet = valueFactory.set();
+		for (int i = 0; i < singleValueSets.length; i++) testSet = testSet.union(singleValueSets[i]);
+				
+		return testSet;
+	}		
+	
 }

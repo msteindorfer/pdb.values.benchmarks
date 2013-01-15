@@ -31,7 +31,13 @@
 				<configuration>
 					<argLine>
 						-server
-						-Xmx4g
+						-Xmx8g
+						<!-- -XX:+PrintCompilation -->
+						<!-- -verbose:gc -->
+						<!-- -XX:+PrintGCDetails -->
+						-XX:+HeapDumpOnOutOfMemoryError
+						<!-- -Xloggc:loggc.txt -->				
+						-XX:-BackgroundCompilation				
 					</argLine>
 					<includes>
 						<include>**/Benchmark*</include>
@@ -46,6 +52,18 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.2</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.9</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

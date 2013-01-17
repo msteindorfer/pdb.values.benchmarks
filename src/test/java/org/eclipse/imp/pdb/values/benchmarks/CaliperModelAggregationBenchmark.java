@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 CWI
+ * Copyright (c) 2013 CWI
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,66 +18,41 @@ import java.net.URL;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IRelation;
-import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
-import org.eclipse.imp.pdb.facts.type.TypeStore;
-import org.junit.AfterClass;
 
 import com.google.caliper.Param;
 import com.google.caliper.Runner;
-import com.google.caliper.SimpleBenchmark;
 
-public class CaliperModelAggregationBenchmark extends SimpleBenchmark {
-
-	private static TypeStore typeStore = new TypeStore();
+public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 
 	private IValueFactory valueFactory;
-	@Param private ValueFactoryFactory valueFactoryFactory;
 	
-	public enum ValueFactoryFactory {
-		VF_RASCAL {
-			@Override IValueFactory getInstance() {
-				return org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();
-			}
-		},
-		VF_CLOJURE {
-			@Override IValueFactory getInstance() {
-				return org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance();
-			}
-		},
-		VF_SCALA {
-			@Override IValueFactory getInstance() {
-				return new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();
-			}
-		};
+	@Param
+	private ValueFactoryFactory valueFactoryFactory;
 		
-		abstract IValueFactory getInstance();
+	@SuppressWarnings("rawtypes")
+	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
+	
+	private static IValue[] values;
 
+	public void setUpStaticValueFactorySpecificTestData() throws Exception {
+		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("./model-aggregation");
+		values = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
 	}
-	
-	private IValue[] values;
-	private ISet[] singleValueSets;
 
-	@Param({"10", "100", "1000", "10000"}) int singleValueSetsCount;
-	
+	@Override
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance(); 
 		
-//		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("./model-aggregation");
-//		values = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
-	
-		singleValueSets = new ISet[singleValueSetsCount];
-		for (int i = 0; i < singleValueSets.length; i++) {
-			singleValueSets[i] = valueFactory.set(valueFactory.integer(i));
+		// detect change of valueFactory
+		if (!lastValueFactoryClass.equals(valueFactory.getClass())) {
+			setUpStaticValueFactorySpecificTestData();
+			lastValueFactoryClass = valueFactory.getClass();
 		}
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
+	}		
+	
 	private IValue[] readValuesFromFiles(File[] files) throws Exception {
 		IValue[] values = new IValue[files.length];
 		
@@ -92,13 +67,13 @@ public class CaliperModelAggregationBenchmark extends SimpleBenchmark {
 		return values;
 	}
 
-//	public Object timeRelationAggregation(int reps) throws Exception {
-//		Object dummy = null;
-//		
-//		for (int i = 0; i < reps; i++) dummy = relationAggregation();
-//		
-//		return dummy;
-//	}
+	public Object timeRelationAggregation(int reps) throws Exception {
+		Object dummy = null;
+		
+		for (int i = 0; i < reps; i++) dummy = relationAggregation();
+		
+		return dummy;
+	}
 	
 	public IRelation[] relationAggregation() throws Exception {
 		String[] relationNames = new String[] { 
@@ -150,21 +125,9 @@ public class CaliperModelAggregationBenchmark extends SimpleBenchmark {
 		
 		return relations;
 	}
-	
-	public ISet timeUnionSingleElementIntegerSets(int reps) {
-		ISet testSet = null;
-		
-		for (int r = 0; r < reps; r++) {
-			System.out.println("Reps: " + r);
-			testSet = valueFactory.set();
-			for (int i = 0; i < singleValueSets.length; i++) testSet = testSet.union(singleValueSets[i]);
-		}
-		
-		return testSet;
-	}		
 
-//	public static void main(String[] args) throws Exception {
-//		Runner.main(CaliperModelAggregationBenchmark.class, new String[]{"-Jmemory=-Xms2048m", "--measureMemory"});
-//	}
+	public static void main(String[] args) throws Exception {
+		Runner.main(CaliperModelAggregationBenchmark.class, new String[]{"-Jmemory=-Xms2048m"});
+	}
 	
 }

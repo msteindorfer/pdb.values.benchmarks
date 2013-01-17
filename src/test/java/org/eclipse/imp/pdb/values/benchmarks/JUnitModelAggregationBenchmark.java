@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 CWI
+ * Copyright (c) 2013 CWI
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class BenchmarkModelAggregation {
+public class JUnitModelAggregationBenchmark {
 
 	private static TypeStore typeStore = new TypeStore();
 	// TODO: inject ValueFactory
@@ -46,7 +46,7 @@ public class BenchmarkModelAggregation {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		URL folderOfTestDataURL = BenchmarkModelAggregation.class.getResource("./model-aggregation");
+		URL folderOfTestDataURL = JUnitModelAggregationBenchmark.class.getResource("./model-aggregation");
 		values = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
 	
 		int singleValueSetsCount = 1_000_000;
@@ -85,7 +85,7 @@ public class BenchmarkModelAggregation {
 	@Test
 	public void testRelationAggregation() throws Exception {
 		Runtime runtime = Runtime.getRuntime();
-		Logger logger = LoggerFactory.getLogger(BenchmarkModelAggregation.class);
+		Logger logger = LoggerFactory.getLogger(JUnitModelAggregationBenchmark.class);
 
 		long startTime = System.nanoTime();
 		long startMemory = (runtime.totalMemory() - runtime.freeMemory());
@@ -153,7 +153,7 @@ public class BenchmarkModelAggregation {
 	@Test
 	public void testUnionSingleElementIntegerSets() {
 		Runtime runtime = Runtime.getRuntime();
-		Logger logger = LoggerFactory.getLogger(BenchmarkModelAggregation.class);
+		Logger logger = LoggerFactory.getLogger(JUnitModelAggregationBenchmark.class);
 
 		long startTime = System.nanoTime();
 		long startMemory = (runtime.totalMemory() - runtime.freeMemory());

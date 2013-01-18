@@ -52,7 +52,7 @@ public class CaliperRelationBenchmark extends RascalBenchmark {
 	}		
 
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperRelationBenchmark.class, new String[]{"-Jmemory=-Xms2048m"});
+		Runner.main(CaliperRelationBenchmark.class, BenchmarkCaliperAsJUnit.ARGS);
 	}
 	
 }

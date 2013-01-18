@@ -15,16 +15,12 @@ import org.junit.Test;
 
 public class BenchmarkCaliperAsJUnit {
 
+	public static String[] ARGS = new String[]{"-Jmemory=-Xmx8g", "--measureMemory"};	
+	
 	@Test
 	public void runCaliperBenchmarks() {
-		/*
-		 * Further options, e.g.:
-		 * 
-		 * Saving output:
-		 * "--saveResults", "output.txt"
-		 */
-		com.google.caliper.Runner.main(CaliperModelAggregationBenchmark.class, new String[]{"-Jmemory=-Xmx8g", "--measureMemory"});
-		com.google.caliper.Runner.main(CaliperRelationBenchmark.class, new String[]{"-Jmemory=-Xmx8g", "--measureMemory"});
+		com.google.caliper.Runner.main(CaliperRelationBenchmark.class, ARGS);
+		com.google.caliper.Runner.main(CaliperModelAggregationBenchmark.class, ARGS);
 	}
 
 }

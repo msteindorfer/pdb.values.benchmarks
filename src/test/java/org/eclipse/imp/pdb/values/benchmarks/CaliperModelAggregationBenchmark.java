@@ -70,7 +70,8 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 	public Object timeRelationAggregation(int reps) throws Exception {
 		Object dummy = null;
 		
-		for (int i = 0; i < reps; i++) dummy = relationAggregation();
+		for (int i = 0; i < reps; i++) 
+			dummy = relationAggregation();
 		
 		return dummy;
 	}
@@ -127,7 +128,7 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperModelAggregationBenchmark.class, new String[]{"-Jmemory=-Xms2048m"});
+		Runner.main(CaliperModelAggregationBenchmark.class, BenchmarkCaliperAsJUnit.ARGS);
 	}
 	
 }

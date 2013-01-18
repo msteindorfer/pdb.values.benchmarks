@@ -43,14 +43,13 @@ public class CaliperRelationBenchmark extends RascalBenchmark {
 		ISet resultSet = null;
 		
 		for (int r = 0; r < reps; r++) {
-			System.out.println("Reps: " + r);
 			resultSet = valueFactory.set();
 			for (int i = 0; i < singleValueSets.length; i++) resultSet = resultSet.union(singleValueSets[i]);
 		}
 		
 		return resultSet;
-	}		
-
+	}
+	
 	public static void main(String[] args) throws Exception {
 		Runner.main(CaliperRelationBenchmark.class, BenchmarkCaliperAsJUnit.ARGS);
 	}

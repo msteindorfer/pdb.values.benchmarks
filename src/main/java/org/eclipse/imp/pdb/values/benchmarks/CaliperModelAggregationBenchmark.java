@@ -35,17 +35,33 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 	@SuppressWarnings("rawtypes")
 	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
 	
-	private static IValue[] values;
-	private static IRelation unionOfCall;
+	private static IValue[] constructorValues;
 	
+	private static String[] relationNames = new String[] { 
+			"methodBodies",
+			"classes",
+			"methodDecls",
+			"packages",
+			"fieldDecls",
+			"implements",
+			"methods",
+			"declaredFields",
+			"calls",
+			"variables",
+			"declaredMethods",
+			"types",
+			"modifiers",
+//			"declaredTopTypes" // ISet
+	};
+	
+	private static IRelation[] unionRelations;
+		
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
 		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("model-aggregation");
-		values = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
+		constructorValues = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
 		
-		try (InputStream inputStream = CaliperModelAggregationBenchmark.class.getResourceAsStream("model-aggregation-union/_union_of_calls")) {	
-			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
-			unionOfCall = (IRelation) binaryReader.deserialize();
-		}	
+		// TODO: load from serialized files instead of computing.
+		unionRelations = unionRelations();
 	}
 
 	@Override
@@ -73,43 +89,27 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 		return values;
 	}
 
-	public Object timeRelationAggregation(int reps) throws Exception {
+	public Object timeUnionRelations(int reps) throws Exception {
 //		Object dummy = null;
 //		
 //		for (int i = 0; i < reps; i++) 
-//			dummy = relationAggregation();
+//			dummy = unionRelations();
 //		
 //		return dummy;
 		
-		return relationAggregation();
+		return unionRelations();
 	}
 	
-	public IRelation[] relationAggregation() throws Exception {
-		String[] relationNames = new String[] { 
-				"methodBodies",
-				"classes",
-				"methodDecls",
-				"packages",
-				"fieldDecls",
-				"implements",
-				"methods",
-				"declaredFields",
-				"calls",
-				"variables",
-				"declaredMethods",
-				"types",
-				"modifiers",
-//				"declaredTopTypes" // ISet
-		};
+	public IRelation[] unionRelations() throws Exception {
 		
+		// initialize
 		IRelation[] relations = new IRelation[relationNames.length];
 		for (int i = 0; i < relations.length; i++) {
 			relations[i] = valueFactory.relation();
 		}
-		
-//		ISet declaredTopTypes = valueFactory.relation();
-				
-		for (IValue value : values) {
+
+		// compute / accumulate
+		for (IValue value : constructorValues) {
 			IConstructor constructor = (IConstructor) value;
 
 			for (int i = 0; i < relations.length; i++) {
@@ -118,33 +118,75 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 				IRelation two = (IRelation) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.union(two); 
-			}
-			
-//			declaredTopTypes = declaredTopTypes.union((ISet) constructor.getAnnotation("declaredTopTypes"));
+			}		
 		}
-		
-//		// Writing output to file
-//		for (int i = 0; i < relations.length; i++) {
-//			try (OutputStream outputStream = new FileOutputStream("_union_of_" + relationNames[i])) {
-//				
-//				BinaryWriter binaryWriter = new BinaryWriter(relations[i], outputStream, typeStore);
-//				binaryWriter.serialize();
-//			}
-//		}
-		
+				
 		return relations;
 	}
 
-	public Object timeClosure(int reps) throws Exception {
+	public IRelation[] subtractRelations() throws Exception {
+		
+		// initialize
+		IRelation[] relations = unionRelations;
+			
+		// compute / accumulate		
+		for (IValue value : constructorValues) {
+			IConstructor constructor = (IConstructor) value;
+
+			for (int i = 0; i < relations.length; i++) {
+				String relationName = relationNames[i];
+				IRelation one = relations[i];
+				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				
+				relations[i] = one.subtract(two); 
+			}		
+		}
+				
+		return relations;
+	}
+	
+	public Object timeSubtractRelations(int reps) throws Exception {
 //		Object dummy = null;
 //		
 //		for (int i = 0; i < reps; i++) 
-//			dummy = unionOfCall.closure();
+//			dummy = subtractRelations();
 //		
 //		return dummy;
 		
-		return unionOfCall.closure();
+		return subtractRelations();
 	}	
+
+	public IRelation[] intersectRelations() throws Exception {
+		
+		// initialize
+		IRelation[] relations = unionRelations;
+				
+		// compute / accumulate
+		for (IValue value : constructorValues) {
+			IConstructor constructor = (IConstructor) value;
+
+			for (int i = 0; i < relations.length; i++) {
+				String relationName = relationNames[i];
+				IRelation one = relations[i];
+				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				
+				relations[i] = one.intersect(two); 
+			}		
+		}
+				
+		return relations;
+	}
+	
+	public Object timeIntersectRelations(int reps) throws Exception {
+//		Object dummy = null;
+//		
+//		for (int i = 0; i < reps; i++) 
+//			dummy = intersectRelations();
+//		
+//		return dummy;
+		
+		return intersectRelations();
+	}		
 	
 	public static void main(String[] args) throws Exception {
 		Runner.main(CaliperModelAggregationBenchmark.class, args);

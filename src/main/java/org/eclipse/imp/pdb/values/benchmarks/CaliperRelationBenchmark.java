@@ -51,7 +51,7 @@ public class CaliperRelationBenchmark extends RascalBenchmark {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperRelationBenchmark.class, BenchmarkCaliperAsJUnit.ARGS);
+		Runner.main(CaliperRelationBenchmark.class, args);
 	}
 	
 }

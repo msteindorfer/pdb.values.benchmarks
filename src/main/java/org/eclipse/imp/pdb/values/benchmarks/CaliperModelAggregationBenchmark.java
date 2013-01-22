@@ -36,10 +36,16 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
 	
 	private static IValue[] values;
-
+	private static IRelation unionOfCall;
+	
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("./model-aggregation");
+		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("model-aggregation");
 		values = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
+		
+		try (InputStream inputStream = CaliperModelAggregationBenchmark.class.getResourceAsStream("model-aggregation-union/_union_of_calls")) {	
+			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
+			unionOfCall = (IRelation) binaryReader.deserialize();
+		}	
 	}
 
 	@Override
@@ -68,12 +74,14 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 	}
 
 	public Object timeRelationAggregation(int reps) throws Exception {
-		Object dummy = null;
+//		Object dummy = null;
+//		
+//		for (int i = 0; i < reps; i++) 
+//			dummy = relationAggregation();
+//		
+//		return dummy;
 		
-		for (int i = 0; i < reps; i++) 
-			dummy = relationAggregation();
-		
-		return dummy;
+		return relationAggregation();
 	}
 	
 	public IRelation[] relationAggregation() throws Exception {
@@ -127,8 +135,19 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 		return relations;
 	}
 
+	public Object timeClosure(int reps) throws Exception {
+//		Object dummy = null;
+//		
+//		for (int i = 0; i < reps; i++) 
+//			dummy = unionOfCall.closure();
+//		
+//		return dummy;
+		
+		return unionOfCall.closure();
+	}	
+	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperModelAggregationBenchmark.class, BenchmarkCaliperAsJUnit.ARGS);
+		Runner.main(CaliperModelAggregationBenchmark.class, args);
 	}
 	
 }

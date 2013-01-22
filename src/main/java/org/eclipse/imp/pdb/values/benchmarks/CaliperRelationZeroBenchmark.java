@@ -27,17 +27,17 @@ public class CaliperRelationZeroBenchmark extends RascalBenchmark {
 	@Param
 	private ValueFactoryFactory valueFactoryFactory;
 
-	private IRelation testRelation;
+	private IRelation testRelation;	
 	
 	@Override
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance();
 
-		try (InputStream inputStream = CaliperRelationZeroBenchmark.class.getResourceAsStream("./rsf/JHotDraw52.rsf_CALL")) {
+		try (InputStream inputStream = CaliperRelationZeroBenchmark.class.getResourceAsStream("rsf/JHotDraw52.rsf_CALL")) {
 			
 			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
 			testRelation = (IRelation) binaryReader.deserialize();
-		}	
+		}
 	}
 	
 //	public Object timeArity(int reps) {
@@ -110,10 +110,53 @@ public class CaliperRelationZeroBenchmark extends RascalBenchmark {
 //			result = testRelation.selectByFieldNames();
 //		}
 //		return result;
-//	}		
+//	}
+	
+	public Object timeCompose(int reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.compose(testRelation);
+		}
+		return result;
+	}		
+
+	
+	/* SET OPERATIONS */
+	
+	public Object timeUnion(int reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.union(testRelation);
+		}
+		return result;
+	}		
+	
+	public Object timeIntersect(int reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.intersect(testRelation);
+		}
+		return result;
+	}	
+	
+	public Object timeSubstract(int reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.subtract(testRelation);
+		}
+		return result;
+	}		
+	
+	public Object timeProduct(int reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.product(testRelation);
+		}
+		return result;
+	}		
 	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperRelationZeroBenchmark.class, BenchmarkCaliperAsJUnit.ARGS);
+		Runner.main(CaliperRelationZeroBenchmark.class, args);
 	}
 
 }

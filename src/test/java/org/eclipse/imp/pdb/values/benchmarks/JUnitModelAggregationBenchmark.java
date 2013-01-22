@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IRelation;
@@ -23,44 +25,44 @@ import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.eclipse.imp.pdb.facts.type.TypeStore;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.rules.TestRule;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.BenchmarkRule;
 
+@RunWith(Parameterized.class)
 public class JUnitModelAggregationBenchmark {
-
+	
+	@Rule
+	public TestRule benchmarkRun = new BenchmarkRule();	
+	
 	private static TypeStore typeStore = new TypeStore();
-	// TODO: inject ValueFactory
-//	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();
-//	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance();
-//	private static IValueFactory valueFactory = new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();
-	private static IValueFactory valueFactory = org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance();
-		
-	private static IValue[] values;
-	private static ISet[] singleValueSets;
+	private IValueFactory valueFactory;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		URL folderOfTestDataURL = JUnitModelAggregationBenchmark.class.getResource("./model-aggregation");
-		values = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
+	private IValue[] values;
+	private ISet[] singleValueSets;
 	
-		int singleValueSetsCount = 1_000_000;
-		singleValueSets = new ISet[singleValueSetsCount];
-		for (int i = 0; i < singleValueSets.length; i++) {
-			singleValueSets[i] = valueFactory.set(valueFactory.integer(i));
-		}
+	public JUnitModelAggregationBenchmark(IValueFactory valueFactory) throws Exception {
+		this.valueFactory = valueFactory;
+	}
+	
+	@Parameters
+	public static Collection<Object[]> getTestParameters() {
+		return Arrays.asList(new Object[][] {
+					{ org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance() },
+//					{ org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance() },
+					{ new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory() },
+					{ org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance() }
+		});
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	private static IValue[] readValuesFromFiles(File[] files) throws Exception {
+	private static IValue[] readValuesFromFiles(IValueFactory valueFactory, File[] files) throws Exception {
 		IValue[] values = new IValue[files.length];
 		
 		for (int i = 0; i < files.length; i++) {
@@ -76,28 +78,22 @@ public class JUnitModelAggregationBenchmark {
 	
 	@Before
 	public void setUp() throws Exception {
+		URL folderOfTestDataURL = JUnitModelAggregationBenchmark.class.getResource("model-aggregation");
+		values = (IValue[]) readValuesFromFiles(valueFactory, new File(folderOfTestDataURL.getFile()).listFiles());
+	
+		int singleValueSetsCount = 10_000;
+		singleValueSets = new ISet[singleValueSetsCount];
+		for (int i = 0; i < singleValueSets.length; i++) {
+			singleValueSets[i] = valueFactory.set(valueFactory.integer(i));
+		}	
+	
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
+	@BenchmarkOptions(benchmarkRounds = 1, warmupRounds = 0)
 	@Test
 	public void testRelationAggregation() throws Exception {
-		Runtime runtime = Runtime.getRuntime();
-		Logger logger = LoggerFactory.getLogger(JUnitModelAggregationBenchmark.class);
-
-		long startTime = System.nanoTime();
-		long startMemory = (runtime.totalMemory() - runtime.freeMemory());
-		
-		for (int i = 0; i < 100; i++) doRelationAggregation();
-
-	    long estimatedTime = System.nanoTime() - startTime;
-		long estimatedMemory = (runtime.totalMemory() - runtime.freeMemory()) - startMemory;
-
-	    logger.info("Duraction: {} seconds", estimatedTime / 1_000_000_000);
-		logger.info("Memory used: {} mb", estimatedMemory / (1024 * 1024));		
-	}
+		doRelationAggregation();
+	}	
 	
 	public IRelation[] doRelationAggregation() throws Exception {
 		String[] relationNames = new String[] { 
@@ -149,24 +145,13 @@ public class JUnitModelAggregationBenchmark {
 		
 		return relations;
 	}
-
+	
+	@BenchmarkOptions(benchmarkRounds = 1, warmupRounds = 0)
 	@Test
 	public void testUnionSingleElementIntegerSets() {
-		Runtime runtime = Runtime.getRuntime();
-		Logger logger = LoggerFactory.getLogger(JUnitModelAggregationBenchmark.class);
-
-		long startTime = System.nanoTime();
-		long startMemory = (runtime.totalMemory() - runtime.freeMemory());
-		
 		doUnionSingleElementIntegerSets();
-		
-	    long estimatedTime = System.nanoTime() - startTime;
-		long estimatedMemory = (runtime.totalMemory() - runtime.freeMemory()) - startMemory;
+	}		
 
-	    logger.info("Duraction: {} seconds", estimatedTime / 1_000_000_000);
-		logger.info("Memory used: {} mb", estimatedMemory / (1024 * 1024));
-	}	
-	
 	public ISet doUnionSingleElementIntegerSets() {
 		ISet testSet = valueFactory.set();
 		for (int i = 0; i < singleValueSets.length; i++) testSet = testSet.union(singleValueSets[i]);

@@ -1,2 +1,6 @@
 target/
 bin/
+
+*.db
+*.html
+*.json

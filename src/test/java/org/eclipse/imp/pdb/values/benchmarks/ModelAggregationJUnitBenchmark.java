@@ -15,57 +15,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IRelation;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
-import org.eclipse.imp.pdb.facts.type.TypeStore;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 
-import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
-import com.carrotsearch.junitbenchmarks.BenchmarkRule;
-import com.carrotsearch.junitbenchmarks.annotation.BenchmarkHistoryChart;
-import com.carrotsearch.junitbenchmarks.annotation.BenchmarkMethodChart;
-
-@BenchmarkOptions(callgc=true)
-@BenchmarkMethodChart(filePrefix="method")
-@BenchmarkHistoryChart(filePrefix="history")
-@RunWith(Parameterized.class)
-public class JUnitModelAggregationBenchmark {
+public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 	
-	@Rule
-	public TestRule benchmarkRun = new BenchmarkRule();	
-	
-	private static TypeStore typeStore = new TypeStore();
-
-	private IValueFactory valueFactory;
-	
-	public JUnitModelAggregationBenchmark(IValueFactory valueFactory) throws Exception {
-		this.valueFactory = valueFactory;
+	public ModelAggregationJUnitBenchmark(IValueFactory valueFactory) throws Exception {
+		super(valueFactory);
 	}
-	
-	@Parameters
-	public static Collection<Object[]> getTestParameters() {
-		return Arrays.asList(new Object[][] {
-//				{ org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance() },
-				{ org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance() },
-				{ org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance() },
-				{ new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory() },
-		});
-	}
-		
-	@SuppressWarnings("rawtypes")
-	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
 	
 	private static IValue[] constructorValues;
 	
@@ -88,6 +50,7 @@ public class JUnitModelAggregationBenchmark {
 	
 	private static IRelation[] unionRelations;
 		
+	@Override
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
 		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("model-aggregation");
 		constructorValues = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
@@ -96,14 +59,10 @@ public class JUnitModelAggregationBenchmark {
 		unionRelations = unionRelations();
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		// detect change of valueFactory
-		if (!lastValueFactoryClass.equals(valueFactory.getClass())) {
-			setUpStaticValueFactorySpecificTestData();
-			lastValueFactoryClass = valueFactory.getClass();
-		}
-	}		
+//	@Before
+//	public void setUp() throws Exception {
+//		super.setUp();
+//	}		
 	
 	private IValue[] readValuesFromFiles(File[] files) throws Exception {
 		IValue[] values = new IValue[files.length];

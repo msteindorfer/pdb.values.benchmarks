@@ -12,12 +12,15 @@
 package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IRelation;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runners.Parameterized.Parameters;
 
 public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 
@@ -25,20 +28,42 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 		AbstractJUnitBenchmark.printParameters(getTestParameters());
 	}	
 	
-	public RelationJUnitBenchmark(IValueFactory valueFactory) throws Exception {
+	public RelationJUnitBenchmark(IValueFactory valueFactory, String relationResource) throws Exception {
 		super(valueFactory);
+		this.relationResource = relationResource;		
 	}
+	
+	private String relationResource;
+	private static IRelation testRelation;
 
-	private static IRelation testRelation;	
+	@Parameters
+	public static List<Object[]> getTestParameters() {
+		List<Object[]> relationResourceValues = Arrays.asList(new Object[][] {
+//				{ "rsf/Eclipse202a.rsf_CALL" }, 
+//				{ "rsf/jdk14v2.rsf_CALL" },
+//				{ "rsf/JDK140AWT.rsf_CALL" }, 
+				{ "rsf/JHotDraw52.rsf_CALL" },
+//				{ "rsf/JWAM16FullAndreas.rsf_CALL" } 
+				});
+
+		return AbstractJUnitBenchmark.productOfTestParameters(
+				AbstractJUnitBenchmark.getTestParameters(),
+				relationResourceValues);
+	}	
 	
 	@Override
-	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		try (InputStream inputStream = RelationJUnitBenchmark.class.getResourceAsStream("rsf/JHotDraw52.rsf_CALL")) {
+	public void setUp() throws Exception {	
+		try (InputStream inputStream = RelationJUnitBenchmark.class.getResourceAsStream(relationResource)) {
 			
 			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
 			testRelation = (IRelation) binaryReader.deserialize();
 		}
 	}
+	
+	@Override
+	public void setUpStaticValueFactorySpecificTestData() throws Exception {
+		// no static setup
+	}	
 	
 	@Test
 	public void timeArity() {

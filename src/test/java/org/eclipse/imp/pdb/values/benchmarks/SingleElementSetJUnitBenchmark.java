@@ -21,6 +21,10 @@ import org.junit.runners.Parameterized.Parameters;
 
 public class SingleElementSetJUnitBenchmark extends AbstractJUnitBenchmark {
 	
+	static {
+		AbstractJUnitBenchmark.printParameters(getTestParameters());
+	}
+	
 	public SingleElementSetJUnitBenchmark(IValueFactory valueFactory, int singleValueSetsCount) throws Exception {
 		super(valueFactory);
 		this.singleValueSetsCount = singleValueSetsCount;
@@ -31,14 +35,9 @@ public class SingleElementSetJUnitBenchmark extends AbstractJUnitBenchmark {
 		List<Object[]> singleValueSetsCountValues = Arrays
 				.asList(new Object[][] { { 10 }, { 100 }, { 1_000 }, { 10_000 } });
 
-		List<Object[]> product = AbstractJUnitBenchmark
-				.productOfTestParameters(
-						AbstractJUnitBenchmark.getTestParameters(),
-						singleValueSetsCountValues);
-
-		AbstractJUnitBenchmark.printParameters(product);
-		
-		return product;
+		return AbstractJUnitBenchmark.productOfTestParameters(
+				AbstractJUnitBenchmark.getTestParameters(),
+				singleValueSetsCountValues);
 	}
 
 	private int singleValueSetsCount;

@@ -16,15 +16,20 @@ import java.io.InputStream;
 import org.eclipse.imp.pdb.facts.IRelation;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 
+	static {
+		AbstractJUnitBenchmark.printParameters(getTestParameters());
+	}	
+	
 	public RelationJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 	}
 
-	private IRelation testRelation;	
+	private static IRelation testRelation;	
 	
 	@Override
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
@@ -75,7 +80,11 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 		testRelation.select();
 	}		
 	
-	@Test
+	@Ignore @Test
+	/*
+	 * selectByFieldNames throws an Exception if the underlying relation does
+	 * not have field names. Therefore this benchmark is ignored for the moment.
+	 */
 	public void timeSelectByFieldNames() {
 		testRelation.selectByFieldNames();
 	}

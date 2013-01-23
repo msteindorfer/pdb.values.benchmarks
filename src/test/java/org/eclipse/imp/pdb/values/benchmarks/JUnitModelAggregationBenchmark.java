@@ -20,7 +20,6 @@ import java.util.Collection;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IRelation;
-import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
@@ -35,7 +34,12 @@ import org.junit.runners.Parameterized.Parameters;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
+import com.carrotsearch.junitbenchmarks.annotation.BenchmarkHistoryChart;
+import com.carrotsearch.junitbenchmarks.annotation.BenchmarkMethodChart;
 
+@BenchmarkOptions(callgc=true)
+@BenchmarkMethodChart(filePrefix="method")
+@BenchmarkHistoryChart(filePrefix="history")
 @RunWith(Parameterized.class)
 public class JUnitModelAggregationBenchmark {
 	
@@ -43,10 +47,8 @@ public class JUnitModelAggregationBenchmark {
 	public TestRule benchmarkRun = new BenchmarkRule();	
 	
 	private static TypeStore typeStore = new TypeStore();
+
 	private IValueFactory valueFactory;
-	
-	private IValue[] values;
-	private ISet[] singleValueSets;
 	
 	public JUnitModelAggregationBenchmark(IValueFactory valueFactory) throws Exception {
 		this.valueFactory = valueFactory;
@@ -55,14 +57,55 @@ public class JUnitModelAggregationBenchmark {
 	@Parameters
 	public static Collection<Object[]> getTestParameters() {
 		return Arrays.asList(new Object[][] {
-					{ org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance() },
-//					{ org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance() },
-					{ new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory() },
-					{ org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance() }
+//				{ org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance() },
+				{ org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance() },
+				{ org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance() },
+				{ new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory() },
 		});
 	}
+		
+	@SuppressWarnings("rawtypes")
+	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
+	
+	private static IValue[] constructorValues;
+	
+	private static String[] relationNames = new String[] { 
+			"methodBodies",
+			"classes",
+			"methodDecls",
+			"packages",
+			"fieldDecls",
+			"implements",
+			"methods",
+			"declaredFields",
+			"calls",
+			"variables",
+			"declaredMethods",
+			"types",
+			"modifiers",
+//			"declaredTopTypes" // ISet
+	};
+	
+	private static IRelation[] unionRelations;
+		
+	public void setUpStaticValueFactorySpecificTestData() throws Exception {
+		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("model-aggregation");
+		constructorValues = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
+		
+		// TODO: load from serialized files instead of computing.
+		unionRelations = unionRelations();
+	}
 
-	private static IValue[] readValuesFromFiles(IValueFactory valueFactory, File[] files) throws Exception {
+	@Before
+	public void setUp() throws Exception {
+		// detect change of valueFactory
+		if (!lastValueFactoryClass.equals(valueFactory.getClass())) {
+			setUpStaticValueFactorySpecificTestData();
+			lastValueFactoryClass = valueFactory.getClass();
+		}
+	}		
+	
+	private IValue[] readValuesFromFiles(File[] files) throws Exception {
 		IValue[] values = new IValue[files.length];
 		
 		for (int i = 0; i < files.length; i++) {
@@ -76,51 +119,16 @@ public class JUnitModelAggregationBenchmark {
 		return values;
 	}
 	
-	@Before
-	public void setUp() throws Exception {
-		URL folderOfTestDataURL = JUnitModelAggregationBenchmark.class.getResource("model-aggregation");
-		values = (IValue[]) readValuesFromFiles(valueFactory, new File(folderOfTestDataURL.getFile()).listFiles());
-	
-		int singleValueSetsCount = 10_000;
-		singleValueSets = new ISet[singleValueSetsCount];
-		for (int i = 0; i < singleValueSets.length; i++) {
-			singleValueSets[i] = valueFactory.set(valueFactory.integer(i));
-		}	
-	
-	}
-
-	@BenchmarkOptions(benchmarkRounds = 1, warmupRounds = 0)
-	@Test
-	public void testRelationAggregation() throws Exception {
-		doRelationAggregation();
-	}	
-	
-	public IRelation[] doRelationAggregation() throws Exception {
-		String[] relationNames = new String[] { 
-				"methodBodies",
-				"classes",
-				"methodDecls",
-				"packages",
-				"fieldDecls",
-				"implements",
-				"methods",
-				"declaredFields",
-				"calls",
-				"variables",
-				"declaredMethods",
-				"types",
-				"modifiers",
-//				"declaredTopTypes" // ISet
-		};
+	public IRelation[] unionRelations() throws Exception {
 		
+		// initialize
 		IRelation[] relations = new IRelation[relationNames.length];
 		for (int i = 0; i < relations.length; i++) {
 			relations[i] = valueFactory.relation();
 		}
-		
-//		ISet declaredTopTypes = valueFactory.relation();
-				
-		for (IValue value : values) {
+
+		// compute / accumulate
+		for (IValue value : constructorValues) {
 			IConstructor constructor = (IConstructor) value;
 
 			for (int i = 0; i < relations.length; i++) {
@@ -129,34 +137,67 @@ public class JUnitModelAggregationBenchmark {
 				IRelation two = (IRelation) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.union(two); 
-			}
-			
-//			declaredTopTypes = declaredTopTypes.union((ISet) constructor.getAnnotation("declaredTopTypes"));
+			}		
 		}
+				
+		return relations;
+	}
+
+	@Test
+	public void timeUnionRelations() throws Exception {
+		unionRelations();
+	}	
+	
+	public IRelation[] subtractRelations() throws Exception {
 		
-//		// Writing output to file
-//		for (int i = 0; i < relations.length; i++) {
-//			try (OutputStream outputStream = new FileOutputStream("_union_of_" + relationNames[i])) {
-//				
-//				BinaryWriter binaryWriter = new BinaryWriter(relations[i], outputStream, typeStore);
-//				binaryWriter.serialize();
-//			}
-//		}
-		
+		// initialize
+		IRelation[] relations = unionRelations;
+			
+		// compute / accumulate		
+		for (IValue value : constructorValues) {
+			IConstructor constructor = (IConstructor) value;
+
+			for (int i = 0; i < relations.length; i++) {
+				String relationName = relationNames[i];
+				IRelation one = relations[i];
+				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				
+				relations[i] = one.subtract(two); 
+			}		
+		}
+				
 		return relations;
 	}
 	
-	@BenchmarkOptions(benchmarkRounds = 1, warmupRounds = 0)
 	@Test
-	public void testUnionSingleElementIntegerSets() {
-		doUnionSingleElementIntegerSets();
-	}		
+	public void timeSubtractRelations() throws Exception {
+		subtractRelations();
+	}	
 
-	public ISet doUnionSingleElementIntegerSets() {
-		ISet testSet = valueFactory.set();
-		for (int i = 0; i < singleValueSets.length; i++) testSet = testSet.union(singleValueSets[i]);
+	public IRelation[] intersectRelations() throws Exception {
+		
+		// initialize
+		IRelation[] relations = unionRelations;
 				
-		return testSet;
-	}		
+		// compute / accumulate
+		for (IValue value : constructorValues) {
+			IConstructor constructor = (IConstructor) value;
+
+			for (int i = 0; i < relations.length; i++) {
+				String relationName = relationNames[i];
+				IRelation one = relations[i];
+				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				
+				relations[i] = one.intersect(two); 
+			}		
+		}
+				
+		return relations;
+	}
+	
+	@Test
+	public void timeIntersectRelations() throws Exception {
+		intersectRelations();
+	}	
 	
 }

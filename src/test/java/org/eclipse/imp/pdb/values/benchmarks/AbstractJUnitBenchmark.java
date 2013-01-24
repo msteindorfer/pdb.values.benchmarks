@@ -24,15 +24,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
-import com.carrotsearch.junitbenchmarks.Clock;
 import com.carrotsearch.junitbenchmarks.annotation.BenchmarkHistoryChart;
 import com.carrotsearch.junitbenchmarks.annotation.BenchmarkMethodChart;
 
-@BenchmarkOptions(callgc=true, clock=Clock.NANO_TIME)
-@BenchmarkMethodChart
-@BenchmarkHistoryChart
+@BenchmarkMethodChart(filePrefix="methods-CLASSNAME")
+@BenchmarkHistoryChart(filePrefix="history-CLASSNAME")
 @RunWith(Parameterized.class)
 public abstract class AbstractJUnitBenchmark {
 	

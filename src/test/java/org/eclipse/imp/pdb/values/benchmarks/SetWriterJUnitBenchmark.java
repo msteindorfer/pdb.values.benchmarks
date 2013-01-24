@@ -11,17 +11,11 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
-import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.junit.Test;
-import org.junit.runners.Parameterized.Parameters;
 
 public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 
@@ -29,36 +23,22 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		AbstractJUnitBenchmark.printParameters(getTestParameters());
 	}
 	
-	public SetWriterJUnitBenchmark(IValueFactory valueFactory, String setResource) throws Exception {
+	public SetWriterJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
-		this.setResource = setResource;		
 	}
 
-	private String setResource;
-	private static ISet testSet;	
-	
-	@Parameters
-	public static List<Object[]> getTestParameters() {
-		List<Object[]> relationResourceValues = Arrays.asList(new Object[][] {
-//				{ "rsf/Eclipse202a.rsf_CALL" }, 
-//				{ "rsf/jdk14v2.rsf_CALL" },
-//				{ "rsf/JDK140AWT.rsf_CALL" }, 
-				{ "rsf/JHotDraw52.rsf_CALL" },
-//				{ "rsf/JWAM16FullAndreas.rsf_CALL" } 
-				});
-
-		return AbstractJUnitBenchmark.productOfTestParameters(
-				AbstractJUnitBenchmark.getTestParameters(),
-				relationResourceValues);
-	}	
+	private ISet testSet;	
 	
 	@Override
 	public void setUp() throws Exception {	
-		try (InputStream inputStream = SetWriterJUnitBenchmark.class.getResourceAsStream(setResource)) {
-			
-			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
-			testSet = (ISet) binaryReader.deserialize();
+		// TODO: parameterize test data generation
+		ISetWriter writer = valueFactory.setWriter();
+		
+		for (int i = 10_000; i > 0; i--) {
+			writer.insert(valueFactory.integer(i));
 		}
+		
+		testSet = writer.done();
 	}
 	
 	@Override

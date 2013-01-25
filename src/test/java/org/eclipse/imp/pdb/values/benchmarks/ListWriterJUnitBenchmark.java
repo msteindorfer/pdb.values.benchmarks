@@ -11,11 +11,12 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import java.util.Iterator;
+
 import org.eclipse.imp.pdb.facts.IList;
 import org.eclipse.imp.pdb.facts.IListWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
@@ -47,36 +48,111 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		// no static setup
 	}	
 	
-	
 	@Test
-	public void timeInsertAt() {
+	public void timeInsertAtOneElementFront() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		
 		for (IValue v : testList) {
-			writer.insert(v);
+			writer.insertAt(0, v);
 		}
 		
 		writer.done();
 	}	
 
-	
-	
-
-	
-	/* 
-	 * FROM LIST TESTS 
-	 */	
+	@Test
+	public void timeInsertAtOneElementMiddle() {
+		IListWriter writer = valueFactory.listWriter();
+		writer.insertAll(testList);
+		
+		int offset = testList.length();
+		
+		for (Iterator<IValue> iterator = testList.iterator(); iterator.hasNext(); offset++) {
+			IValue v = iterator.next();
+			writer.insertAt(offset / 2, v);
+		}
+		
+		writer.done();
+	}		
 	
 	@Test
-	public void timeAppend() {
+	public void timeInsertAtOneElementEnd() {
+		IListWriter writer = valueFactory.listWriter();
+		writer.insertAll(testList);
+
+		int offset = Math.max(0, testList.length() - 1);
+		
+		for (Iterator<IValue> iterator = testList.iterator(); iterator.hasNext(); offset++) {
+			IValue v = iterator.next();
+			writer.insertAt(offset, v);
+		}
+		
+		writer.done();
+	}		
+
+	@Test
+	public void timeReplaceAtOneElementFront() {
+		IListWriter writer = valueFactory.listWriter();
+		writer.insertAll(testList);
+		
+		for (IValue v : testList) {
+			writer.replaceAt(0, v);
+		}
+		
+		writer.done();
+	}	
+
+	@Test
+	public void timeReplaceAtOneElementMiddle() {
+		IListWriter writer = valueFactory.listWriter();
+		writer.insertAll(testList);
+		
+		int offset = testList.length();
+		
+		for (Iterator<IValue> iterator = testList.iterator(); iterator.hasNext();) {
+			IValue v = iterator.next();
+			writer.replaceAt(offset / 2, v);
+		}
+		
+		writer.done();
+	}		
+	
+	@Test
+	public void timeReplaceAtOneElementEnd() {
+		IListWriter writer = valueFactory.listWriter();
+		writer.insertAll(testList);
+
+		int offset = Math.max(0, testList.length() - 1);
+		
+		for (Iterator<IValue> iterator = testList.iterator(); iterator.hasNext();) {
+			IValue v = iterator.next();
+			writer.replaceAt(offset, v);
+		}
+		
+		writer.done();
+	}
+	
+	@Test
+	public void timeAppendIndividually() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		
 		for (IValue v : testList) {
 			writer.append(v);
 		}
+		
+		writer.done();		
+	}
+	
+	@Test
+	public void timeAppendAll() {
+		IListWriter writer = valueFactory.listWriter();
+		writer.insertAll(testList);
+		writer.appendAll(testList);
+		
+		writer.done();
 	}	
+	
 			
 	@Test
 	public void timeDeleteValueReduce() {
@@ -86,6 +162,8 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		for (IValue v : testList) {
 			writer.delete(v);
 		}
+		
+		writer.done();		
 	}	
 
 	@Test
@@ -96,6 +174,8 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		while (writer.size() != 0) {
 			writer.delete(0);
 		}
+		
+		writer.done();		
 	}	
 		
 	@Test
@@ -106,35 +186,9 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		while (writer.size() != 0) {
 			writer.delete(writer.size() - 1);
 		}
+		
+		writer.done();		
 	}
-	
-	@Ignore @Test
-	public void  timeProduct() {
-		// TODO
-	}
-
-	@Ignore @Test
-	public void  timeIntersect() {
-		// TODO
-	}
-	
-	@Ignore @Test
-	public void  timeSubtract() {
-		// TODO
-	}
-	
-	@Ignore @Test
-	public void  timeIsSubListOf() {
-		// TODO
-	}	
-	
-	
-	
-
-	
-	/* 
-	 * FROM SET WRITER TESTS 
-	 */
 	
 	@Test
 	public void timeInsert() {

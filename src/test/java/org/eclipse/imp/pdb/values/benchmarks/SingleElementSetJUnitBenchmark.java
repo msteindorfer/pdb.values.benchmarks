@@ -30,7 +30,7 @@ public class SingleElementSetJUnitBenchmark extends AbstractJUnitBenchmark {
 		this.singleValueSetsCount = singleValueSetsCount;
 	}
 
-	@Parameters
+	@Parameters(name="{0}, {1}")
 	public static List<Object[]> getTestParameters() {
 		List<Object[]> singleValueSetsCountValues = Arrays
 				.asList(new Object[][] { { 10 }, { 100 }, { 1_000 }, { 10_000 } });

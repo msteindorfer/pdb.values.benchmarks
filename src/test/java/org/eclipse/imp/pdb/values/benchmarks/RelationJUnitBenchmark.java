@@ -36,7 +36,7 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 	private String relationResource;
 	private static IRelation testRelation;
 
-	@Parameters
+	@Parameters(name="{0}, {1}")
 	public static List<Object[]> getTestParameters() {
 		List<Object[]> relationResourceValues = Arrays.asList(new Object[][] {
 //				{ "rsf/Eclipse202a.rsf_CALL" }, 

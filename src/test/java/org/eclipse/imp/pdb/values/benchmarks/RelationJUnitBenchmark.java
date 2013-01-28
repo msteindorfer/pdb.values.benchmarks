@@ -142,4 +142,9 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 		testRelation.product(testRelation);
 	}
 	
+	@Test
+	public void timeEquals() {
+		testRelation.equals(testRelation);
+	}	
+	
 }

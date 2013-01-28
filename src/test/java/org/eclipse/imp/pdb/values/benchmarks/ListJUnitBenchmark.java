@@ -156,4 +156,9 @@ public class ListJUnitBenchmark extends AbstractJUnitBenchmark {
 		// TODO
 	}
 	
+	@Test
+	public void timeEquals() {
+		testList.equals(testList);
+	}
+	
 }

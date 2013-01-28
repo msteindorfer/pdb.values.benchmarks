@@ -122,4 +122,10 @@ public class MapJUnitBenchmark extends AbstractJUnitBenchmark {
 		while (iterator.hasNext() && (iterator.next() == null || iterator.next() != null));
 	}
 		
+	@Test
+	public void timeEquals() {
+		testMap.equals(testMap);
+	}
+	
+	
 }

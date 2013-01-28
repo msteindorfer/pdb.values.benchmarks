@@ -56,19 +56,6 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		// no static setup
 	}	
 	
-	
-	@Test
-	public void timeInsertAt() {
-		IMapWriter writer = valueFactory.mapWriter();
-		writer.insertAll(testTuples);
-		
-		for (IValue v : testMap) {
-			writer.insert(valueFactory.tuple(v, testMap.get(v)));
-		}
-		
-		writer.done();
-	}	
-	
 	@Test
 	public void timeInsert() {
 		IMapWriter writer = valueFactory.mapWriter();

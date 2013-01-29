@@ -56,9 +56,9 @@ public class ListJUnitBenchmark extends AbstractJUnitBenchmark {
 		testList.append(null);
 	}	
 
-	@Ignore @Test
+	@Test
 	public void timeInsert() {
-		testList.insert(null);
+		testList.insert(valueFactory.integer(0));
 	}
 	
 	@Test
@@ -66,9 +66,22 @@ public class ListJUnitBenchmark extends AbstractJUnitBenchmark {
 		testList.concat(testList);
 	}	
 	
-	@Ignore @Test
-	public void timePut() {
-		testList.put(0, null);
+	@Test
+	public void timePutFront() {
+		int index = 0;
+		testList.put(index, valueFactory.integer(0));
+	}
+	
+	@Test
+	public void timePutMiddle() {
+		int index = testList.length() / 2;
+		testList.put(index, valueFactory.integer(0));
+	}		
+	
+	@Test
+	public void timePutEnd() {
+		int index = Math.max(0, testList.length() - 1);
+		testList.put(index, valueFactory.integer(0));
 	}	
 	
 	@Test

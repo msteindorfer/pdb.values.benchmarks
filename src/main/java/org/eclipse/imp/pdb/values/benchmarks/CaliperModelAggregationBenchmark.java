@@ -11,10 +11,11 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.InputStream;
-import java.net.URL;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.IRelation;
@@ -57,9 +58,23 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 	private static IRelation[] unionRelations;
 		
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("model-aggregation");
-		constructorValues = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
+		String resourcePrefixRelativeToClass = "model-aggregation";
+		List<String> resources = new ArrayList<>();
 		
+		try (
+				InputStream inputStream = CaliperModelAggregationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index.txt");
+				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+			) {
+
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				resources.add(resourcePrefixRelativeToClass + "/" + line);
+			}
+			
+		}
+		constructorValues = (IValue[]) readValuesFromFiles(this.getClass(), resources);
+
+				
 		// TODO: load from serialized files instead of computing.
 		unionRelations = unionRelations();
 	}
@@ -75,11 +90,11 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 		}
 	}		
 	
-	private IValue[] readValuesFromFiles(File[] files) throws Exception {
-		IValue[] values = new IValue[files.length];
-		
-		for (int i = 0; i < files.length; i++) {
-			try (InputStream inputStream = new FileInputStream(files[i])) {
+	private IValue[] readValuesFromFiles(Class<?> clazz, List<String> resources) throws Exception {
+		IValue[] values = new IValue[resources.size()];
+				
+		for (int i = 0; i < resources.size(); i++) {
+			try (InputStream inputStream = clazz.getResourceAsStream(resources.get(i))) {
 				
 				BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
 				values[i] = binaryReader.deserialize();
@@ -87,8 +102,8 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 		}
 		
 		return values;
-	}
-
+	}	
+	
 	public Object timeUnionRelations(int reps) throws Exception {
 //		Object dummy = null;
 //		

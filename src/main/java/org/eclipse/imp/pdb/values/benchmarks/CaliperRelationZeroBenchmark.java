@@ -40,14 +40,22 @@ public class CaliperRelationZeroBenchmark extends RascalBenchmark {
 		}
 	}
 	
-//	public Object timeArity(int reps) {
-//		int result = 0;
-//		for (int r = 0; r < reps; r++) {
-//			result = testRelation.arity();
-//		}
-//		return result;
-//	}
+	public Object timeArity(int reps) {
+		int result = 0;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.arity();
+		}
+		return result;
+	}
 
+	public Object timeSize(int reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.size();
+		}
+		return result;
+	}	
+	
 	public Object timeClosure(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
@@ -72,13 +80,13 @@ public class CaliperRelationZeroBenchmark extends RascalBenchmark {
 		return result;
 	}
 	
-//	public Object timeFieldTypes(int reps) {
-//		Object result = null;
-//		for (int r = 0; r < reps; r++) {
-//			result = testRelation.getFieldTypes();
-//		}
-//		return result;
-//	}
+	public Object timeFieldTypes(int reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testRelation.getFieldTypes();
+		}
+		return result;
+	}
 	
 	public Object timeDomain(int reps) {
 		Object result = null;

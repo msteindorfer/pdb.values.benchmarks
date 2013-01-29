@@ -31,8 +31,9 @@
 				<configuration>
 					<argLine>
 						-Xmx8g
-						-Djub.consumers=CONSOLE,H2 
-						-Djub.db.file=.benchmarks						
+						-Djub.consumers=CONSOLE,H2
+						-Djub.db.file=.benchmarks
+						-Djub.rounds.benchmark=10
 						<!-- -XX:+PrintCompilation -->
 						<!-- -verbose:gc -->
 						<!-- -XX:+PrintGCDetails -->

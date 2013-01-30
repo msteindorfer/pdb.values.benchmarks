@@ -17,7 +17,7 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import com.google.caliper.Param;
 import com.google.caliper.Runner;
 
-public class CaliperRelationBenchmark extends RascalBenchmark {
+public class CaliperAASingleElementSetBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory; 
 	
@@ -51,7 +51,7 @@ public class CaliperRelationBenchmark extends RascalBenchmark {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperRelationBenchmark.class, args);
+		Runner.main(CaliperAASingleElementSetBenchmark.class, args);
 	}
 	
 }

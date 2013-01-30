@@ -20,7 +20,7 @@ import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import com.google.caliper.Param;
 import com.google.caliper.Runner;
 
-public class CaliperRelationZeroBenchmark extends RascalBenchmark {
+public class CaliperAARelationBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory; 
 	
@@ -33,7 +33,7 @@ public class CaliperRelationZeroBenchmark extends RascalBenchmark {
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance();
 
-		try (InputStream inputStream = CaliperRelationZeroBenchmark.class.getResourceAsStream("rsf/JHotDraw52.rsf_CALL")) {
+		try (InputStream inputStream = CaliperAARelationBenchmark.class.getResourceAsStream("rsf/JHotDraw52.rsf_CALL")) {
 			
 			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
 			testRelation = (IRelation) binaryReader.deserialize();
@@ -164,7 +164,7 @@ public class CaliperRelationZeroBenchmark extends RascalBenchmark {
 	}		
 	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperRelationZeroBenchmark.class, args);
+		Runner.main(CaliperAARelationBenchmark.class, args);
 	}
 
 }

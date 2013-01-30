@@ -17,7 +17,7 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
 
-public class CaliperSetWriterBenchmark extends RascalBenchmark {
+public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	

@@ -16,7 +16,7 @@ import org.eclipse.imp.pdb.facts.type.TypeStore;
 
 import com.google.caliper.SimpleBenchmark;
 
-abstract class RascalBenchmark extends SimpleBenchmark {
+abstract class AbstractCaliperBenchmark extends SimpleBenchmark {
 
 	protected final TypeStore typeStore = new TypeStore();
 	

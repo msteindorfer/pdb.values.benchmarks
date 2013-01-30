@@ -26,7 +26,7 @@ import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import com.google.caliper.Param;
 import com.google.caliper.Runner;
 
-public class CaliperModelAggregationBenchmark extends RascalBenchmark {
+public class CaliperAAModelAggregationBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory;
 	
@@ -62,7 +62,7 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 		List<String> resources = new ArrayList<>();
 		
 		try (
-				InputStream inputStream = CaliperModelAggregationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index.txt");
+				InputStream inputStream = CaliperAAModelAggregationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index.txt");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 			) {
 
@@ -204,7 +204,7 @@ public class CaliperModelAggregationBenchmark extends RascalBenchmark {
 	}		
 	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperModelAggregationBenchmark.class, args);
+		Runner.main(CaliperAAModelAggregationBenchmark.class, args);
 	}
 	
 }

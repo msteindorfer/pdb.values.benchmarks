@@ -16,9 +16,10 @@ import java.io.InputStream;
 import org.eclipse.imp.pdb.facts.IRelation;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
+import org.junit.Test;
 
 import com.google.caliper.Param;
-import com.google.caliper.Runner;
+import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAARelationBenchmark extends AbstractCaliperBenchmark {
 
@@ -162,9 +163,31 @@ public class CaliperAARelationBenchmark extends AbstractCaliperBenchmark {
 		}
 		return result;
 	}		
+
+	@Test
+	public void testEquals() {
+		testRelation.equals(testRelation);
+	}
+	
+	public void timeEquals(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testEquals();
+		}
+	}
+	
+	@Test
+	public void testIsEqual() {
+		testRelation.isEqual(testRelation);
+	}
+	
+	public void timeIsEqual(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testIsEqual();
+		}
+	}		
 	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperAARelationBenchmark.class, args);
+		CaliperMain.main(CaliperAARelationBenchmark.class, args);
 	}
 
 }

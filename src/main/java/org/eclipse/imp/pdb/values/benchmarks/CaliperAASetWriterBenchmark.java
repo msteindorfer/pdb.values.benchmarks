@@ -16,6 +16,7 @@ import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
+import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 	
@@ -86,5 +87,9 @@ public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 			testWriter.size();
 		}
 	}
+
+	public static void main(String[] args) throws Exception {
+		CaliperMain.main(CaliperAASetWriterBenchmark.class, args);
+	}	
 	
 }

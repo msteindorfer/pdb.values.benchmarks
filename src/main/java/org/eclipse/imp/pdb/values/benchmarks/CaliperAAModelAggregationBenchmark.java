@@ -24,7 +24,7 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 
 import com.google.caliper.Param;
-import com.google.caliper.Runner;
+import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAAModelAggregationBenchmark extends AbstractCaliperBenchmark {
 
@@ -105,14 +105,14 @@ public class CaliperAAModelAggregationBenchmark extends AbstractCaliperBenchmark
 	}	
 	
 	public Object timeUnionRelations(int reps) throws Exception {
-//		Object dummy = null;
-//		
-//		for (int i = 0; i < reps; i++) 
-//			dummy = unionRelations();
-//		
-//		return dummy;
+		Object dummy = null;
 		
-		return unionRelations();
+		for (int i = 0; i < reps; i++) 
+			dummy = unionRelations();
+		
+		return dummy;
+		
+//		return unionRelations();
 	}
 	
 	public IRelation[] unionRelations() throws Exception {
@@ -161,14 +161,14 @@ public class CaliperAAModelAggregationBenchmark extends AbstractCaliperBenchmark
 	}
 	
 	public Object timeSubtractRelations(int reps) throws Exception {
-//		Object dummy = null;
-//		
-//		for (int i = 0; i < reps; i++) 
-//			dummy = subtractRelations();
-//		
-//		return dummy;
+		Object dummy = null;
 		
-		return subtractRelations();
+		for (int i = 0; i < reps; i++) 
+			dummy = subtractRelations();
+		
+		return dummy;
+//		
+//		return subtractRelations();
 	}	
 
 	public IRelation[] intersectRelations() throws Exception {
@@ -193,18 +193,18 @@ public class CaliperAAModelAggregationBenchmark extends AbstractCaliperBenchmark
 	}
 	
 	public Object timeIntersectRelations(int reps) throws Exception {
-//		Object dummy = null;
-//		
-//		for (int i = 0; i < reps; i++) 
-//			dummy = intersectRelations();
-//		
-//		return dummy;
+		Object dummy = null;
 		
-		return intersectRelations();
+		for (int i = 0; i < reps; i++) 
+			dummy = intersectRelations();
+		
+		return dummy;
+//		
+//		return intersectRelations();
 	}		
 	
 	public static void main(String[] args) throws Exception {
-		Runner.main(CaliperAAModelAggregationBenchmark.class, args);
+		CaliperMain.main(CaliperAAModelAggregationBenchmark.class, args);
 	}
 	
 }

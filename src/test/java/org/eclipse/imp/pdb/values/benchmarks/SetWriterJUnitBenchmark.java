@@ -17,28 +17,41 @@ import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
+
 public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}
+	private static final boolean CALLGC = true;
+	private static final int BENCHMARK_ROUNDS = 10;	
+	private static final int WARMUP_ROUNDS = 5;
 	
 	public SetWriterJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 	}
 
+	private int COUNT = 10_000;	
+	
 	private ISet testSet;	
+	
+	private ISetWriter testWriter;
 	
 	@Override
 	public void setUp() throws Exception {	
 		// TODO: parameterize test data generation
 		ISetWriter writer = valueFactory.setWriter();
 		
-		for (int i = 10_000; i > 0; i--) {
+		for (int i = COUNT; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
 		}
 		
 		testSet = writer.done();
+
+		testWriter = valueFactory.setWriter();
+		
+		for (int i = COUNT; i > 0; i--) {
+			testWriter.insert(valueFactory.integer(i));
+		}
 	}
 	
 	@Override
@@ -47,6 +60,7 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}	
 	
 	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsert() {
 		ISetWriter writer = valueFactory.setWriter();
 		
@@ -58,6 +72,7 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertAll() {
 		ISetWriter writer = valueFactory.setWriter();
 		writer.insertAll(testSet);
@@ -65,6 +80,7 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertIndividuallyAndAllSame() {
 		ISetWriter writer = valueFactory.setWriter();
 		
@@ -77,6 +93,7 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}	
 
 	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertAllAndIndividuallySame() {
 		ISetWriter writer = valueFactory.setWriter();
 		
@@ -89,6 +106,7 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}	
 		
 	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeDelete() {
 		ISetWriter writer = valueFactory.setWriter();
 		writer.insertAll(testSet);
@@ -101,6 +119,7 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertAndCheckSize() {
 		ISetWriter writer = valueFactory.setWriter();
 		
@@ -113,6 +132,13 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
+	public void timeSize() {
+		testWriter.size();
+	}
+		
+	@Test
+	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertAndDelete() {
 		ISetWriter writer = valueFactory.setWriter();
 		

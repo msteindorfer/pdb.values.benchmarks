@@ -13,6 +13,7 @@ package org.eclipse.imp.pdb.values.benchmarks;
 
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
+import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
@@ -30,8 +31,6 @@ public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 	
 	private ISet testSet;
 	private ISetWriter testWriter;
-
-	private ISetWriter testEmptyWriter;
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -52,35 +51,69 @@ public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 		for (int i = testSetSize; i > 0; i--) {
 			testWriter.insert(valueFactory.integer(i));
 		}
-		
-		testEmptyWriter = valueFactory.setWriter();
 	}
 		
+	public void timeInsertWithInference(int runs) {
+		for (int i = 0; i < runs; i++) {
+			ISetWriter writer = valueFactory.setWriter();
+			for (IValue v : testSet) {
+				writer.insert(v);
+			}
+			writer.done();
+		}
+	}
+
 	public void timeInsert(int runs) {
 		for (int i = 0; i < runs; i++) {
-			testEmptyWriter.insert(valueFactory.integer(i % testSetSize));
+			ISetWriter writer = valueFactory.setWriter(testSet.getElementType());
+			for (IValue v : testSet) {
+				writer.insert(v);
+			}
+			writer.done();
 		}
 	}
 	
-	public void timeInsertAll(int runs) {
+	public void timeInsertAllWithInference(int runs) {
 		for (int i = 0; i < runs; i++) {
-			testEmptyWriter.insertAll(testSet);
+			ISetWriter writer = valueFactory.setWriter();
+			writer.insertAll(testSet);
+			writer.done();
 		}
 	}	
 
-//	// How to test delete?
-//	public void timeDelete(int runs) {
-//		for (int i = 0; i < runs; i++) {
-//			ISetWriter writer = valueFactory.setWriter();
-//			writer.insertAll(testSet);
-//		
-//		for (IValue v : testSet) {
-//			writer.delete(v);
-//		}
-//		
-//		writer.done();
-//		}
-//	}
+	public void timeInsertAll(int runs) {
+		for (int i = 0; i < runs; i++) {
+			ISetWriter writer = valueFactory.setWriter(testSet.getElementType());
+			writer.insertAll(testSet);
+			writer.done();
+		}
+	}	
+	
+	public void timeDeleteWithInference(int runs) {
+		for (int i = 0; i < runs; i++) {
+			ISetWriter writer = valueFactory.setWriter();
+			writer.insertAll(testSet);
+		
+			for (IValue v : testSet) {
+				writer.delete(v);
+			}
+		
+			writer.done();
+		}
+	}
+
+	public void timeDelete(int runs) {
+		for (int i = 0; i < runs; i++) {
+			ISetWriter writer = valueFactory.setWriter(testSet.getElementType());
+			writer.insertAll(testSet);
+		
+			for (IValue v : testSet) {
+				writer.delete(v);
+			}
+		
+			writer.done();
+		}
+	}	
 	
 	public void timeSize(int runs) {
 		for (int i = 0; i < runs; i++) {

@@ -140,7 +140,6 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 		}
 	}		
 
-	// TODO: fails currently because of Caliper timing issues
 	@Test
 	public void testCompose() {
 		testMap.compose(testMap);
@@ -152,7 +151,6 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 		}
 	}		
 	
-	// TODO: fails currently because of Caliper timing issues
 	@Test
 	public void testCommon() {
 		testMap.common(testMap);

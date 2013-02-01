@@ -40,7 +40,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public void timeIsEmpty(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testIsEmpty();
 		}
 	}
@@ -51,7 +51,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public void timeSize(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testSize();
 		}
 	}	
@@ -64,7 +64,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public void timeGet(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testGet();
 		}
 	}	
@@ -77,7 +77,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 	
 	public void timeContainsKey(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testContainsKey();
 		}
 	}	
@@ -91,7 +91,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 	
 	public void timeContainsValue(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testContainsValue();
 		}
 	}	
@@ -102,7 +102,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 	
 	public void timeGetKeyType(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testGetKeyType();
 		}
 	}	
@@ -113,7 +113,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 	
 	public void timeGetValueType(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testGetValueType();
 		}
 	}	
@@ -124,7 +124,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}	
 
 	public void timeJoin(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testJoin();
 		}
 	}	
@@ -135,29 +135,31 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public void timeRemove(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testRemove();
 		}
 	}		
-	
+
+	// TODO: fails currently because of Caliper timing issues
 	@Test
 	public void testCompose() {
 		testMap.compose(testMap);
 	}
 	
 	public void timeCompose(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testCompose();
 		}
 	}		
 	
+	// TODO: fails currently because of Caliper timing issues
 	@Test
 	public void testCommon() {
 		testMap.common(testMap);
 	}	
 	
 	public void timeCommon(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testCommon();
 		}
 	}	
@@ -168,7 +170,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public void timeIsSubMap(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testIsSubMap();
 		}
 	}	
@@ -180,7 +182,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public void timeIterator(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testIterator();
 		}
 	}		
@@ -192,7 +194,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public void timeValueIterator(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testValueIterator();
 		}
 	}		
@@ -204,7 +206,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 		
 	public void timeEntryIterator(int reps) {
-		for (int i = 0; i < 0; i++) {
+		for (int i = 0; i < reps; i++) {
 			testEntryIterator();
 		}
 	}	

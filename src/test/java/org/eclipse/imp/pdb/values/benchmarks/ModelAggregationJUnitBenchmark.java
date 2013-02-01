@@ -56,7 +56,7 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 		
 	@Override
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		URL folderOfTestDataURL = CaliperModelAggregationBenchmark.class.getResource("model-aggregation");
+		URL folderOfTestDataURL = ModelAggregationJUnitBenchmark.class.getResource("model-aggregation");
 		constructorValues = (IValue[]) readValuesFromFiles(new File(folderOfTestDataURL.getFile()).listFiles());
 		
 		// TODO: load from serialized files instead of computing.

@@ -17,7 +17,6 @@ import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
-import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 	
@@ -115,14 +114,14 @@ public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 		}
 	}	
 	
-	public void timeSize(int runs) {
-		for (int i = 0; i < runs; i++) {
+	public void timeSize(long runs) {
+		for (long i = 0; i < runs; i++) {
 			testWriter.size();
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		CaliperMain.main(CaliperAASetWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAASetWriterBenchmark.class, args);
 	}	
 	
 }

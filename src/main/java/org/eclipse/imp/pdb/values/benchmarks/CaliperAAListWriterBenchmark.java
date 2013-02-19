@@ -20,7 +20,6 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 
 import com.google.caliper.Param;
-import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAAListWriterBenchmark extends AbstractCaliperBenchmark {
 
@@ -376,7 +375,7 @@ public class CaliperAAListWriterBenchmark extends AbstractCaliperBenchmark {
 	}	
 
 	public static void main(String[] args) throws Exception {
-		CaliperMain.main(CaliperAAListWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAAListWriterBenchmark.class, args);
 	}	
 	
 }

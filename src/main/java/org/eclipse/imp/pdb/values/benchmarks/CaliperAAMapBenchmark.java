@@ -9,7 +9,6 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 
 import com.google.caliper.Param;
-import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 
@@ -232,7 +231,7 @@ public class CaliperAAMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		CaliperMain.main(CaliperAAMapBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAAMapBenchmark.class, args);
 	}	
 	
 }

@@ -23,7 +23,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.google.caliper.Param;
-import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAAMapWriterBenchmark extends AbstractCaliperBenchmark {
 	
@@ -198,7 +197,7 @@ public class CaliperAAMapWriterBenchmark extends AbstractCaliperBenchmark {
 	}		
 
 	public static void main(String[] args) throws Exception {
-		CaliperMain.main(CaliperAAMapWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAAMapWriterBenchmark.class, args);
 	}	
 	
 }

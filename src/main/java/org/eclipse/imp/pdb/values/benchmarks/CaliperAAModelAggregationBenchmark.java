@@ -24,7 +24,6 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 
 import com.google.caliper.Param;
-import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAAModelAggregationBenchmark extends AbstractCaliperBenchmark {
 
@@ -204,7 +203,7 @@ public class CaliperAAModelAggregationBenchmark extends AbstractCaliperBenchmark
 	}		
 	
 	public static void main(String[] args) throws Exception {
-		CaliperMain.main(CaliperAAModelAggregationBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAAModelAggregationBenchmark.class, args);
 	}
 	
 }

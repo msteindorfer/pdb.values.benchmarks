@@ -11,17 +11,22 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
+import org.eclipse.imp.pdb.facts.type.TypeFactory;
+
+import scala.collection.mutable.SetBuilder;
 
 import clojure.lang.IPersistentSet;
 import clojure.lang.ITransientSet;
 import clojure.lang.PersistentHashSet;
 
 import com.google.caliper.Param;
-import com.google.caliper.runner.CaliperMain;
 
 public class CaliperAASetWriterSpecificBenchmark extends AbstractCaliperBenchmark {
 	
@@ -48,6 +53,25 @@ public class CaliperAASetWriterSpecificBenchmark extends AbstractCaliperBenchmar
 		
 		testSet = writer.done();
 	}
+
+	public void timeJavaMutable(int reps) {		
+		for (int i = 0; i < reps; i++) {
+			Set<IValue> xs = new HashSet<>();
+			for (IValue v : testSet) {
+				xs.add(v);	
+			}
+		}
+	}
+
+	public void timeSetWriter(int reps) {		
+		for (int i = 0; i < reps; i++) {
+			ISetWriter writer = valueFactory.setWriter(TypeFactory.getInstance().integerType());
+			for (IValue v : testSet) {
+				writer.insert(v);	
+			}
+			writer.done();
+		}
+	}	
 	
 	public void timeClojureTransient(int reps) {		
 		for (int i = 0; i < reps; i++) {
@@ -67,9 +91,75 @@ public class CaliperAASetWriterSpecificBenchmark extends AbstractCaliperBenchmar
 			}
 		}
 	}	
+
+//	public void timeScalaPersistent(int reps) { 
+//		for (int i = 0; i < reps; i++) {
+//			scala.collection.immutable.Set<IValue> empty = scala.collection.immutable.Set$.MODULE$.empty();
+//			for (IValue v : testSet) {
+//				empty = empty.$plus(v);
+//			}
+//		}
+//	}
+//	
+//	public void timeScalaMutable(int reps) { 
+//		for (int i = 0; i < reps; i++) {
+//			scala.collection.SetLike empty = scala.collection.mutable.Set$.MODULE$.empty();
+//			for (IValue v : testSet) {
+//				empty = ((scala.collection.mutable.Set) empty).$plus$eq(v);
+//			}
+//		}
+//	}	
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void timeScalaSetBuilderPersistent(int reps) { 
+		for (int i = 0; i < reps; i++) {
+			scala.collection.Set<IValue> empty = scala.collection.immutable.Set$.MODULE$.empty();
+			scala.collection.mutable.SetBuilder builder = new SetBuilder(empty);
+			for (IValue v : testSet) {
+				builder = builder.$plus$eq(v);
+			}
+			builder.result();
+		}
+	}	
+		
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void timeScalaSetBuilderMutable(int reps) { 
+		for (int i = 0; i < reps; i++) {
+			scala.collection.Set<IValue> empty = scala.collection.mutable.Set$.MODULE$.empty();
+			scala.collection.mutable.SetBuilder builder = new SetBuilder(empty);
+			for (IValue v : testSet) {
+				builder = builder.$plus$eq(v);
+			}
+			builder.result();
+		}
+	}
+
+	public void timeString(int reps) {		
+		String sample = "ABCDEFG";
+		
+		for (int i = 0; i < reps; i++) {
+			String[] strings = new String[testSetSize];
+			
+			for (int j = 0; j < testSetSize; j++) {
+				strings[j] = new String(sample);
+			}
+		}
+	}	
+
+	public void timeStringIntern(int reps) {		
+		String sample = "ABCDEFG";
+		
+		for (int i = 0; i < reps; i++) {
+			String[] strings = new String[testSetSize];
+			
+			for (int j = 0; j < testSetSize; j++) {
+				strings[j] = new String(sample).intern();
+			}
+		}
+	}	
+		
 	public static void main(String[] args) throws Exception {
-		CaliperMain.main(CaliperAASetWriterSpecificBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAASetWriterSpecificBenchmark.class, args);
 	}	
 	
 }

@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IRelation;
 import org.eclipse.imp.pdb.facts.IValueFactory;
-import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.junit.Test;
 
 import com.google.caliper.Param;
@@ -60,11 +59,8 @@ public class CaliperAARelationBenchmark extends AbstractCaliperBenchmark {
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance();
 
-		try (InputStream inputStream = CaliperAARelationBenchmark.class.getResourceAsStream(resource)) {
-			
-			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
-			testRelation = (IRelation) binaryReader.deserialize();
-		}
+		ValueUtils utils = new ValueUtils(valueFactory, typeStore);
+		this.testRelation = (IRelation) utils.readValueFromResource(getClass(), resource);
 	}
 	
 	public Object timeArity(long reps) {

@@ -19,6 +19,8 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 	
 	private IMap testMap;
 	
+	private IValue VALUE_NOT_EXISTING;
+	
 	@Override
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
@@ -29,6 +31,8 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 		for (int i = 10_000; i > 0; i--) {
 			writer.insert(valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i)));
 		}
+		
+		VALUE_NOT_EXISTING = valueFactory.integer(12000);
 		
 		testMap = writer.done();
 	}
@@ -70,9 +74,7 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 	
 	@Test
 	public void testContainsKey() {
-		for (IValue v : testMap) {
-			testMap.containsKey(v);
-		}
+		testMap.containsKey(VALUE_NOT_EXISTING);
 	}
 	
 	public void timeContainsKey(int reps) {
@@ -83,10 +85,7 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 
 	@Test
 	public void testContainsValue() {
-		for (Iterator<IValue> iterator = testMap.valueIterator(); iterator.hasNext();) {
-			IValue v = iterator.next();
-			testMap.containsValue(v);
-		}
+		testMap.containsValue(VALUE_NOT_EXISTING);
 	}
 	
 	public void timeContainsValue(int reps) {

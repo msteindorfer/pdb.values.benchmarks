@@ -19,6 +19,11 @@ abstract class AbstractCaliperBenchmark extends com.google.caliper.SimpleBenchma
 	protected final TypeStore typeStore = new TypeStore();
 	
 	protected enum ValueFactoryFactory {
+//		VF_JAVA {
+//			@Override IValueFactory getInstance() {
+//				return org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance();
+//			}
+//		},
 		VF_RASCAL {
 			@Override IValueFactory getInstance() {
 				return org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();

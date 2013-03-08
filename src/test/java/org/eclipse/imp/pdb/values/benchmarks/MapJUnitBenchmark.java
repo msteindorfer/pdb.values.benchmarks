@@ -10,10 +10,6 @@ import org.junit.Test;
 
 public class MapJUnitBenchmark extends AbstractJUnitBenchmark {
 
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}
-	
 	public MapJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 	}

@@ -9,10 +9,6 @@ import org.junit.Test;
 
 public class ListJUnitBenchmark extends AbstractJUnitBenchmark {
 
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}
-	
 	public ListJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 	}

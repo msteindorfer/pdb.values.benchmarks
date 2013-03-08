@@ -23,10 +23,6 @@ import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
 public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
-
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}	
 	
 	public RelationJUnitBenchmark(IValueFactory valueFactory, String relationResource) throws Exception {
 		super(valueFactory);
@@ -37,7 +33,7 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 	private static IRelation testRelation;
 
 	@Parameters(name="{0}, {1}")
-	public static List<Object[]> getTestParameters() {
+	public static List<Object[]> getTestParameters() throws Exception {
 		List<Object[]> relationResourceValues = Arrays.asList(new Object[][] {
 //				{ "rsf/Eclipse202a.rsf_CALL" }, 
 //				{ "rsf/jdk14v2.rsf_CALL" },

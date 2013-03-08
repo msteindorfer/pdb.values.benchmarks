@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import java.util.Iterator;
+
 import org.eclipse.imp.pdb.facts.IList;
 import org.eclipse.imp.pdb.facts.IListWriter;
 import org.eclipse.imp.pdb.facts.IValue;
@@ -20,14 +22,25 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
-
-	private IValueFactory valueFactory; 
+public class CaliperACListBenchmark1 extends AbstractCaliperBenchmark {
+		
+	protected IValueFactory valueFactory; 
 	
 	@Param
-	private ValueFactoryFactory valueFactoryFactory;
+	protected ValueFactoryFactory valueFactoryFactory;
 
-	private IList testList;
+	@Param({"10", "100", "1000"})
+//	@Param({"10", "100", "1000", "10000", "100000"})
+	protected int size;
+	
+	protected IList testList;
+	protected IList testListDifferent;
+	
+	protected int INDEX_FRONT;
+	protected int INDEX_MIDDLE;
+	protected int INDEX_END;
+	
+	protected IValue DUMMY;
 	
 	@Override
 	protected void setUp() throws Exception {	
@@ -36,13 +49,21 @@ public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
 		// TODO: parameterize test data generation
 		IListWriter writer = valueFactory.listWriter();
 		
-		for (int i = 10_000; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
 		}
 		
 		testList = writer.done();
-	}
 		
+		INDEX_FRONT = 0;
+		INDEX_MIDDLE = testList.length() / 2;
+		INDEX_END = Math.max(0, testList.length() - 1);
+		
+		DUMMY = valueFactory.integer(0);
+	
+		testListDifferent = testList.delete(INDEX_END);
+	}	
+	
 	@Test
 	public void testGetElementType() {
 		testList.getElementType();
@@ -61,7 +82,7 @@ public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
 
 	public void timeLength(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testLength();
+			testList.length();
 		}
 	}		
 	
@@ -72,29 +93,29 @@ public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
 
 	public void timeReverse(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testReverse();
+			testList.reverse();
 		}
 	}	
 	
 	@Test
 	public void testAppend() {
-		testList.append(valueFactory.integer(0));
+		testList.append(DUMMY);
 	}	
 
 	public void timeAppend(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testAppend();
+			testList.append(DUMMY);
 		}
 	}		
 		
 	@Test
 	public void testInsert() {
-		testList.insert(valueFactory.integer(0));
+		testList.insert(DUMMY);
 	}
 
 	public void timeInsert(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testInsert();
+			testList.insert(DUMMY);
 		}
 	}		
 	
@@ -105,79 +126,73 @@ public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
 	
 	public void timeConcat(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testConcat();
+			testList.concat(testList);
 		}
 	}		
 		
 	@Test
 	public void testPutFront() {
-		int index = 0;
-		testList.put(index, valueFactory.integer(0));
+		testList.put(INDEX_FRONT, DUMMY);
 	}
 	
 	public void timePutFront(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testPutFront();
+			testList.put(INDEX_FRONT, DUMMY);
 		}
 	}		
 		
 	@Test
 	public void testPutMiddle() {
-		int index = testList.length() / 2;
-		testList.put(index, valueFactory.integer(0));
+		testList.put(INDEX_MIDDLE, DUMMY);
 	}
 
 	public void timePutMiddle(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testPutMiddle();
+			testList.put(INDEX_MIDDLE, DUMMY);
 		}
 	}			
 	
 	@Test
 	public void testPutEnd() {
-		int index = Math.max(0, testList.length() - 1);
-		testList.put(index, valueFactory.integer(0));
+		testList.put(INDEX_END, DUMMY);
 	}	
 	
 	public void timePutEnd(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testPutEnd();
+			testList.put(INDEX_END, DUMMY);
 		}
 	}	
 	
 	@Test
 	public void testGetFront() {
-		int index = 0;
-		testList.get(index);
+		testList.get(INDEX_FRONT);
 	}
 	
 	public void timeGetFront(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testGetFront();
+			testList.get(INDEX_FRONT);
 		}
 	}		
 		
 	@Test
 	public void testGetMiddle() {
-		int index = testList.length() / 2;
-		testList.get(index);
+		testList.get(INDEX_MIDDLE);
 	}
 
 	public void timeGetMiddle(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testGetMiddle();
+			testList.get(INDEX_MIDDLE);
 		}
 	}			
 	
 	@Test
 	public void testGetEnd() {
-		int index = Math.max(0, testList.length() - 1);
-		testList.get(index);
+		testList.get(INDEX_END);
 	}	
 	
 	public void timeGetEnd(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testGetEnd();
+			testList.get(INDEX_END);
 		}
 	}	
 	
@@ -193,93 +208,9 @@ public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
 
 	public void timeIsEmpty(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testIsEmpty();
+			testList.isEmpty();
 		}
 	}
-	
-	@Test // TODO
-	public void testContains() {
-		for (IValue v : testList) {
-			testList.contains(v);
-		}
-	}	
-
-	public void timeContains(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testContains();
-		}
-	}	
-	
-	@Test // TODO
-	public void testDeleteValueKeep() {
-		for (IValue v : testList) {
-			testList.delete(v);
-		}
-	}
-	
-	public void timeDeleteValueKeep(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteValueKeep();
-		}
-	}	
-
-	@Test // TODO
-	public void testDeleteValueReduce() {
-		IList reducedList = testList;
-		
-		for (IValue v : testList) {
-			reducedList = reducedList.delete(v);
-		}
-	}
-	
-	public void timeDeleteValueReduce(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteValueReduce();
-		}
-	}	
-
-	@Test // TODO
-	public void testDeleteIndexKeep() {
-		for (int i = 0; i < testList.length(); i++) {
-			testList.delete(i);
-		}
-	}
-	
-	public void timeDeleteIndexKeep(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteIndexKeep();
-		}
-	}	
-
-	@Test // TODO
-	public void testDeleteIndexReduceFromFront() {
-		IList reducedList = testList;
-			
-		while (!reducedList.isEmpty()) {
-			reducedList = reducedList.delete(0);
-		}
-	}
-	
-	public void timeDeleteIndexReduceFromFront(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteIndexReduceFromFront();
-		}
-	}	
-		
-	@Test
-	public void testDeleteIndexReduceFromBack() {
-		IList reducedList = testList;
-			
-		while (!reducedList.isEmpty()) {
-			reducedList = reducedList.delete(reducedList.length() - 1);
-		}
-	}
-	
-	public void timeDeleteIndexReduceFromBack(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteIndexReduceFromBack();
-		}
-	}	
 	
 	@Ignore @Test
 	public void testProduct() {
@@ -308,7 +239,18 @@ public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
 	
 	public void timeEquals(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testEquals();
+			testList.equals(testList);
+		}
+	}
+
+	@Test
+	public void testEqualsEndFalse() {
+		testList.equals(testListDifferent);
+	}
+	
+	public void timeEqualsEndFalse(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testList.equals(testListDifferent);
 		}
 	}
 	
@@ -319,12 +261,37 @@ public class CaliperAAListBenchmark extends AbstractCaliperBenchmark {
 	
 	public void timeIsEqual(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testIsEqual();
+			testList.isEqual(testList);
+		}
+	}
+	
+	@Test
+	public void testIteration() {
+		for (Iterator<IValue> iterator = testList.iterator(); iterator.hasNext();) {
+			@SuppressWarnings("unused")
+			IValue value = iterator.next();
+		}
+	}
+	
+	public void timeIteration(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testIteration();
 		}
 	}	
 	
+	@Test
+	public void testHashCode() {
+		testList.hashCode();
+	}
+	
+	public void timeHashCode(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testList.hashCode();
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAAListBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperACListBenchmark1.class, args);
 	}		
 	
 }

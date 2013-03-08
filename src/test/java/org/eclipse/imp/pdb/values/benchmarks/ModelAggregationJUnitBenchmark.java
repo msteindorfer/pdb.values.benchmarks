@@ -25,10 +25,6 @@ import org.junit.Test;
 
 public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 	
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}	
-	
 	public ModelAggregationJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 	}

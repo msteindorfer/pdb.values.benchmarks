@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperAAListWriterBenchmark extends AbstractCaliperBenchmark {
+public class CaliperACListWriterBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory; 
 	
@@ -375,7 +375,7 @@ public class CaliperAAListWriterBenchmark extends AbstractCaliperBenchmark {
 	}	
 
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAAListWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperACListWriterBenchmark.class, args);
 	}	
 	
 }

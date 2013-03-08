@@ -28,7 +28,7 @@ import clojure.lang.PersistentHashSet;
 
 import com.google.caliper.Param;
 
-public class CaliperAASetWriterSpecificBenchmark extends AbstractCaliperBenchmark {
+public class CaliperACSetWriterSpecificBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -159,7 +159,7 @@ public class CaliperAASetWriterSpecificBenchmark extends AbstractCaliperBenchmar
 	}	
 		
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAASetWriterSpecificBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperACSetWriterSpecificBenchmark.class, args);
 	}	
 	
 }

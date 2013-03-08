@@ -18,7 +18,7 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
 
-public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
+public class CaliperACSetWriterBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -121,7 +121,7 @@ public class CaliperAASetWriterBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAASetWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperACSetWriterBenchmark.class, args);
 	}	
 	
 }

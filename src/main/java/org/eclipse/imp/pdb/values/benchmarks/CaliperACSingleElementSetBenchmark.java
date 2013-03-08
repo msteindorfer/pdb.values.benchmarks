@@ -16,7 +16,7 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
 
-public class CaliperAASingleElementSetBenchmark extends AbstractCaliperBenchmark {
+public class CaliperACSingleElementSetBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory; 
 	
@@ -50,7 +50,7 @@ public class CaliperAASingleElementSetBenchmark extends AbstractCaliperBenchmark
 	}
 	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAASingleElementSetBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperACSingleElementSetBenchmark.class, args);
 	}
 	
 }

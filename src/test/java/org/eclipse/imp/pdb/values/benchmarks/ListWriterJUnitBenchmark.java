@@ -21,10 +21,6 @@ import org.junit.Test;
 
 public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}
-	
 	public ListWriterJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 	}

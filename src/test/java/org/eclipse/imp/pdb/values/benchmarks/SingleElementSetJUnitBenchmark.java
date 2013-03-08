@@ -21,17 +21,13 @@ import org.junit.runners.Parameterized.Parameters;
 
 public class SingleElementSetJUnitBenchmark extends AbstractJUnitBenchmark {
 	
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}
-	
 	public SingleElementSetJUnitBenchmark(IValueFactory valueFactory, int singleValueSetsCount) throws Exception {
 		super(valueFactory);
 		this.singleValueSetsCount = singleValueSetsCount;
 	}
 
 	@Parameters(name="{0}, {1}")
-	public static List<Object[]> getTestParameters() {
+	public static List<Object[]> getTestParameters() throws Exception {
 		List<Object[]> singleValueSetsCountValues = Arrays
 				.asList(new Object[][] { { 10 }, { 100 }, { 1_000 }, { 10_000 } });
 

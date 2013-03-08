@@ -16,15 +16,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IRelation;
+import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperAARelationBenchmark extends AbstractCaliperBenchmark {
+public class CaliperACRelationBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -41,7 +43,7 @@ public class CaliperAARelationBenchmark extends AbstractCaliperBenchmark {
 		List<String> resources = new ArrayList<>();
 		
 		try (
-				InputStream inputStream = CaliperAARelationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index_CALL.txt");
+				InputStream inputStream = CaliperACRelationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index_CALL.txt");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 			) {
 
@@ -208,8 +210,22 @@ public class CaliperAARelationBenchmark extends AbstractCaliperBenchmark {
 		}
 	}		
 	
+	@Test
+	public void testIteration() {
+		for (Iterator<IValue> iterator = testRelation.iterator(); iterator.hasNext();) {
+			@SuppressWarnings("unused")
+			IValue value = iterator.next();
+		}
+	}
+	
+	public void timeIteration(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testIteration();
+		}
+	}			
+	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAARelationBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperACRelationBenchmark.class, args);
 	}
 
 }

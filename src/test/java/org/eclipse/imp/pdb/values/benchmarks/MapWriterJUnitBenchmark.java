@@ -24,10 +24,6 @@ import org.junit.Test;
 
 public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 
-	static {
-		AbstractJUnitBenchmark.printParameters(getTestParameters());
-	}
-	
 	public MapWriterJUnitBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 	}

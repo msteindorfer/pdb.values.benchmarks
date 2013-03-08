@@ -61,7 +61,7 @@ public class CaliperACListBenchmark1 extends AbstractCaliperBenchmark {
 		
 		DUMMY = valueFactory.integer(0);
 	
-		testListDifferent = testList.delete(INDEX_END);
+		testListDifferent = testList.delete(INDEX_END); // ~ one smaller at the end
 	}	
 	
 	@Test
@@ -196,9 +196,15 @@ public class CaliperACListBenchmark1 extends AbstractCaliperBenchmark {
 		}
 	}	
 	
-	@Ignore @Test // TODO
+	@Test
 	public void testSublist() {
-		testList.sublist(0, 0);
+		testList.sublist(INDEX_FRONT + 1, INDEX_END - 1);
+	}
+	
+	public void timeSublist(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testSublist();
+		}		
 	}
 
 	@Test
@@ -226,11 +232,33 @@ public class CaliperACListBenchmark1 extends AbstractCaliperBenchmark {
 	public void testSubtract() {
 		// TODO
 	}
-	
+		
 	@Ignore @Test
-	public void testIsSubListOf() {
+	public void testReplace() {
 		// TODO
+	}	
+	
+	@Test
+	public void testIsSubListOfTrue() {
+		testListDifferent.isSubListOf(testList);
 	}
+
+	public void timeIsSubListOfTrue(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testIsSubListOfTrue();
+		}
+	}
+	
+	@Test
+	public void testIsSubListOfFalse() {
+		testList.isSubListOf(testListDifferent);
+	}
+
+	public void timeIsSubListOfFalse(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testIsSubListOfFalse();
+		}
+	}	
 	
 	@Test
 	public void testEquals() {

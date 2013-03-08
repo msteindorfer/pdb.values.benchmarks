@@ -58,12 +58,12 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 		DUMMY = valueFactory.integer(0);
 	}
 	
-	@Test // TODO
+	@Test
 	public void testContains() {
 		for (IValue v : testList) {
 			testList.contains(v);
 		}
-	}	
+	}
 
 	public void timeContains(int reps) {
 		for (int i = 0; i < reps; i++) {
@@ -71,7 +71,7 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 		}
 	}	
 	
-	@Test // TODO
+	@Test
 	public void testDeleteValueKeep() {
 		for (IValue v : testList) {
 			testList.delete(v);
@@ -84,7 +84,7 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 		}
 	}	
 
-	@Test // TODO
+	@Test
 	public void testDeleteValueReduce() {
 		IList reducedList = testList;
 		
@@ -99,7 +99,7 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 		}
 	}	
 
-	@Test // TODO
+	@Test
 	public void testDeleteIndexKeep() {
 		for (int i = 0; i < testList.length(); i++) {
 			testList.delete(i);
@@ -112,12 +112,12 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 		}
 	}	
 
-	@Test // TODO
+	@Test
 	public void testDeleteIndexReduceFromFront() {
 		IList reducedList = testList;
 			
 		while (!reducedList.isEmpty()) {
-			reducedList = reducedList.delete(0);
+			reducedList = reducedList.delete(INDEX_FRONT);
 		}
 	}
 	
@@ -126,13 +126,28 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 			testDeleteIndexReduceFromFront();
 		}
 	}	
-		
+
+	@Test
+	public void testDeleteIndexReduceFromMiddle() {
+		IList reducedList = testList;
+			
+		while (!reducedList.isEmpty()) {
+			reducedList = reducedList.delete(INDEX_MIDDLE);
+		}
+	}
+	
+	public void timeDeleteIndexReduceFromMiddle(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testDeleteIndexReduceFromMiddle();
+		}
+	}	
+	
 	@Test
 	public void testDeleteIndexReduceFromBack() {
 		IList reducedList = testList;
 			
 		while (!reducedList.isEmpty()) {
-			reducedList = reducedList.delete(reducedList.length() - 1);
+			reducedList = reducedList.delete(INDEX_END);
 		}
 	}
 	

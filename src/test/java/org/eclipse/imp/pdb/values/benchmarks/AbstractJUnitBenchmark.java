@@ -45,7 +45,7 @@ public abstract class AbstractJUnitBenchmark {
 	}
 	
 	@Parameters(name="{0}")
-	public static List<Object[]> getTestParameters() {
+	public static List<Object[]> getTestParameters() throws Exception {
 		return Arrays.asList(new Object[][] {
 //				{ org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance() },
 				{ org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance() },

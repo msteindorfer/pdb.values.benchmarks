@@ -19,24 +19,17 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
+public class CaliperAEListBenchmark2 extends AbstractCaliperBenchmark {
 
 	protected IValueFactory valueFactory; 
 	
 	@Param
 	protected ValueFactoryFactory valueFactoryFactory;
 
-	@Param({"10", "100", "1000"})
-//	@Param({"10", "100", "1000", "10000", "100000"})
+	@Param({"10", "100", "1000", "10000"})
 	protected int size;
 	
 	protected IList testList;
-	
-	protected int INDEX_FRONT;
-	protected int INDEX_MIDDLE;
-	protected int INDEX_END;
-	
-	protected IValue DUMMY;
 	
 	@Override
 	protected void setUp() throws Exception {	
@@ -50,12 +43,6 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 		}
 		
 		testList = writer.done();
-		
-		INDEX_FRONT = 0;
-		INDEX_MIDDLE = testList.length() / 2;
-		INDEX_END = Math.max(0, testList.length() - 1);
-		
-		DUMMY = valueFactory.integer(0);
 	}
 	
 	@Test
@@ -115,9 +102,9 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 	@Test
 	public void testDeleteIndexReduceFromFront() {
 		IList reducedList = testList;
-			
+		
 		while (!reducedList.isEmpty()) {
-			reducedList = reducedList.delete(INDEX_FRONT);
+			reducedList = reducedList.delete(0);
 		}
 	}
 	
@@ -130,9 +117,11 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 	@Test
 	public void testDeleteIndexReduceFromMiddle() {
 		IList reducedList = testList;
-			
+		int length = testList.length();
+		
 		while (!reducedList.isEmpty()) {
-			reducedList = reducedList.delete(INDEX_MIDDLE);
+			reducedList = reducedList.delete(length / 2);
+			length = length - 1;
 		}
 	}
 	
@@ -145,9 +134,11 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 	@Test
 	public void testDeleteIndexReduceFromBack() {
 		IList reducedList = testList;
+		int length = testList.length();
 			
 		while (!reducedList.isEmpty()) {
-			reducedList = reducedList.delete(INDEX_END);
+			reducedList = reducedList.delete(length - 1);
+			length = length - 1;
 		}
 	}
 	
@@ -158,7 +149,7 @@ public class CaliperACListBenchmark2 extends AbstractCaliperBenchmark {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACListBenchmark2.class, args);
+		com.google.caliper.Runner.main(CaliperAEListBenchmark2.class, args);
 	}		
 	
 }

@@ -28,7 +28,7 @@ import clojure.lang.PersistentHashSet;
 
 import com.google.caliper.Param;
 
-public class CaliperACSetWriterSpecificBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAESetWriterSpecificBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -36,7 +36,7 @@ public class CaliperACSetWriterSpecificBenchmark extends AbstractCaliperBenchmar
 	private ValueFactoryFactory valueFactoryFactory;
 
 	@Param({"10", "100", "1000", "10000"}) 
-	int testSetSize;
+	int size;
 	
 	private ISet testSet;
 	
@@ -47,7 +47,7 @@ public class CaliperACSetWriterSpecificBenchmark extends AbstractCaliperBenchmar
 		// TODO: parameterize test data generation
 		ISetWriter writer = valueFactory.setWriter();
 		
-		for (int i = testSetSize; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
 		}
 		
@@ -138,9 +138,9 @@ public class CaliperACSetWriterSpecificBenchmark extends AbstractCaliperBenchmar
 		String sample = "ABCDEFG";
 		
 		for (int i = 0; i < reps; i++) {
-			String[] strings = new String[testSetSize];
+			String[] strings = new String[size];
 			
-			for (int j = 0; j < testSetSize; j++) {
+			for (int j = 0; j < size; j++) {
 				strings[j] = new String(sample);
 			}
 		}
@@ -150,16 +150,16 @@ public class CaliperACSetWriterSpecificBenchmark extends AbstractCaliperBenchmar
 		String sample = "ABCDEFG";
 		
 		for (int i = 0; i < reps; i++) {
-			String[] strings = new String[testSetSize];
+			String[] strings = new String[size];
 			
-			for (int j = 0; j < testSetSize; j++) {
+			for (int j = 0; j < size; j++) {
 				strings[j] = new String(sample).intern();
 			}
 		}
 	}	
 		
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACSetWriterSpecificBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAESetWriterSpecificBenchmark.class, args);
 	}	
 	
 }

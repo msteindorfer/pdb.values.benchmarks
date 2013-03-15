@@ -16,14 +16,14 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
 
-public class CaliperACSingleElementSetBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAESingleElementSetBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory; 
 	
 	private ISet[] singleValueSets;
 
 	@Param({"10", "100", "1000", "10000"}) 
-	int singleValueSetsCount;
+	int size;
 	
 	@Param
 	public ValueFactoryFactory valueFactoryFactory;
@@ -32,7 +32,7 @@ public class CaliperACSingleElementSetBenchmark extends AbstractCaliperBenchmark
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance();
 		
-		singleValueSets = new ISet[singleValueSetsCount];
+		singleValueSets = new ISet[size];
 		for (int i = 0; i < singleValueSets.length; i++) {
 			singleValueSets[i] = valueFactory.set(valueFactory.integer(i));
 		}
@@ -50,7 +50,7 @@ public class CaliperACSingleElementSetBenchmark extends AbstractCaliperBenchmark
 	}
 	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACSingleElementSetBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAESingleElementSetBenchmark.class, args);
 	}
 	
 }

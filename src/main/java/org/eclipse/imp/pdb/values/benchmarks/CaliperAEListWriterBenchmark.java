@@ -21,12 +21,15 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperACListWriterBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAEListWriterBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory; 
 	
 	@Param
 	private ValueFactoryFactory valueFactoryFactory;
+	
+	@Param({"10", "100", "1000", "10000"})
+	protected int size;	
 	
 	private IList testList;	
 	
@@ -37,7 +40,7 @@ public class CaliperACListWriterBenchmark extends AbstractCaliperBenchmark {
 		// TODO: parameterize test data generation
 		IListWriter writer = valueFactory.listWriter();
 		
-		for (int i = 10_000; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
 		}
 		
@@ -375,7 +378,7 @@ public class CaliperACListWriterBenchmark extends AbstractCaliperBenchmark {
 	}	
 
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACListWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAEListWriterBenchmark.class, args);
 	}	
 	
 }

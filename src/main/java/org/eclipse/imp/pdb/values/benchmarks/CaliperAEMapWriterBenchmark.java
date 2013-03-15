@@ -24,13 +24,16 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperACMapWriterBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAEMapWriterBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
 	@Param
 	private ValueFactoryFactory valueFactoryFactory;
 
+	@Param({"10", "100", "1000", "10000"})
+	protected int size;	
+	
 	private static IMap testMap;	
 	private static Iterable<ITuple> testTuples;
 	
@@ -42,7 +45,7 @@ public class CaliperACMapWriterBenchmark extends AbstractCaliperBenchmark {
 		IMapWriter writer = valueFactory.mapWriter();
 		Collection<ITuple> newTuples = new java.util.LinkedList<>();
 		
-		for (int i = 10_000; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			ITuple newTuple = valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i));
 			writer.insert(newTuple);
 			newTuples.add(newTuple);
@@ -197,7 +200,7 @@ public class CaliperACMapWriterBenchmark extends AbstractCaliperBenchmark {
 	}		
 
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACMapWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAEMapWriterBenchmark.class, args);
 	}	
 	
 }

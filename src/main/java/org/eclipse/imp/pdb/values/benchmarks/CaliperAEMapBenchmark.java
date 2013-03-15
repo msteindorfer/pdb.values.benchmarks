@@ -10,17 +10,23 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAEMapBenchmark extends AbstractCaliperBenchmark {
 
 	private IValueFactory valueFactory; 
 	
 	@Param
 	private ValueFactoryFactory valueFactoryFactory;	
+
+	@Param({"10", "100", "1000", "10000"})
+	protected int size;	
 	
 	private IMap testMap;
 	
+	private IValue VALUE_EXISTING;
+	
 	private IValue VALUE_NOT_EXISTING;
 	
+	// TODO: parameterize by map size
 	@Override
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
@@ -28,13 +34,14 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 		// TODO: parameterize test data generation
 		IMapWriter writer = valueFactory.mapWriter();
 		
-		for (int i = 10_000; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i)));
 		}
 		
-		VALUE_NOT_EXISTING = valueFactory.integer(12000);
-		
 		testMap = writer.done();
+		
+		VALUE_EXISTING = valueFactory.integer(size - 1);
+		VALUE_NOT_EXISTING = valueFactory.integer(size + 1);
 	}
 	
 	@Test
@@ -74,7 +81,7 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 	
 	@Test
 	public void testContainsKey() {
-		testMap.containsKey(VALUE_NOT_EXISTING);
+		testMap.containsKey(VALUE_EXISTING);
 	}
 	
 	public void timeContainsKey(int reps) {
@@ -84,13 +91,35 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 	}	
 
 	@Test
+	public void testContainsKeyNotExisting() {
+		testMap.containsKey(VALUE_NOT_EXISTING);
+	}
+	
+	public void timeContainsKeyNotExisting(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testContainsKeyNotExisting();
+		}
+	}	
+
+	@Test
 	public void testContainsValue() {
-		testMap.containsValue(VALUE_NOT_EXISTING);
+		testMap.containsValue(VALUE_EXISTING);
 	}
 	
 	public void timeContainsValue(int reps) {
 		for (int i = 0; i < reps; i++) {
 			testContainsValue();
+		}
+	}	
+	
+	@Test
+	public void testContainsValueNotExisting() {
+		testMap.containsValue(VALUE_NOT_EXISTING);
+	}
+	
+	public void timeContainsValueNotExisting(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testContainsValueNotExisting();
 		}
 	}	
 
@@ -230,7 +259,7 @@ public class CaliperACMapBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACMapBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAEMapBenchmark.class, args);
 	}	
 	
 }

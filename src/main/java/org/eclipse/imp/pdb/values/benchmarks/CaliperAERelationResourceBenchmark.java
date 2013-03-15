@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperACRelationBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAERelationResourceBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -43,7 +43,7 @@ public class CaliperACRelationBenchmark extends AbstractCaliperBenchmark {
 		List<String> resources = new ArrayList<>();
 		
 		try (
-				InputStream inputStream = CaliperACRelationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index_CALL.txt");
+				InputStream inputStream = CaliperAERelationResourceBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index_CALL.txt");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 			) {
 
@@ -225,7 +225,7 @@ public class CaliperACRelationBenchmark extends AbstractCaliperBenchmark {
 	}			
 	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACRelationBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAERelationResourceBenchmark.class, args);
 	}
 
 }

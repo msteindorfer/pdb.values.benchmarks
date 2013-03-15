@@ -18,7 +18,7 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
 
-public class CaliperACSetWriterBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAESetWriterBenchmark extends AbstractCaliperBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -26,7 +26,7 @@ public class CaliperACSetWriterBenchmark extends AbstractCaliperBenchmark {
 	private ValueFactoryFactory valueFactoryFactory;
 
 	@Param({"10", "100", "1000", "10000"}) 
-	int testSetSize;
+	int size;
 	
 	private ISet testSet;
 	private ISetWriter testWriter;
@@ -38,7 +38,7 @@ public class CaliperACSetWriterBenchmark extends AbstractCaliperBenchmark {
 		// TODO: parameterize test data generation
 		ISetWriter writer = valueFactory.setWriter();
 		
-		for (int i = testSetSize; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
 		}
 		
@@ -47,7 +47,7 @@ public class CaliperACSetWriterBenchmark extends AbstractCaliperBenchmark {
 		
 		testWriter = valueFactory.setWriter();
 		
-		for (int i = testSetSize; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			testWriter.insert(valueFactory.integer(i));
 		}
 	}
@@ -121,7 +121,7 @@ public class CaliperACSetWriterBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACSetWriterBenchmark.class, args);
+		com.google.caliper.Runner.main(CaliperAESetWriterBenchmark.class, args);
 	}	
 	
 }

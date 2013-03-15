@@ -22,15 +22,14 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperACListBenchmark1 extends AbstractCaliperBenchmark {
+public class CaliperAEListBenchmark1 extends AbstractCaliperBenchmark {
 		
 	protected IValueFactory valueFactory; 
 	
 	@Param
 	protected ValueFactoryFactory valueFactoryFactory;
 
-	@Param({"10", "100", "1000"})
-//	@Param({"10", "100", "1000", "10000", "100000"})
+	@Param({"10", "100", "1000", "10000"})
 	protected int size;
 	
 	protected IList testList;
@@ -319,7 +318,7 @@ public class CaliperACListBenchmark1 extends AbstractCaliperBenchmark {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperACListBenchmark1.class, args);
+		com.google.caliper.Runner.main(CaliperAEListBenchmark1.class, args);
 	}		
 	
 }

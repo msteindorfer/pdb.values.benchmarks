@@ -14,7 +14,7 @@ package org.eclipse.imp.pdb.values.benchmarks;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.type.TypeStore;
 
-abstract class AbstractCaliperBenchmark extends com.google.caliper.SimpleBenchmark {
+abstract class AbstractCaliperBenchmark extends com.google.caliper.Benchmark {
 
 	protected final TypeStore typeStore = new TypeStore();
 	

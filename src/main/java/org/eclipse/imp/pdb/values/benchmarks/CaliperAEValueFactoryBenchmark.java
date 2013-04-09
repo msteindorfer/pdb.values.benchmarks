@@ -177,7 +177,7 @@ public class CaliperAEValueFactoryBenchmark extends AbstractCaliperBenchmark {
 	}	
 		
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAEValueFactoryBenchmark.class, args);
+		com.google.caliper.runner.CaliperMain.main(CaliperAEValueFactoryBenchmark.class, args);
 	}	
 	
 }

@@ -225,7 +225,7 @@ public class CaliperAERelationResourceBenchmark extends AbstractCaliperBenchmark
 	}			
 	
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAERelationResourceBenchmark.class, args);
+		com.google.caliper.runner.CaliperMain.main(CaliperAERelationResourceBenchmark.class, args);
 	}
 
 }

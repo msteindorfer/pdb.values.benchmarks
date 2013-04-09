@@ -121,7 +121,7 @@ public class CaliperAESetWriterBenchmark extends AbstractCaliperBenchmark {
 	}
 
 	public static void main(String[] args) throws Exception {
-		com.google.caliper.Runner.main(CaliperAESetWriterBenchmark.class, args);
+		com.google.caliper.runner.CaliperMain.main(CaliperAESetWriterBenchmark.class, args);
 	}	
 	
 }

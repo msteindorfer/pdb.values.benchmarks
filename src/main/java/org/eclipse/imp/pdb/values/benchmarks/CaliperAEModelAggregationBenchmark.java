@@ -24,6 +24,8 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 
 import com.google.caliper.Param;
+import com.google.caliper.api.BeforeRep;
+import com.google.caliper.api.Macrobenchmark;
 
 public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark {
 
@@ -32,10 +34,8 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 	@Param
 	private ValueFactoryFactory valueFactoryFactory;
 		
-	@SuppressWarnings("rawtypes")
-	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
-	
-	private static IValue[] constructorValues;
+//	@SuppressWarnings("rawtypes")
+//	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
 	
 	private static String[] relationNames = new String[] { 
 			"methodBodies",
@@ -54,8 +54,11 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 //			"declaredTopTypes" // ISet
 	};
 	
-	private static IRelation[] unionRelations;
+	private IValue[] constructorValues;
+
+	private IRelation[] unionRelations;
 		
+	@BeforeRep
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
 		String resourcePrefixRelativeToClass = "model-aggregation";
 		List<String> resources = new ArrayList<>();
@@ -82,11 +85,11 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance(); 
 		
-		// detect change of valueFactory
-		if (!lastValueFactoryClass.equals(valueFactory.getClass())) {
-			setUpStaticValueFactorySpecificTestData();
-			lastValueFactoryClass = valueFactory.getClass();
-		}
+//		// detect change of valueFactory
+//		if (!lastValueFactoryClass.equals(valueFactory.getClass())) {
+//			setUpStaticValueFactorySpecificTestData();
+//			lastValueFactoryClass = valueFactory.getClass();
+//		}
 	}		
 	
 	private IValue[] readValuesFromFiles(Class<?> clazz, List<String> resources) throws Exception {
@@ -101,19 +104,9 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 		}
 		
 		return values;
-	}	
-	
-	public Object timeUnionRelations(int reps) throws Exception {
-		Object dummy = null;
-		
-		for (int i = 0; i < reps; i++) 
-			dummy = unionRelations();
-		
-		return dummy;
-		
-//		return unionRelations();
 	}
 	
+	@Macrobenchmark
 	public IRelation[] unionRelations() throws Exception {
 		
 		// initialize
@@ -138,6 +131,7 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 		return relations;
 	}
 
+	@Macrobenchmark
 	public IRelation[] subtractRelations() throws Exception {
 		
 		// initialize
@@ -158,18 +152,8 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 				
 		return relations;
 	}
-	
-	public Object timeSubtractRelations(int reps) throws Exception {
-		Object dummy = null;
-		
-		for (int i = 0; i < reps; i++) 
-			dummy = subtractRelations();
-		
-		return dummy;
-//		
-//		return subtractRelations();
-	}	
 
+	@Macrobenchmark
 	public IRelation[] intersectRelations() throws Exception {
 		
 		// initialize
@@ -189,18 +173,7 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 		}
 				
 		return relations;
-	}
-	
-	public Object timeIntersectRelations(int reps) throws Exception {
-		Object dummy = null;
-		
-		for (int i = 0; i < reps; i++) 
-			dummy = intersectRelations();
-		
-		return dummy;
-//		
-//		return intersectRelations();
-	}		
+	}	
 	
 	public static void main(String[] args) throws Exception {
 		com.google.caliper.runner.CaliperMain.main(CaliperAEModelAggregationBenchmark.class, args);

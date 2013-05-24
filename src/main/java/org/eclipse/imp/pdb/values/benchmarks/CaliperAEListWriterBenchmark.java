@@ -198,62 +198,8 @@ public class CaliperAEListWriterBenchmark extends AbstractCaliperBenchmark {
 		for (int i = 0; i < reps; i++) {
 			testAppendAll();
 		}
-	}	
-			
-	@Test
-	public void testDeleteValueReduce() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-		
-		for (IValue v : testList) {
-			writer.delete(v);
-		}
-		
-		writer.done();		
-	}	
-
-	public void timeDeleteValueReduce(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteValueReduce();
-		}
-	}	
-	
-	@Test
-	public void testDeleteIndexReduceFromFront() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-			
-		while (writer.size() != 0) {
-			writer.delete(0);
-		}
-		
-		writer.done();		
 	}
-	
-	public void timeDeleteIndexReduceFromFront(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteIndexReduceFromFront();
-		}
-	}	
-	
-	@Test
-	public void testDeleteIndexReduceFromBack() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-			
-		while (writer.size() != 0) {
-			writer.delete(writer.size() - 1);
-		}
 		
-		writer.done();		
-	}
-	
-	public void timeDeleteIndexReduceFromBack(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDeleteIndexReduceFromBack();
-		}
-	}	
-	
 	@Test
 	public void testInsert() {
 		IListWriter writer = valueFactory.listWriter();
@@ -318,25 +264,7 @@ public class CaliperAEListWriterBenchmark extends AbstractCaliperBenchmark {
 		for (int i = 0; i < reps; i++) {
 			testInsertAllAndIndividuallySame();
 		}
-	}		
-	
-	@Test
-	public void testDelete() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-		
-		for (IValue v : testList) {
-			writer.delete(v);
-		}
-		
-		writer.done();
 	}
-	
-	public void timeDelete(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testDelete();
-		}
-	}		
 	
 	@Test
 	public void testInsertAndCheckSize() {
@@ -354,28 +282,7 @@ public class CaliperAEListWriterBenchmark extends AbstractCaliperBenchmark {
 		for (int i = 0; i < reps; i++) {
 			testInsertAndCheckSize();
 		}
-	}			
-	
-	@Test
-	public void testInsertAndDelete() {
-		IListWriter writer = valueFactory.listWriter();
-		
-		for (IValue v : testList) {
-			writer.insert(v);
-		}
-
-		for (IValue v : testList) {
-			writer.delete(v);
-		}
-				
-		writer.done();
 	}
-	
-	public void timeInsertAndDelete(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testInsertAndDelete();
-		}
-	}	
 
 	public static void main(String[] args) throws Exception {
 		com.google.caliper.runner.CaliperMain.main(CaliperAEListWriterBenchmark.class, args);

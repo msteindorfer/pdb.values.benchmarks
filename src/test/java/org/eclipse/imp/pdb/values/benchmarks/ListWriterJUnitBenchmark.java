@@ -147,43 +147,6 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.appendAll(testList);
 		
 		writer.done();
-	}	
-	
-			
-	@Test
-	public void timeDeleteValueReduce() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-		
-		for (IValue v : testList) {
-			writer.delete(v);
-		}
-		
-		writer.done();		
-	}	
-
-	@Test
-	public void timeDeleteIndexReduceFromFront() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-			
-		while (writer.size() != 0) {
-			writer.delete(0);
-		}
-		
-		writer.done();		
-	}	
-		
-	@Test
-	public void timeDeleteIndexReduceFromBack() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-			
-		while (writer.size() != 0) {
-			writer.delete(writer.size() - 1);
-		}
-		
-		writer.done();		
 	}
 	
 	@Test
@@ -227,18 +190,6 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		
 		writer.done();
 	}	
-		
-	@Test
-	public void timeDelete() {
-		IListWriter writer = valueFactory.listWriter();
-		writer.insertAll(testList);
-		
-		for (IValue v : testList) {
-			writer.delete(v);
-		}
-		
-		writer.done();
-	}
 	
 	@Test
 	public void timeInsertAndCheckSize() {
@@ -252,19 +203,4 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}
 	
-	@Test
-	public void timeInsertAndDelete() {
-		IListWriter writer = valueFactory.listWriter();
-		
-		for (IValue v : testList) {
-			writer.insert(v);
-		}
-
-		for (IValue v : testList) {
-			writer.delete(v);
-		}
-				
-		writer.done();
-	}
-
 }

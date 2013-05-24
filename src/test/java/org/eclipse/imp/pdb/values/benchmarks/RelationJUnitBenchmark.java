@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.imp.pdb.facts.IRelation;
+import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.junit.Ignore;
@@ -30,7 +30,7 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	private String relationResource;
-	private static IRelation testRelation;
+	private static ISet testRelation;
 
 	@Parameters(name="{0}, {1}")
 	public static List<Object[]> getTestParameters() throws Exception {
@@ -52,7 +52,7 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 		try (InputStream inputStream = RelationJUnitBenchmark.class.getResourceAsStream(relationResource)) {
 			
 			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
-			testRelation = (IRelation) binaryReader.deserialize();
+			testRelation = (ISet) binaryReader.deserialize();
 		}
 	}
 	
@@ -63,56 +63,56 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 	
 	@Test
 	public void timeArity() {
-		testRelation.arity();
+		testRelation.asRelation().arity();
 	}
 	
 	@Test
 	public void timeClosure() {
-		testRelation.closure();
+		testRelation.asRelation().closure();
 	}
 	
 	@Test	
 	public void timeClosureStar() {
-		testRelation.closureStar();
+		testRelation.asRelation().closureStar();
 	}
 	
 	@Test
 	public void timeCarrier() {
-		testRelation.carrier();
+		testRelation.asRelation().carrier();
 	}
 	
 	@Test
 	public void timeFieldTypes() {
-		testRelation.getFieldTypes();
+		testRelation.getType().getFieldTypes();
 	}
 	
 	@Test
 	public void timeDomain() {
-		testRelation.domain();
+		testRelation.asRelation().domain();
 	}	
 
 	@Test
 	public void timeRange() {
-		testRelation.range();
+		testRelation.asRelation().range();
 	}	
 
 	@Test
-	public void timeSelect() {
-		testRelation.select();
+	public void timeProject() {
+		testRelation.asRelation().project();
 	}		
 	
 	@Ignore @Test
 	/*
-	 * selectByFieldNames throws an Exception if the underlying relation does
+	 * projectByFieldNames throws an Exception if the underlying relation does
 	 * not have field names. Therefore this benchmark is ignored for the moment.
 	 */
-	public void timeSelectByFieldNames() {
-		testRelation.selectByFieldNames();
+	public void timeProjectByFieldNames() {
+		testRelation.asRelation().projectByFieldNames();
 	}
 	
 	@Test
 	public void timeCompose() {
-		testRelation.compose(testRelation);
+		testRelation.asRelation().compose(testRelation.asRelation());
 	}		
 
 	

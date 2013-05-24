@@ -2,24 +2,22 @@
 export ALLOCATION_JAR=~/Temporary/allocation.jar
 export BENCHMARK_JAR=target/org.eclipse.imp.pdb.values.benchmarks-0.0.1-SNAPSHOT.jar
 #export BENCHMARK_RUNNER=com.google.caliper.Runner
+export JAVA_ARGS=-Xmx12g
 
 export OBJECT_EXPLORER_JAR=~/Temporary/object-explorer.jar
 
-# leave empty (instead of YES) for using new API
-export USE_LEGACY_CALIPER=YES
+java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEModelAggregationBenchmark $*
 
-#java -javaagent:$OBJECT_EXPLORER_JAR -cp $BENCHMARK_JAR org.eclipse.imp.pdb.values.benchmarks.CaliperAEMapBenchmark $*
-
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEValueFactoryBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetWriterBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetWriterSpecificBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEModelAggregationBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESingleElementSetBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAERelationBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAERelationResourceBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEMapBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEMapWriterBenchmark $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEListBenchmark1 $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEListBenchmark2 $*
-java -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEListWriterBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEValueFactoryBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetWriterBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetWriterSpecificBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEModelAggregationBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESingleElementSetBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAERelationBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAERelationResourceBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEMapBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEMapWriterBenchmark $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEListBenchmark1 $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEListBenchmark2 $*
+# java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEListWriterBenchmark $*

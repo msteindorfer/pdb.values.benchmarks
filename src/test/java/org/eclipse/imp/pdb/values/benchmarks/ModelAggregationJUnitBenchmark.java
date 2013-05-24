@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
-import org.eclipse.imp.pdb.facts.IRelation;
+import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
@@ -48,7 +48,7 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 //			"declaredTopTypes" // ISet
 	};
 	
-	private static IRelation[] unionRelations;
+	private static ISet[] unionRelations;
 		
 	@Override
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
@@ -78,10 +78,10 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 		return values;
 	}
 	
-	public IRelation[] unionRelations() throws Exception {
+	public ISet[] unionRelations() throws Exception {
 		
 		// initialize
-		IRelation[] relations = new IRelation[relationNames.length];
+		ISet[] relations = new ISet[relationNames.length];
 		for (int i = 0; i < relations.length; i++) {
 			relations[i] = valueFactory.relation();
 		}
@@ -92,8 +92,8 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
-				IRelation one = relations[i];
-				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				ISet one = relations[i];
+				ISet two = (ISet) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.union(two); 
 			}		
@@ -107,10 +107,10 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 		unionRelations();
 	}	
 	
-	public IRelation[] subtractRelations() throws Exception {
+	public ISet[] subtractRelations() throws Exception {
 		
 		// initialize
-		IRelation[] relations = unionRelations;
+		ISet[] relations = unionRelations;
 			
 		// compute / accumulate		
 		for (IValue value : constructorValues) {
@@ -118,8 +118,8 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
-				IRelation one = relations[i];
-				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				ISet one = relations[i];
+				ISet two = (ISet) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.subtract(two); 
 			}		
@@ -133,10 +133,10 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 		subtractRelations();
 	}	
 
-	public IRelation[] intersectRelations() throws Exception {
+	public ISet[] intersectRelations() throws Exception {
 		
 		// initialize
-		IRelation[] relations = unionRelations;
+		ISet[] relations = unionRelations;
 				
 		// compute / accumulate
 		for (IValue value : constructorValues) {
@@ -144,8 +144,8 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
-				IRelation one = relations[i];
-				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				ISet one = relations[i];
+				ISet two = (ISet) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.intersect(two); 
 			}		

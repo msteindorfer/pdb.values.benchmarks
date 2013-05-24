@@ -11,8 +11,8 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
-import org.eclipse.imp.pdb.facts.IRelation;
-import org.eclipse.imp.pdb.facts.IRelationWriter;
+import org.eclipse.imp.pdb.facts.ISet;
+import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
@@ -27,13 +27,13 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	@Param({"10", "100", "1000", "10000"})
 	protected int size;	
 	
-	private IRelation testSet;
+	private ISet testSet;
 	
 	@Override
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		
-		IRelationWriter writer = valueFactory.relationWriter();
+		ISetWriter writer = valueFactory.relationWriter();
 		
 		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
@@ -53,7 +53,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeArity(long reps) {
 		int result = 0;
 		for (long r = 0; r < reps; r++) {
-			result = testSet.arity();
+			result = testSet.asRelation().arity();
 		}
 		return result;
 	}
@@ -61,7 +61,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeClosure(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.closure();
+			result = testSet.asRelation().closure();
 		}
 		return result;
 	}
@@ -69,7 +69,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeCompose(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.compose(testSet);
+			result = testSet.asRelation().compose(testSet.asRelation());
 		}
 		return result;
 	}		
@@ -77,7 +77,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeClosureStar(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.closureStar();
+			result = testSet.asRelation().closureStar();
 		}
 		return result;
 	}
@@ -85,7 +85,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeCarrier(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.carrier();
+			result = testSet.asRelation().carrier();
 		}
 		return result;
 	}
@@ -93,7 +93,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeFieldTypes(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.getFieldTypes();
+			result = testSet.getType().getFieldTypes();
 		}
 		return result;
 	}
@@ -101,7 +101,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeDomain(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.domain();
+			result = testSet.asRelation().domain();
 		}
 		return result;
 	}	
@@ -109,23 +109,23 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	public Object timeRange(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.range();
+			result = testSet.asRelation().range();
 		}
 		return result;
 	}	
 
-	public Object timeSelect(int reps) {
+	public Object timeProject(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.select();
+			result = testSet.asRelation().project();
 		}
 		return result;
 	}		
 	
-	public Object timeSelectByFieldNames(int reps) {
+	public Object timeProjectByFieldNames(int reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.selectByFieldNames();
+			result = testSet.asRelation().projectByFieldNames();
 		}
 		return result;
 	}

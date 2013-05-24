@@ -86,33 +86,7 @@ public class CaliperAESetWriterBenchmark extends AbstractCaliperBenchmark {
 			writer.insertAll(testSet);
 			writer.done();
 		}
-	}	
-	
-	public void timeDeleteWithInference(int runs) {
-		for (int i = 0; i < runs; i++) {
-			ISetWriter writer = valueFactory.setWriter();
-			writer.insertAll(testSet);
-		
-			for (IValue v : testSet) {
-				writer.delete(v);
-			}
-		
-			writer.done();
-		}
 	}
-
-	public void timeDelete(int runs) {
-		for (int i = 0; i < runs; i++) {
-			ISetWriter writer = valueFactory.setWriter(testSet.getElementType());
-			writer.insertAll(testSet);
-		
-			for (IValue v : testSet) {
-				writer.delete(v);
-			}
-		
-			writer.done();
-		}
-	}	
 	
 	public void timeSize(long runs) {
 		for (long i = 0; i < runs; i++) {

@@ -103,19 +103,6 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		}
 		
 		writer.done();
-	}	
-		
-	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
-	public void timeDelete() {
-		ISetWriter writer = valueFactory.setWriter();
-		writer.insertAll(testSet);
-		
-		for (IValue v : testSet) {
-			writer.delete(v);
-		}
-		
-		writer.done();
 	}
 	
 	@Test
@@ -135,22 +122,6 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeSize() {
 		testWriter.size();
-	}
-		
-	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
-	public void timeInsertAndDelete() {
-		ISetWriter writer = valueFactory.setWriter();
-		
-		for (IValue v : testSet) {
-			writer.insert(v);
-		}
-
-		for (IValue v : testSet) {
-			writer.delete(v);
-		}
-				
-		writer.done();
 	}
 
 }

@@ -18,13 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IConstructor;
-import org.eclipse.imp.pdb.facts.IRelation;
+import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 
 import com.google.caliper.Param;
-import com.google.caliper.api.BeforeRep;
 import com.google.caliper.api.Macrobenchmark;
 
 public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark {
@@ -34,8 +33,8 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 	@Param
 	private ValueFactoryFactory valueFactoryFactory;
 		
-//	@SuppressWarnings("rawtypes")
-//	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
+	@SuppressWarnings("rawtypes")
+	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
 	
 	private static String[] relationNames = new String[] { 
 			"methodBodies",
@@ -54,11 +53,10 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 //			"declaredTopTypes" // ISet
 	};
 	
-	private IValue[] constructorValues;
+	private static IValue[] constructorValues;
 
-	private IRelation[] unionRelations;
+	private static ISet[] unionRelations;
 		
-	@BeforeRep
 	public void setUpStaticValueFactorySpecificTestData() throws Exception {
 		String resourcePrefixRelativeToClass = "model-aggregation";
 		List<String> resources = new ArrayList<>();
@@ -84,13 +82,13 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 	@Override
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance(); 
-		
-//		// detect change of valueFactory
-//		if (!lastValueFactoryClass.equals(valueFactory.getClass())) {
-//			setUpStaticValueFactorySpecificTestData();
-//			lastValueFactoryClass = valueFactory.getClass();
-//		}
-	}		
+
+		// detect change of valueFactory
+		if (!lastValueFactoryClass.equals(valueFactory.getClass())) {
+			setUpStaticValueFactorySpecificTestData();
+			lastValueFactoryClass = valueFactory.getClass();
+		}
+	}
 	
 	private IValue[] readValuesFromFiles(Class<?> clazz, List<String> resources) throws Exception {
 		IValue[] values = new IValue[resources.size()];
@@ -107,10 +105,10 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 	}
 	
 	@Macrobenchmark
-	public IRelation[] unionRelations() throws Exception {
+	public ISet[] unionRelations() throws Exception {
 		
 		// initialize
-		IRelation[] relations = new IRelation[relationNames.length];
+		ISet[] relations = new ISet[relationNames.length];
 		for (int i = 0; i < relations.length; i++) {
 			relations[i] = valueFactory.relation();
 		}
@@ -121,8 +119,8 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
-				IRelation one = relations[i];
-				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				ISet one = relations[i];
+				ISet two = (ISet) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.union(two); 
 			}		
@@ -132,10 +130,10 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 	}
 
 	@Macrobenchmark
-	public IRelation[] subtractRelations() throws Exception {
+	public ISet[] subtractRelations() throws Exception {
 		
 		// initialize
-		IRelation[] relations = unionRelations;
+		ISet[] relations = unionRelations;
 			
 		// compute / accumulate		
 		for (IValue value : constructorValues) {
@@ -143,8 +141,8 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
-				IRelation one = relations[i];
-				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				ISet one = relations[i];
+				ISet two = (ISet) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.subtract(two); 
 			}		
@@ -154,10 +152,10 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 	}
 
 	@Macrobenchmark
-	public IRelation[] intersectRelations() throws Exception {
+	public ISet[] intersectRelations() throws Exception {
 		
 		// initialize
-		IRelation[] relations = unionRelations;
+		ISet[] relations = unionRelations;
 				
 		// compute / accumulate
 		for (IValue value : constructorValues) {
@@ -165,8 +163,8 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
-				IRelation one = relations[i];
-				IRelation two = (IRelation) constructor.getAnnotation(relationName);
+				ISet one = relations[i];
+				ISet two = (ISet) constructor.getAnnotation(relationName);
 				
 				relations[i] = one.intersect(two); 
 			}		

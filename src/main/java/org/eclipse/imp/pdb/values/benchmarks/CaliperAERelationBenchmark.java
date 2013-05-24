@@ -33,7 +33,7 @@ public class CaliperAERelationBenchmark extends AbstractCaliperBenchmark {
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		
-		ISetWriter writer = valueFactory.relationWriter();
+		ISetWriter writer = valueFactory.setWriter();
 		
 		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));

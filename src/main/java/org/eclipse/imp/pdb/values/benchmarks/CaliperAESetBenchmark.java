@@ -65,7 +65,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		SET1_INTERRELATED = valueFactory.set(VALUE_EXISTING);
 	}
 
-	public Object timeGetElementType(int reps) {
+	public Object timeGetElementType(long reps) {
 		Object result = null;
 		for (int i = 0; i < reps; i++) {
 			result = testSet.getElementType();
@@ -95,7 +95,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		testSet.contains(VALUE_EXISTING);
 	}
 	
-	public void timeContainsValue(int reps) {
+	public void timeContainsValue(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testContainsValue();
 		}
@@ -106,13 +106,13 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		testSet.contains(VALUE_NOT_EXISTING);
 	}
 	
-	public void timeContainsValueNotExisting(int reps) {
+	public void timeContainsValueNotExisting(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testContainsValueNotExisting();
 		}
 	}
 	
-	public Object timeInsert(int reps) {
+	public Object timeInsert(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.insert(VALUE_NOT_EXISTING);
@@ -120,7 +120,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}
 
-	public Object timeInsertExisting(int reps) {
+	public Object timeInsertExisting(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.insert(VALUE_EXISTING);
@@ -128,7 +128,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 	
-	public Object timeDelete(int reps) {
+	public Object timeDelete(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.delete(VALUE_EXISTING);
@@ -136,7 +136,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}
 	
-	public Object timeDeleteNonExisting(int reps) {
+	public Object timeDeleteNonExisting(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.delete(VALUE_NOT_EXISTING);
@@ -146,7 +146,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 	
 	/* SET OPERATIONS */
 	
-	public Object timeUnionSelf(int reps) {
+	public Object timeUnionSelf(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.union(testSet);
@@ -154,7 +154,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}
 
-	public Object timeUnionDifferent(int reps) {
+	public Object timeUnionDifferent(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.union(testSetDifferent);
@@ -162,7 +162,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 
-	public Object timeUnionSet1Disjoint(int reps) {
+	public Object timeUnionSet1Disjoint(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.union(SET1_DISJOINT);
@@ -170,7 +170,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 
-	public Object timeUnionSet1Interrelated(int reps) {
+	public Object timeUnionSet1Interrelated(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.union(SET1_INTERRELATED);
@@ -178,7 +178,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 		
-	public Object timeIntersectSelf(int reps) {
+	public Object timeIntersectSelf(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.intersect(testSet);
@@ -186,7 +186,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 
-	public Object timeIntersectDifferent(int reps) {
+	public Object timeIntersectDifferent(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.intersect(testSetDifferent);
@@ -194,7 +194,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 
-	public Object timeIntersectSet1Disjoint(int reps) {
+	public Object timeIntersectSet1Disjoint(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.intersect(SET1_DISJOINT);
@@ -202,7 +202,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 
-	public Object timeIntersectSet1Interrelated(int reps) {
+	public Object timeIntersectSet1Interrelated(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.intersect(SET1_INTERRELATED);
@@ -210,7 +210,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 	
-	public Object timeSubstractSelf(int reps) {
+	public Object timeSubstractSelf(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.subtract(testSet);
@@ -218,7 +218,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}		
 
-	public Object timeSubstractDifferent(int reps) {
+	public Object timeSubstractDifferent(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.subtract(testSetDifferent);
@@ -226,7 +226,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}
 	
-	public Object timeSubtractSet1Disjoint(int reps) {
+	public Object timeSubtractSet1Disjoint(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.subtract(SET1_DISJOINT);
@@ -234,7 +234,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 
-	public Object timeSubtractSet1Interrelated(int reps) {
+	public Object timeSubtractSet1Interrelated(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
 			result = testSet.subtract(SET1_INTERRELATED);
@@ -242,44 +242,44 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		return result;
 	}	
 		
-	public Object timeProductSelf(int reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.product(testSet);
-		}
-		return result;
-	}
-	
-	public Object timeProductDifferent(int reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.product(testSetDifferent);
-		}
-		return result;
-	}			
-	
-	public Object timeProductSet1Disjoint(int reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.product(SET1_DISJOINT);
-		}
-		return result;
-	}	
-
-	public Object timeProductSet1Interrelated(int reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.product(SET1_INTERRELATED);
-		}
-		return result;
-	}	
+//	public Object timeProductSelf(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.product(testSet);
+//		}
+//		return result;
+//	}
+//	
+//	public Object timeProductDifferent(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.product(testSetDifferent);
+//		}
+//		return result;
+//	}			
+//	
+//	public Object timeProductSet1Disjoint(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.product(SET1_DISJOINT);
+//		}
+//		return result;
+//	}	
+//
+//	public Object timeProductSet1Interrelated(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.product(SET1_INTERRELATED);
+//		}
+//		return result;
+//	}	
 
 	@Test
 	public void testEquals() {
 		testSet.equals(testSet);
 	}
 	
-	public void timeEquals(int reps) {
+	public void timeEquals(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testSet.equals(testSet);
 		}
@@ -290,7 +290,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		testSet.equals(testSetDifferent);
 	}
 	
-	public void timeEqualsEndFalse(int reps) {
+	public void timeEqualsEndFalse(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testSet.equals(testSetDifferent);
 		}
@@ -301,7 +301,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		testSet.equals(testSetDuplicate);
 	}
 	
-	public void timeEqualsDuplicate(int reps) {
+	public void timeEqualsDuplicate(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testSet.equals(testSetDuplicate);
 		}
@@ -312,7 +312,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 //		testSet.isEqual(testSet);
 //	}
 //	
-//	public void timeIsEqual(int reps) {
+//	public void timeIsEqual(long reps) {
 //		for (int i = 0; i < reps; i++) {
 //			testSet.isEqual(testSet);
 //		}
@@ -326,7 +326,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		}
 	}
 	
-	public void timeIteration(int reps) {
+	public void timeIteration(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testIteration();
 		}
@@ -337,7 +337,7 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		testSet.hashCode();
 	}
 	
-	public void timeHashCode(int reps) {
+	public void timeHashCode(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testSet.hashCode();
 		}

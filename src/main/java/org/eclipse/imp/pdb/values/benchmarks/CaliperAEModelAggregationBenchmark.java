@@ -110,7 +110,7 @@ public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark
 		// initialize
 		ISet[] relations = new ISet[relationNames.length];
 		for (int i = 0; i < relations.length; i++) {
-			relations[i] = valueFactory.relation();
+			relations[i] = valueFactory.set();
 		}
 
 		// compute / accumulate

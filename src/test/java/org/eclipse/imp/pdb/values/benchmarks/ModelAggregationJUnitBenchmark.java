@@ -83,7 +83,7 @@ public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
 		// initialize
 		ISet[] relations = new ISet[relationNames.length];
 		for (int i = 0; i < relations.length; i++) {
-			relations[i] = valueFactory.relation();
+			relations[i] = valueFactory.set();
 		}
 
 		// compute / accumulate

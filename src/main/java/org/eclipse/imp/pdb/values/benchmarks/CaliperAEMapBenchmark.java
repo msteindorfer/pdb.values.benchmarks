@@ -2,6 +2,7 @@ package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.util.Iterator;
 
+import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.IMap;
 import org.eclipse.imp.pdb.facts.IMapWriter;
 import org.eclipse.imp.pdb.facts.IValue;
@@ -10,12 +11,12 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperAEMapBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAEMapBenchmark extends Benchmark {
 
 	private IValueFactory valueFactory; 
 	
 	@Param
-	private ValueFactoryFactory valueFactoryFactory;	
+	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 
 	@Param({"10", "100", "1000", "10000"})
 	protected int size;	

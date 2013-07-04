@@ -7,27 +7,22 @@
  *
  * Contributors:
  *
- *   * Michael Steindorfer - Michael.Steindorfer@cwi.nl - CWI  
+ *   * Michael Steindorfer - Michael.Steindorfer@cwi.nl - CWI
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
 import org.eclipse.imp.pdb.facts.IValueFactory;
-import org.eclipse.imp.pdb.facts.type.TypeStore;
 
-import com.google.caliper.legacy.Benchmark;
-
-abstract class AbstractCaliperBenchmark extends Benchmark {
-
-	protected final TypeStore typeStore = new TypeStore();
-	
-	protected enum ValueFactoryFactory {
+public class BenchmarkUtils {
+	public static enum ValueFactoryFactory {
 //		VF_JAVA {
 //			@Override IValueFactory getInstance() {
 //				return org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance();
 //			}
 //		},
 		VF_RASCAL {
-			@Override IValueFactory getInstance() {
+			@Override
+			IValueFactory getInstance() {
 				return org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();
 			}
 //		},
@@ -41,8 +36,7 @@ abstract class AbstractCaliperBenchmark extends Benchmark {
 //				return new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();
 //			}
 		};
-		
+
 		abstract IValueFactory getInstance();
 	}
-	
 }

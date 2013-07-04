@@ -28,7 +28,7 @@ package org.eclipse.imp.pdb.values.benchmarks;
 //
 //import com.google.caliper.Param;
 //
-//public class CaliperAESetWriterSpecificBenchmark extends AbstractCaliperBenchmark {
+//public class CaliperAESetWriterSpecificBenchmark extends Benchmark {
 //	
 //	private IValueFactory valueFactory; 
 //	
@@ -164,4 +164,4 @@ package org.eclipse.imp.pdb.values.benchmarks;
 //	
 //}
 
-// public class CaliperAESetWriterSpecificBenchmark extends AbstractCaliperBenchmark {}
+// public class CaliperAESetWriterSpecificBenchmark extends Benchmark {}

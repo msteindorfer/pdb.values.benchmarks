@@ -1,5 +1,6 @@
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.type.Type;
 import org.eclipse.imp.pdb.facts.type.TypeFactory;
@@ -7,12 +8,12 @@ import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperAEValueFactoryBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAEValueFactoryBenchmark extends Benchmark {
 
 	private IValueFactory valueFactory; 
 	
 	@Param
-	private ValueFactoryFactory valueFactoryFactory;	
+	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 	
 	@Override
 	protected void setUp() throws Exception {	

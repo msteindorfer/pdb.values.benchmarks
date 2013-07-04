@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValue;
@@ -18,12 +19,12 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
 
-public class CaliperAESetWriterBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAESetWriterBenchmark extends Benchmark {
 	
 	private IValueFactory valueFactory; 
 	
 	@Param
-	private ValueFactoryFactory valueFactoryFactory;
+	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 
 	@Param({"10", "100", "1000", "10000"}) 
 	int size;

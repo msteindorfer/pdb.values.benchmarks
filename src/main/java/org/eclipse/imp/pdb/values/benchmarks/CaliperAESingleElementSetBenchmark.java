@@ -11,12 +11,13 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 
 import com.google.caliper.Param;
 
-public class CaliperAESingleElementSetBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAESingleElementSetBenchmark extends Benchmark {
 
 	private IValueFactory valueFactory; 
 	
@@ -26,7 +27,7 @@ public class CaliperAESingleElementSetBenchmark extends AbstractCaliperBenchmark
 	int size;
 	
 	@Param
-	public ValueFactoryFactory valueFactoryFactory;
+	public BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 	
 	@Override
 	protected void setUp() throws Exception {

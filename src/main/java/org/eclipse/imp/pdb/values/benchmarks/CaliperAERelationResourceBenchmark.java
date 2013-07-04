@@ -19,19 +19,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
+import org.eclipse.imp.pdb.facts.type.TypeStore;
 import org.junit.Test;
 
 import com.google.caliper.Param;
 
-public class CaliperAERelationResourceBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAERelationResourceBenchmark extends Benchmark {
 	
-	private IValueFactory valueFactory; 
-	
+	private IValueFactory valueFactory;
+
+	private final TypeStore typeStore = new TypeStore();
+
 	@Param
-	private ValueFactoryFactory valueFactoryFactory;
+	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 
 	private ISet testRelation;	
 

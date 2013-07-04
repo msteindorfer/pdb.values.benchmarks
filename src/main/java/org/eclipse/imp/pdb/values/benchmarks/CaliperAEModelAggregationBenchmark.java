@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
@@ -25,13 +26,16 @@ import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 
 import com.google.caliper.Param;
 import com.google.caliper.api.Macrobenchmark;
+import org.eclipse.imp.pdb.facts.type.TypeStore;
 
-public class CaliperAEModelAggregationBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAEModelAggregationBenchmark extends Benchmark {
 
 	private IValueFactory valueFactory;
-	
+
+	private final TypeStore typeStore = new TypeStore();
+
 	@Param
-	private ValueFactoryFactory valueFactoryFactory;
+	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 		
 	@SuppressWarnings("rawtypes")
 	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	

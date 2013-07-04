@@ -13,6 +13,7 @@ package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.util.Iterator;
 
+import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValue;
@@ -22,12 +23,12 @@ import org.junit.Test;
 import com.google.caliper.Param;
 import com.google.caliper.api.Macrobenchmark;
 
-public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
+public class CaliperAESetBenchmark extends Benchmark {
 	
 	private IValueFactory valueFactory;
 	
 	@Param
-	private ValueFactoryFactory valueFactoryFactory;
+	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 
 	@Param({"10", "100", "1000", "10000"})
 	protected int size;	
@@ -487,6 +488,6 @@ public class CaliperAESetBenchmark extends AbstractCaliperBenchmark {
 		for (int i = 0; i < reps; i++) {
 			testSet.hashCode();
 		}
-	}		
+	}
 
 }

@@ -7,3 +7,5 @@ bin/
 
 src/main/resources/org/eclipse/imp/pdb/values/benchmarks/php/
 log-*.log
+
+.idea/

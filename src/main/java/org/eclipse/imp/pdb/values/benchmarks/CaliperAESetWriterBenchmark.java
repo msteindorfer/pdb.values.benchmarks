@@ -88,12 +88,6 @@ public class CaliperAESetWriterBenchmark extends Benchmark {
 			writer.done();
 		}
 	}
-	
-	public void timeSize(long runs) {
-		for (long i = 0; i < runs; i++) {
-			testWriter.size();
-		}
-	}
 
 	public static void main(String[] args) throws Exception {
 		com.google.caliper.runner.CaliperMain.main(CaliperAESetWriterBenchmark.class, args);

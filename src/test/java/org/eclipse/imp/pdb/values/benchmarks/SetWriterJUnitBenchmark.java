@@ -104,24 +104,5 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		
 		writer.done();
 	}
-	
-	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
-	public void timeInsertAndCheckSize() {
-		ISetWriter writer = valueFactory.setWriter();
-		
-		for (IValue v : testSet) {
-			writer.insert(v);
-			writer.size();
-		}
-		
-		writer.done();
-	}
-	
-	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
-	public void timeSize() {
-		testWriter.size();
-	}
 
 }

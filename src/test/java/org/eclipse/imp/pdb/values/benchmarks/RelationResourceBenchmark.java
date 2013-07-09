@@ -34,7 +34,7 @@ public class RelationResourceBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	private String relationResource;
-	private static ISet testRelation;
+	private ISet testSet;
 
 	@Parameters(name="{0}, {1}")
 	public static List<Object[]> getTestParameters() throws Exception {
@@ -56,48 +56,48 @@ public class RelationResourceBenchmark extends AbstractJUnitBenchmark {
 		try (InputStream inputStream = RelationResourceBenchmark.class.getResourceAsStream(relationResource)) {
 			
 			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
-			testRelation = (ISet) binaryReader.deserialize();
+			testSet = (ISet) binaryReader.deserialize();
 		}
 	}
 		
 	@Test
 	public void timeArity() {
-		testRelation.asRelation().arity();
+		testSet.asRelation().arity();
 	}
 	
 	@Test
 	public void timeClosure() {
-		testRelation.asRelation().closure();
+		testSet.asRelation().closure();
 	}
 	
 	@Test	
 	public void timeClosureStar() {
-		testRelation.asRelation().closureStar();
+		testSet.asRelation().closureStar();
 	}
 	
 	@Test
 	public void timeCarrier() {
-		testRelation.asRelation().carrier();
+		testSet.asRelation().carrier();
 	}
 	
 	@Test
 	public void timeFieldTypes() {
-		testRelation.getType().getFieldTypes();
+		testSet.getType().getFieldTypes();
 	}
 	
 	@Test
 	public void timeDomain() {
-		testRelation.asRelation().domain();
+		testSet.asRelation().domain();
 	}	
 
 	@Test
 	public void timeRange() {
-		testRelation.asRelation().range();
+		testSet.asRelation().range();
 	}	
 
 	@Test
 	public void timeProject() {
-		testRelation.asRelation().project();
+		testSet.asRelation().project();
 	}		
 	
 	@Ignore @Test
@@ -106,44 +106,12 @@ public class RelationResourceBenchmark extends AbstractJUnitBenchmark {
 	 * not have field names. Therefore this benchmark is ignored for the moment.
 	 */
 	public void timeProjectByFieldNames() {
-		testRelation.asRelation().projectByFieldNames();
+		testSet.asRelation().projectByFieldNames();
 	}
 	
 	@Test
 	public void timeCompose() {
-		testRelation.asRelation().compose(testRelation.asRelation());
-	}		
-	
-//	/* SET OPERATIONS */
-//	
-//	@Test
-//	public void timeUnion() {
-//		testRelation.union(testRelation);
-//	}		
-//	
-//	@Test
-//	public void timeIntersect() {
-//		testRelation.intersect(testRelation);
-//	}	
-//	
-//	@Test
-//	public void timeSubstract() {
-//		testRelation.subtract(testRelation);
-//	}		
-//	
-//	@Test
-//	public void timeProduct() {
-//		testRelation.product(testRelation);
-//	}
-//	
-//	@Test
-//	public void timeEquals() {
-//		testRelation.equals(testRelation);
-//	}
-//	
-//	@Test
-//	public void timeIsEqual() {
-//		testRelation.isEqual(testRelation);
-//	}
+		testSet.asRelation().compose(testSet.asRelation());
+	}
 	
 }

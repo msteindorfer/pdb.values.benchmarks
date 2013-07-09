@@ -11,13 +11,12 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.imp.pdb.facts.ISet;
+import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValueFactory;
-import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
@@ -46,56 +45,57 @@ public class RelationBenchmark extends AbstractJUnitBenchmark {
 //	protected IValueFactory valueFactory; 
 	protected int size;
 	
-	private String relationResource;
-	private static ISet testRelation;
+	private ISet testSet;
 	
 	@Override
 	public void setUp() throws Exception {	
-		try (InputStream inputStream = RelationBenchmark.class.getResourceAsStream(relationResource)) {
-			
-			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
-			testRelation = (ISet) binaryReader.deserialize();
+		ISetWriter writer = valueFactory.setWriter();
+		
+		for (int i = size; i > 0; i--) {
+			writer.insert(valueFactory.integer(i));
 		}
+		
+		testSet = writer.done();
 	}
 		
 	@Test
 	public void timeArity() {
-		testRelation.asRelation().arity();
+		testSet.asRelation().arity();
 	}
 	
 	@Test
 	public void timeClosure() {
-		testRelation.asRelation().closure();
+		testSet.asRelation().closure();
 	}
 	
 	@Test	
 	public void timeClosureStar() {
-		testRelation.asRelation().closureStar();
+		testSet.asRelation().closureStar();
 	}
 	
 	@Test
 	public void timeCarrier() {
-		testRelation.asRelation().carrier();
+		testSet.asRelation().carrier();
 	}
 	
 	@Test
 	public void timeFieldTypes() {
-		testRelation.getType().getFieldTypes();
+		testSet.getType().getFieldTypes();
 	}
 	
 	@Test
 	public void timeDomain() {
-		testRelation.asRelation().domain();
+		testSet.asRelation().domain();
 	}	
 
 	@Test
 	public void timeRange() {
-		testRelation.asRelation().range();
+		testSet.asRelation().range();
 	}	
 
 	@Test
 	public void timeProject() {
-		testRelation.asRelation().project();
+		testSet.asRelation().project();
 	}		
 	
 	@Ignore @Test
@@ -104,44 +104,12 @@ public class RelationBenchmark extends AbstractJUnitBenchmark {
 	 * not have field names. Therefore this benchmark is ignored for the moment.
 	 */
 	public void timeProjectByFieldNames() {
-		testRelation.asRelation().projectByFieldNames();
+		testSet.asRelation().projectByFieldNames();
 	}
 	
 	@Test
 	public void timeCompose() {
-		testRelation.asRelation().compose(testRelation.asRelation());
-	}		
-	
-//	/* SET OPERATIONS */
-//	
-//	@Test
-//	public void timeUnion() {
-//		testRelation.union(testRelation);
-//	}		
-//	
-//	@Test
-//	public void timeIntersect() {
-//		testRelation.intersect(testRelation);
-//	}	
-//	
-//	@Test
-//	public void timeSubstract() {
-//		testRelation.subtract(testRelation);
-//	}		
-//	
-//	@Test
-//	public void timeProduct() {
-//		testRelation.product(testRelation);
-//	}
-//	
-//	@Test
-//	public void timeEquals() {
-//		testRelation.equals(testRelation);
-//	}
-//	
-//	@Test
-//	public void timeIsEqual() {
-//		testRelation.isEqual(testRelation);
-//	}
+		testSet.asRelation().compose(testSet.asRelation());
+	}
 	
 }

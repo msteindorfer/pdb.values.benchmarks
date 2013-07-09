@@ -10,12 +10,14 @@ import java.util.Scanner;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
+@Ignore
 public class MemoryMeasurmentBenchmark extends AbstractJUnitBenchmark {
 
 	String resource;

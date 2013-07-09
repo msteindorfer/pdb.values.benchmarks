@@ -24,9 +24,9 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.junit.Test;
 
-public class ModelAggregationJUnitBenchmark extends AbstractJUnitBenchmark {
+public class ModelAggregationBenchmark extends AbstractJUnitBenchmark {
 	
-	public ModelAggregationJUnitBenchmark(IValueFactory valueFactory) throws Exception {
+	public ModelAggregationBenchmark(IValueFactory valueFactory) throws Exception {
 		super(valueFactory);
 		setUpStaticValueFactorySpecificTestData();
 	}

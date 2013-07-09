@@ -11,8 +11,10 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IMap;
 import org.eclipse.imp.pdb.facts.IMapWriter;
@@ -21,13 +23,28 @@ import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runners.Parameterized.Parameters;
 
-public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
-
-	public MapWriterJUnitBenchmark(IValueFactory valueFactory) throws Exception {
+public class MapWriterBenchmark extends AbstractJUnitBenchmark {
+	
+	public MapWriterBenchmark(IValueFactory valueFactory, int size) throws Exception {
 		super(valueFactory);
+		this.size = size;
 	}
 
+	@Parameters(name="{0}, {1}")
+	public static List<Object[]> getTestParameters() throws Exception {
+		return AbstractJUnitBenchmark.productOfTestParameters(
+				AbstractJUnitBenchmark.getTestParameters(), getSizeParameters());
+	}
+	
+	public static List<Object[]> getSizeParameters() {
+		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 }, { 10_000_000 }});
+	}			
+	
+//	protected IValueFactory valueFactory; 
+	protected int size;
+	
 	private static IMap testMap;	
 	private static Iterable<ITuple> testTuples;
 	
@@ -37,7 +54,7 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		IMapWriter writer = valueFactory.mapWriter();
 		Collection<ITuple> newTuples = new java.util.LinkedList<>();
 		
-		for (int i = 10_000; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			ITuple newTuple = valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i));
 			writer.insert(newTuple);
 			newTuples.add(newTuple);
@@ -46,14 +63,9 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		testMap = writer.done();
 		testTuples = Collections.unmodifiableCollection(newTuples);
 	}
-	
-	@Override
-	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		// no static setup
-	}	
-	
+
 	@Test
-	public void timeInsert() {
+	public void testInsert() {
 		IMapWriter writer = valueFactory.mapWriter();
 		
 		for (IValue v : testMap) {
@@ -63,15 +75,27 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}
 	
+	public void timeInsert(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsert();
+		}
+	}
+	
 	@Test
-	public void timeInsertAll() {
+	public void testInsertAll() {
 		IMapWriter writer = valueFactory.mapWriter();
 		writer.insertAll(testTuples);
 		writer.done();
 	}
-	
+
+	public void timeInsertAll(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertAll();
+		}
+	}
+		
 	@Test
-	public void timeInsertIndividuallyAndAllSame() {
+	public void testInsertIndividuallyAndAllSame() {
 		IMapWriter writer = valueFactory.mapWriter();
 		
 		for (IValue v : testMap) {
@@ -82,8 +106,14 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}	
 
+	public void timeInsertIndividuallyAndAllSame(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertIndividuallyAndAllSame();
+		}
+	}	
+	
 	@Test
-	public void timeInsertAllAndIndividuallySame() {
+	public void testInsertAllAndIndividuallySame() {
 		IMapWriter writer = valueFactory.mapWriter();
 		
 		writer.insertAll(testTuples);
@@ -94,8 +124,14 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}
 	
+	public void timeInsertAllAndIndividuallySame(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertAllAndIndividuallySame();
+		}
+	}
+		
 	@Test
-	public void timePut() {
+	public void testPut() {
 		IMapWriter writer = valueFactory.mapWriter();
 		
 		for (IValue v : testMap) {
@@ -105,15 +141,27 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}
 	
+	public void timePut(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testPut();
+		}
+	}
+		
 	@Test
-	public void timePutAll() {
+	public void testPutAll() {
 		IMapWriter writer = valueFactory.mapWriter();
 		writer.putAll(testMap);
 		writer.done();
 	}
-	
+
+	public void timePutAll(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testPutAll();
+		}
+	}
+		
 	@Test
-	public void timePutIndividuallyAndAllSame() {
+	public void testPutIndividuallyAndAllSame() {
 		IMapWriter writer = valueFactory.mapWriter();
 		
 		for (IValue v : testMap) {
@@ -124,8 +172,14 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}	
 
+	public void timePutIndividuallyAndAllSame(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testPutIndividuallyAndAllSame();
+		}
+	}
+	
 	@Test
-	public void timePutAllIndividuallyAndSame() {
+	public void testPutAllIndividuallyAndSame() {
 		IMapWriter writer = valueFactory.mapWriter();
 		
 		writer.putAll(testMap);
@@ -136,16 +190,22 @@ public class MapWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}
 	
+	public void timePutAllIndividuallyAndSame(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testPutAllIndividuallyAndSame();
+		}
+	}
+		
 	@Ignore @Test
-	public void timePutAllFromJavaMap() {
+	public void testPutAllFromJavaMap() {
 	}
 	
 	@Ignore @Test
-	public void timePutIndividuallyAndAllSameFromJavaMap() {
+	public void testPutIndividuallyAndAllSameFromJavaMap() {
 	}	
 
 	@Ignore @Test
-	public void timePutAllIndividuallyAndSameFromJavaMap() {
-	}		
-
+	public void testPutAllIndividuallyAndSameFromJavaMap() {
+	}
+	
 }

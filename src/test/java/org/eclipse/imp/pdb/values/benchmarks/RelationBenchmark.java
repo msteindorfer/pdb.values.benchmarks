@@ -22,45 +22,38 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
-public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
+public class RelationBenchmark extends AbstractJUnitBenchmark {
 	
-	public RelationJUnitBenchmark(IValueFactory valueFactory, String relationResource) throws Exception {
+	public RelationBenchmark(IValueFactory valueFactory, int size) throws Exception {
 		super(valueFactory);
-		this.relationResource = relationResource;		
+		this.size = size;
 	}
-	
-	private String relationResource;
-	private static ISet testRelation;
 
 	@Parameters(name="{0}, {1}")
 	public static List<Object[]> getTestParameters() throws Exception {
-		List<Object[]> relationResourceValues = Arrays.asList(new Object[][] {
-//				{ "rsf/Eclipse202a.rsf_CALL" }, 
-//				{ "rsf/jdk14v2.rsf_CALL" },
-//				{ "rsf/JDK140AWT.rsf_CALL" }, 
-				{ "rsf/JHotDraw52.rsf_CALL" },
-//				{ "rsf/JWAM16FullAndreas.rsf_CALL" } 
-				});
-
 		return AbstractJUnitBenchmark.productOfTestParameters(
-				AbstractJUnitBenchmark.getTestParameters(),
-				relationResourceValues);
-	}	
+				AbstractJUnitBenchmark.getTestParameters(), getSizeParameters());
+	}
+	
+	public static List<Object[]> getSizeParameters() {
+		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 }, { 10_000_000 }});
+	}			
+	
+//	protected IValueFactory valueFactory; 
+	protected int size;
+	
+	private String relationResource;
+	private static ISet testRelation;
 	
 	@Override
 	public void setUp() throws Exception {	
-		try (InputStream inputStream = RelationJUnitBenchmark.class.getResourceAsStream(relationResource)) {
+		try (InputStream inputStream = RelationBenchmark.class.getResourceAsStream(relationResource)) {
 			
 			BinaryReader binaryReader = new BinaryReader(valueFactory, typeStore, inputStream);
 			testRelation = (ISet) binaryReader.deserialize();
 		}
 	}
-	
-	@Override
-	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		// no static setup
-	}	
-	
+		
 	@Test
 	public void timeArity() {
 		testRelation.asRelation().arity();
@@ -114,33 +107,37 @@ public class RelationJUnitBenchmark extends AbstractJUnitBenchmark {
 	public void timeCompose() {
 		testRelation.asRelation().compose(testRelation.asRelation());
 	}		
-
 	
-	/* SET OPERATIONS */
-	
-	@Test
-	public void timeUnion() {
-		testRelation.union(testRelation);
-	}		
-	
-	@Test
-	public void timeIntersect() {
-		testRelation.intersect(testRelation);
-	}	
-	
-	@Test
-	public void timeSubstract() {
-		testRelation.subtract(testRelation);
-	}		
-	
-	@Test
-	public void timeProduct() {
-		testRelation.product(testRelation);
-	}
-	
-	@Test
-	public void timeEquals() {
-		testRelation.equals(testRelation);
-	}	
+//	/* SET OPERATIONS */
+//	
+//	@Test
+//	public void timeUnion() {
+//		testRelation.union(testRelation);
+//	}		
+//	
+//	@Test
+//	public void timeIntersect() {
+//		testRelation.intersect(testRelation);
+//	}	
+//	
+//	@Test
+//	public void timeSubstract() {
+//		testRelation.subtract(testRelation);
+//	}		
+//	
+//	@Test
+//	public void timeProduct() {
+//		testRelation.product(testRelation);
+//	}
+//	
+//	@Test
+//	public void timeEquals() {
+//		testRelation.equals(testRelation);
+//	}
+//	
+//	@Test
+//	public void timeIsEqual() {
+//		testRelation.isEqual(testRelation);
+//	}
 	
 }

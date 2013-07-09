@@ -94,7 +94,7 @@ public abstract class AbstractJUnitBenchmark {
 	@SuppressWarnings("rawtypes")
 	private static volatile Class lastValueFactoryClass = Object.class; // default non-factory value	
 				
-	abstract public void setUpStaticValueFactorySpecificTestData() throws Exception;
+	public void setUpStaticValueFactorySpecificTestData() throws Exception {};
 
 	@Before
 	public void setUp() throws Exception {

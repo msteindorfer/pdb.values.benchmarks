@@ -19,9 +19,9 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
-public class SingleElementSetJUnitBenchmark extends AbstractJUnitBenchmark {
+public class SingleElementSetBenchmark extends AbstractJUnitBenchmark {
 	
-	public SingleElementSetJUnitBenchmark(IValueFactory valueFactory, int singleValueSetsCount) throws Exception {
+	public SingleElementSetBenchmark(IValueFactory valueFactory, int singleValueSetsCount) throws Exception {
 		super(valueFactory);
 		this.singleValueSetsCount = singleValueSetsCount;
 	}
@@ -46,12 +46,7 @@ public class SingleElementSetJUnitBenchmark extends AbstractJUnitBenchmark {
 		for (int i = 0; i < singleValueSets.length; i++) {
 			singleValueSets[i] = valueFactory.set(valueFactory.integer(i));
 		}
-	}
-	
-	@Override
-	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		// no static setup
-	}
+	}	
 
 	@Test
 	public void testUnionSingleElementIntegerSets() {

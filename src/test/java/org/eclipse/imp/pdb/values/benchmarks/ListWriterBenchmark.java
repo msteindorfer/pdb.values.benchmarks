@@ -11,41 +11,57 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.imp.pdb.facts.IList;
 import org.eclipse.imp.pdb.facts.IListWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
+import org.junit.runners.Parameterized.Parameters;
 
-public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
 
-	public ListWriterJUnitBenchmark(IValueFactory valueFactory) throws Exception {
+@BenchmarkOptions(clock = Clock.NANO_TIME)
+public class ListWriterBenchmark extends AbstractJUnitBenchmark {
+
+	public ListWriterBenchmark(IValueFactory valueFactory, int size) throws Exception {
 		super(valueFactory);
+		this.size = size;
 	}
 
-	private static IList testList;	
+	@Parameters(name="{0}, {1}")
+	public static List<Object[]> getTestParameters() throws Exception {
+		return AbstractJUnitBenchmark.productOfTestParameters(
+				AbstractJUnitBenchmark.getTestParameters(), getSizeParameters());
+	}
+	
+	public static List<Object[]> getSizeParameters() {
+		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 }, { 10_000_000 }});
+	}		
+	
+//	protected IValueFactory valueFactory; 
+	protected int size;	
+	
+	private IList testList;	
 	
 	@Override
 	public void setUp() throws Exception {	
 		// TODO: parameterize test data generation
 		IListWriter writer = valueFactory.listWriter();
 		
-		for (int i = 10_000; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
 		}
 		
 		testList = writer.done();
 	}
-	
-	@Override
-	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		// no static setup
-	}	
-	
+		
 	@Test
-	public void timeInsertAtOneElementFront() {
+	public void testInsertAtOneElementFront() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		
@@ -56,8 +72,14 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}	
 
+	public void timeInsertAtOneElementFront(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertAtOneElementFront();
+		}
+	}
+	
 	@Test
-	public void timeInsertAtOneElementMiddle() {
+	public void testInsertAtOneElementMiddle() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		
@@ -70,9 +92,15 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		
 		writer.done();
 	}		
+
+	public void timeInsertAtOneElementMiddle(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertAtOneElementMiddle();
+		}
+	}	
 	
 	@Test
-	public void timeInsertAtOneElementEnd() {
+	public void testInsertAtOneElementEnd() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 
@@ -86,8 +114,14 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}		
 
+	public void timeInsertAtOneElementEnd(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertAtOneElementEnd();
+		}
+	}
+		
 	@Test
-	public void timeReplaceAtOneElementFront() {
+	public void testReplaceAtOneElementFront() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		
@@ -96,10 +130,16 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		}
 		
 		writer.done();
-	}	
-
+	}
+	
+	public void timeReplaceAtOneElementFront(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testReplaceAtOneElementFront();
+		}
+	}
+	
 	@Test
-	public void timeReplaceAtOneElementMiddle() {
+	public void testReplaceAtOneElementMiddle() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		
@@ -113,8 +153,14 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}		
 	
+	public void timeReplaceAtOneElementMiddle(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testReplaceAtOneElementMiddle();
+		}
+	}	
+	
 	@Test
-	public void timeReplaceAtOneElementEnd() {
+	public void testReplaceAtOneElementEnd() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 
@@ -127,9 +173,15 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		
 		writer.done();
 	}
+
+	public void timeReplaceAtOneElementEnd(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testReplaceAtOneElementEnd();
+		}
+	}	
 	
 	@Test
-	public void timeAppendIndividually() {
+	public void testAppendIndividually() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		
@@ -139,18 +191,30 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		
 		writer.done();		
 	}
+
+	public void timeAppendIndividually(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testAppendIndividually();
+		}
+	}
 	
 	@Test
-	public void timeAppendAll() {
+	public void testAppendAll() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		writer.appendAll(testList);
 		
 		writer.done();
-	}
+	}	
 	
+	public void timeAppendAll(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testAppendAll();
+		}
+	}
+		
 	@Test
-	public void timeInsert() {
+	public void testInsert() {
 		IListWriter writer = valueFactory.listWriter();
 		
 		for (IValue v : testList) {
@@ -160,35 +224,59 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		writer.done();
 	}
 	
+	public void timeInsert(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsert();
+		}
+	}	
+	
 	@Test
-	public void timeInsertAll() {
+	public void testInsertAll() {
 		IListWriter writer = valueFactory.listWriter();
 		writer.insertAll(testList);
 		writer.done();
 	}
+
+	public void timeInsertAll(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertAll();
+		}
+	}	
 	
 	@Test
-	public void timeInsertIndividuallyAndAllSame() {
+	public void testInsertIndividuallyAndAllSame() {
 		IListWriter writer = valueFactory.listWriter();
 		
 		for (IValue v : testList) {
 			writer.insert(v);
 		}
 		writer.insertAll(testList);
+		
+		writer.done();
+	}
+	
+	public void timeInsertIndividuallyAndAllSame(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertIndividuallyAndAllSame();
+		}
+	}	
+
+	@Test
+	public void testInsertAllAndIndividuallySame() {
+		IListWriter writer = valueFactory.listWriter();
+		
+		writer.insertAll(testList);
+		for (IValue v : testList) {
+			writer.insert(v);
+		}
 		
 		writer.done();
 	}	
 
-	@Test
-	public void timeInsertAllAndIndividuallySame() {
-		IListWriter writer = valueFactory.listWriter();
-		
-		writer.insertAll(testList);
-		for (IValue v : testList) {
-			writer.insert(v);
+	public void timeInsertAllAndIndividuallySame(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testInsertAllAndIndividuallySame();
 		}
-		
-		writer.done();
 	}
 	
 }

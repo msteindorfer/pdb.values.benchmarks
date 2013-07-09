@@ -11,56 +11,51 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
+import org.junit.runners.Parameterized.Parameters;
 
-import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
-import com.carrotsearch.junitbenchmarks.Clock;
-
-public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
-
-	private static final boolean CALLGC = true;
-	private static final int BENCHMARK_ROUNDS = 10;	
-	private static final int WARMUP_ROUNDS = 5;
+public class SetWriterBenchmark extends AbstractJUnitBenchmark {
 	
-	public SetWriterJUnitBenchmark(IValueFactory valueFactory) throws Exception {
+	public SetWriterBenchmark(IValueFactory valueFactory, int size) throws Exception {
 		super(valueFactory);
+		this.size = size;
 	}
 
-	private int COUNT = 10_000;	
+	@Parameters(name="{0}, {1}")
+	public static List<Object[]> getTestParameters() throws Exception {
+		return AbstractJUnitBenchmark.productOfTestParameters(
+				AbstractJUnitBenchmark.getTestParameters(), getSizeParameters());
+	}
+	
+	public static List<Object[]> getSizeParameters() {
+		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 }, { 10_000_000 }});
+	}		
+	
+//	protected IValueFactory valueFactory; 
+	protected int size;	
 	
 	private ISet testSet;	
-	
-	private ISetWriter testWriter;
-	
+		
 	@Override
 	public void setUp() throws Exception {	
 		// TODO: parameterize test data generation
 		ISetWriter writer = valueFactory.setWriter();
 		
-		for (int i = COUNT; i > 0; i--) {
+		for (int i = size; i > 0; i--) {
 			writer.insert(valueFactory.integer(i));
 		}
 		
 		testSet = writer.done();
-
-		testWriter = valueFactory.setWriter();
-		
-		for (int i = COUNT; i > 0; i--) {
-			testWriter.insert(valueFactory.integer(i));
-		}
 	}
-	
-	@Override
-	public void setUpStaticValueFactorySpecificTestData() throws Exception {
-		// no static setup
-	}	
-	
+		
 	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsert() {
 		ISetWriter writer = valueFactory.setWriter();
 		
@@ -72,7 +67,6 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertAll() {
 		ISetWriter writer = valueFactory.setWriter();
 		writer.insertAll(testSet);
@@ -80,7 +74,6 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertIndividuallyAndAllSame() {
 		ISetWriter writer = valueFactory.setWriter();
 		
@@ -93,7 +86,6 @@ public class SetWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 	}	
 
 	@Test
-	@BenchmarkOptions(callgc=CALLGC, clock=Clock.NANO_TIME, benchmarkRounds=BENCHMARK_ROUNDS, warmupRounds=WARMUP_ROUNDS)
 	public void timeInsertAllAndIndividuallySame() {
 		ISetWriter writer = valueFactory.setWriter();
 		

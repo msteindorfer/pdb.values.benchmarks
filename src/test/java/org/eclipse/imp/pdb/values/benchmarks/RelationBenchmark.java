@@ -52,7 +52,7 @@ public class RelationBenchmark extends AbstractJUnitBenchmark {
 		ISetWriter writer = valueFactory.setWriter();
 		
 		for (int i = size; i > 0; i--) {
-			writer.insert(valueFactory.integer(i));
+			writer.insert(valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i)));
 		}
 		
 		testSet = writer.done();

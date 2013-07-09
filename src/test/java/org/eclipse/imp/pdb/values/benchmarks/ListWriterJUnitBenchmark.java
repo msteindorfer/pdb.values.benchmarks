@@ -189,18 +189,6 @@ public class ListWriterJUnitBenchmark extends AbstractJUnitBenchmark {
 		}
 		
 		writer.done();
-	}	
-	
-	@Test
-	public void timeInsertAndCheckSize() {
-		IListWriter writer = valueFactory.listWriter();
-		
-		for (IValue v : testList) {
-			writer.insert(v);
-			writer.size();
-		}
-		
-		writer.done();
 	}
 	
 }

@@ -266,24 +266,6 @@ public class CaliperAEListWriterBenchmark extends Benchmark {
 			testInsertAllAndIndividuallySame();
 		}
 	}
-	
-	@Test
-	public void testInsertAndCheckSize() {
-		IListWriter writer = valueFactory.listWriter();
-		
-		for (IValue v : testList) {
-			writer.insert(v);
-			writer.size();
-		}
-		
-		writer.done();
-	}
-	
-	public void timeInsertAndCheckSize(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testInsertAndCheckSize();
-		}
-	}
 
 	public static void main(String[] args) throws Exception {
 		com.google.caliper.runner.CaliperMain.main(CaliperAEListWriterBenchmark.class, args);

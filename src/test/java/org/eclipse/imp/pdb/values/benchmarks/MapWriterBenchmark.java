@@ -28,6 +28,7 @@ import org.junit.runners.Parameterized.Parameters;
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.Clock;
 
+@Ignore
 @BenchmarkOptions(clock = Clock.NANO_TIME)
 public class MapWriterBenchmark extends AbstractJUnitBenchmark {
 	

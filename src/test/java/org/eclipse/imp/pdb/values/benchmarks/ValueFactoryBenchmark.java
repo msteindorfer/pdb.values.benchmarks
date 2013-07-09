@@ -5,6 +5,10 @@ import org.eclipse.imp.pdb.facts.type.Type;
 import org.eclipse.imp.pdb.facts.type.TypeFactory;
 import org.junit.Test;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
+
+@BenchmarkOptions(clock = Clock.NANO_TIME)
 public class ValueFactoryBenchmark extends AbstractJUnitBenchmark {
 	
 	public ValueFactoryBenchmark(IValueFactory valueFactory) throws Exception {

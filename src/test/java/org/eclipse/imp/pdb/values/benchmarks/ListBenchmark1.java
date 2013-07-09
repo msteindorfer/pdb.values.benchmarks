@@ -40,7 +40,7 @@ public class ListBenchmark1 extends AbstractJUnitBenchmark {
 	}
 	
 	public static List<Object[]> getSizeParameters() {
-		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 }, { 10_000_000 }});
+		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 } });
 	}			
 	
 //	protected IValueFactory valueFactory; 

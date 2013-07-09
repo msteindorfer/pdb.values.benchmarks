@@ -19,6 +19,10 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
+
+@BenchmarkOptions(clock = Clock.NANO_TIME)
 public class SingleElementSetBenchmark extends AbstractJUnitBenchmark {
 	
 	public SingleElementSetBenchmark(IValueFactory valueFactory, int singleValueSetsCount) throws Exception {

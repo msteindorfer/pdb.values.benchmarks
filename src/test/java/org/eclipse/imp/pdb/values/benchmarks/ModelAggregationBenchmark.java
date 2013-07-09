@@ -24,6 +24,10 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
 import org.junit.Test;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
+
+@BenchmarkOptions(clock = Clock.NANO_TIME)
 public class ModelAggregationBenchmark extends AbstractJUnitBenchmark {
 	
 	public ModelAggregationBenchmark(IValueFactory valueFactory) throws Exception {

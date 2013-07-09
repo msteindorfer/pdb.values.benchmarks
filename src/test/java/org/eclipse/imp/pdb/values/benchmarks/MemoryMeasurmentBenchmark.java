@@ -14,10 +14,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 
 @Ignore
+@BenchmarkOptions(clock = Clock.NANO_TIME)
 public class MemoryMeasurmentBenchmark extends AbstractJUnitBenchmark {
 
 	String resource;

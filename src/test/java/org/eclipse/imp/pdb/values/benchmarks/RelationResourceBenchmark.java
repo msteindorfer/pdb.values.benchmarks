@@ -22,6 +22,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
+
+@BenchmarkOptions(clock = Clock.NANO_TIME)
 public class RelationResourceBenchmark extends AbstractJUnitBenchmark {
 	
 	public RelationResourceBenchmark(IValueFactory valueFactory, String relationResource) throws Exception {

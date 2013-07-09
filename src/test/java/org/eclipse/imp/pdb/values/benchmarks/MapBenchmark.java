@@ -11,6 +11,10 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 import org.junit.runners.Parameterized.Parameters;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.Clock;
+
+@BenchmarkOptions(clock = Clock.NANO_TIME)
 public class MapBenchmark extends AbstractJUnitBenchmark {
 
 	public MapBenchmark(IValueFactory valueFactory, int size) throws Exception {
@@ -25,7 +29,7 @@ public class MapBenchmark extends AbstractJUnitBenchmark {
 	}
 	
 	public static List<Object[]> getSizeParameters() {
-		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 }, { 10_000_000 }});
+		return Arrays.asList(new Object[][] { { 10_000 }, { 100_000 }, { 1_000_000 } });
 	}		
 	
 //	protected IValueFactory valueFactory; 

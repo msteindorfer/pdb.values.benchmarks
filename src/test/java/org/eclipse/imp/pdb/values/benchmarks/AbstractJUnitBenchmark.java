@@ -50,7 +50,7 @@ public abstract class AbstractJUnitBenchmark {
 //				{ org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance() },
 				{ org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance() },
 //				{ org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance() },
-//				{ new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory() },
+				{ new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory() },
 		});
 	}
 	

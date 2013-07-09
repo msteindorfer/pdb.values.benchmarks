@@ -31,8 +31,9 @@
 				<configuration>
 					<argLine>
 						-Xmx8g
-						-Djub.consumers=CONSOLE,H2
+						-Djub.consumers=CONSOLE,XML,H2
 						-Djub.db.file=.benchmarks
+						-Djub.xml.file=.benchmarks.xml
 						-Djub.rounds.benchmark=10
 						<!-- -XX:+PrintCompilation -->
 						<!-- -verbose:gc -->
@@ -119,11 +120,11 @@
 <!-- 			<artifactId>org.eclipse.imp.pdb.values.persistent.clojure</artifactId> -->
 <!-- 			<version>0.0.1-SNAPSHOT</version> -->
 <!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.eclipse.imp</groupId> -->
-<!-- 			<artifactId>org.eclipse.imp.pdb.values.persistent.scala</artifactId> -->
-<!-- 			<version>0.0.1-SNAPSHOT</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.eclipse.imp</groupId>
+			<artifactId>org.eclipse.imp.pdb.values.persistent.scala</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 </project>

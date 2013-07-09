@@ -20,21 +20,21 @@ public class BenchmarkUtils {
 //				return org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance();
 //			}
 //		},
-		VF_RASCAL {
-			@Override
-			IValueFactory getInstance() {
-				return org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();
-			}
+//		VF_RASCAL {
+//			@Override
+//			IValueFactory getInstance() {
+//				return org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();
+//			}
 //		},
 //		VF_CLOJURE {
 //			@Override IValueFactory getInstance() {
 //				return org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance();
 //			}
 //		},
-//		VF_SCALA {
-//			@Override IValueFactory getInstance() {
-//				return new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();
-//			}
+		VF_SCALA {
+			@Override IValueFactory getInstance() {
+				return new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();
+			}
 		};
 
 		abstract IValueFactory getInstance();

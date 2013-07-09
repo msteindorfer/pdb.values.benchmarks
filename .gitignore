@@ -1,6 +1,7 @@
 target/
 bin/
 
+.benchmarks.xml
 *.db
 *.html
 *.json

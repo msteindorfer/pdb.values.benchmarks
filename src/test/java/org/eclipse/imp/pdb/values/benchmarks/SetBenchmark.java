@@ -349,7 +349,7 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test
+	@Test(timeout=60_000 /* 1 minute */)
 	public void testProductSelf() {
 		testSet.product(testSet);
 	}
@@ -362,7 +362,7 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test
+	@Test(timeout=60_000 /* 1 minute */)
 	public void testProductDifferent() {
 		testSet.product(testSetDifferent);
 	}
@@ -375,7 +375,7 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test
+	@Test(timeout=60_000 /* 1 minute */)
 	public void testProductSet1Disjoint() {
 		testSet.product(SET1_DISJOINT);
 	}
@@ -388,7 +388,7 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test
+	@Test(timeout=60_000 /* 1 minute */)
 	public void testProductSet1Interrelated() {
 		testSet.product(SET1_INTERRELATED);
 	}

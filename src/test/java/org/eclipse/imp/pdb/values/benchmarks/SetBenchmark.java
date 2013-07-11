@@ -349,10 +349,10 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test(timeout=60_000 /* 1 minute */)
-	public void testProductSelf() {
-		testSet.product(testSet);
-	}
+//	@Test(timeout=60_000 /* 1 minute */)
+//	public void testProductSelf() {
+//		testSet.product(testSet);
+//	}
 
 	public Object timeProductSelf(long reps) {
 		Object result = null;
@@ -362,10 +362,10 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test(timeout=60_000 /* 1 minute */)
-	public void testProductDifferent() {
-		testSet.product(testSetDifferent);
-	}
+//	@Test(timeout=60_000 /* 1 minute */)
+//	public void testProductDifferent() {
+//		testSet.product(testSetDifferent);
+//	}
 
 	public Object timeProductDifferent(long reps) {
 		Object result = null;
@@ -375,10 +375,10 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test(timeout=60_000 /* 1 minute */)
-	public void testProductSet1Disjoint() {
-		testSet.product(SET1_DISJOINT);
-	}
+//	@Test(timeout=60_000 /* 1 minute */)
+//	public void testProductSet1Disjoint() {
+//		testSet.product(SET1_DISJOINT);
+//	}
 
 	public Object timeProductSet1Disjoint(long reps) {
 		Object result = null;
@@ -388,10 +388,10 @@ public class SetBenchmark extends AbstractJUnitBenchmark {
 		return result;
 	}
 
-	@Test(timeout=60_000 /* 1 minute */)
-	public void testProductSet1Interrelated() {
-		testSet.product(SET1_INTERRELATED);
-	}
+//	@Test(timeout=60_000 /* 1 minute */)
+//	public void testProductSet1Interrelated() {
+//		testSet.product(SET1_INTERRELATED);
+//	}
 
 	public Object timeProductSet1Interrelated(long reps) {
 		Object result = null;

@@ -124,7 +124,7 @@ public class CaliperAEModelAggregationBenchmark extends Benchmark {
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
 				ISet one = relations[i];
-				ISet two = (ISet) constructor.getAnnotation(relationName);
+				ISet two = (ISet) constructor.asAnnotatable().getAnnotation(relationName);
 				
 				relations[i] = one.union(two); 
 			}		
@@ -146,7 +146,7 @@ public class CaliperAEModelAggregationBenchmark extends Benchmark {
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
 				ISet one = relations[i];
-				ISet two = (ISet) constructor.getAnnotation(relationName);
+				ISet two = (ISet) constructor.asAnnotatable().getAnnotation(relationName);
 				
 				relations[i] = one.subtract(two); 
 			}		
@@ -168,7 +168,7 @@ public class CaliperAEModelAggregationBenchmark extends Benchmark {
 			for (int i = 0; i < relations.length; i++) {
 				String relationName = relationNames[i];
 				ISet one = relations[i];
-				ISet two = (ISet) constructor.getAnnotation(relationName);
+				ISet two = (ISet) constructor.asAnnotatable().getAnnotation(relationName);
 				
 				relations[i] = one.intersect(two); 
 			}		

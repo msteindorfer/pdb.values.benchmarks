@@ -4,7 +4,7 @@
 
 	<groupId>org.eclipse.imp</groupId>
 	<artifactId>org.eclipse.imp.pdb.values.benchmarks</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -46,8 +46,7 @@
 						<include>**/*.java</include>
 					</includes>
 					<forkCount>1</forkCount>
-					<reuseForks>false</reuseForks>
-<!-- 					<forkedProcessTimeoutInSeconds>60</forkedProcessTimeoutInSeconds> -->
+					<reuseForks>true</reuseForks>
 				</configuration>
 			</plugin>
 			<!-- 
@@ -116,17 +115,17 @@
 		<dependency>
 			<groupId>org.eclipse.imp</groupId>
 			<artifactId>org.eclipse.imp.pdb.values</artifactId>
-			<version>0.4.0.qualifier</version>
+			<version>0.4.1.qualifier</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.imp</groupId>
 			<artifactId>org.eclipse.imp.pdb.values.persistent.clojure</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.imp</groupId>
 			<artifactId>org.eclipse.imp.pdb.values.persistent.scala</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

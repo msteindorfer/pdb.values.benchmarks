@@ -65,7 +65,24 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>					
+			</plugin>
+		
+			<!-- 
+				The easy way of creating a jar for the tests:
+				http://maven.apache.org/plugins/maven-jar-plugin/usage.html
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

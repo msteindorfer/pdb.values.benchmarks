@@ -17,18 +17,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.IConstructor;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.io.binary.BinaryReader;
-
-import com.google.caliper.Param;
-import com.google.caliper.api.Macrobenchmark;
 import org.eclipse.imp.pdb.facts.type.TypeStore;
 
-public class CaliperAEModelAggregationBenchmark extends Benchmark {
+import com.google.caliper.BeforeExperiment;
+import com.google.caliper.Param;
+import com.google.caliper.api.Macrobenchmark;
+
+public class CaliperAEModelAggregationBenchmark {
 
 	private IValueFactory valueFactory;
 
@@ -83,7 +83,7 @@ public class CaliperAEModelAggregationBenchmark extends Benchmark {
 		unionRelations = unionRelations();
 	}
 
-	@Override
+	@BeforeExperiment
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance(); 
 

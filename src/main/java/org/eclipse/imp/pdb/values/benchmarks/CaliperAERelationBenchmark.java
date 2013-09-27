@@ -11,14 +11,14 @@
  *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
-import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 
+import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Param;
 
-public class CaliperAERelationBenchmark extends Benchmark {
+public class CaliperAERelationBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -30,7 +30,7 @@ public class CaliperAERelationBenchmark extends Benchmark {
 	
 	private ISet testSet;
 	
-	@Override
+	@BeforeExperiment
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		

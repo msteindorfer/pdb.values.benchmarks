@@ -13,17 +13,17 @@ package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.util.Iterator;
 
-import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 
+import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Param;
 import com.google.caliper.api.Macrobenchmark;
 
-public class CaliperAESetBenchmark extends Benchmark {
+public class CaliperAESetBenchmark {
 	
 	private IValueFactory valueFactory;
 	
@@ -43,7 +43,7 @@ public class CaliperAESetBenchmark extends Benchmark {
 	private ISet SET1_DISJOINT;
 	private ISet SET1_INTERRELATED;
 	
-	@Override
+	@BeforeExperiment
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		

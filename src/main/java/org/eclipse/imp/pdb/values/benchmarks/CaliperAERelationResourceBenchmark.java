@@ -19,16 +19,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.eclipse.imp.pdb.facts.type.TypeStore;
 import org.junit.Test;
 
+import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Param;
 
-public class CaliperAERelationResourceBenchmark extends Benchmark {
+public class CaliperAERelationResourceBenchmark {
 	
 	private IValueFactory valueFactory;
 
@@ -61,7 +61,7 @@ public class CaliperAERelationResourceBenchmark extends Benchmark {
 		return resources;
 	}
 	
-	@Override
+	@BeforeExperiment
 	protected void setUp() throws Exception {
 		valueFactory = valueFactoryFactory.getInstance();
 

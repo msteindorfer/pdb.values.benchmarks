@@ -13,16 +13,16 @@ package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.util.Iterator;
 
-import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.IList;
 import org.eclipse.imp.pdb.facts.IListWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 
+import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Param;
 
-public class CaliperAEListWriterBenchmark extends Benchmark {
+public class CaliperAEListWriterBenchmark {
 
 	private IValueFactory valueFactory; 
 	
@@ -34,7 +34,7 @@ public class CaliperAEListWriterBenchmark extends Benchmark {
 	
 	private IList testList;	
 	
-	@Override
+	@BeforeExperiment
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		

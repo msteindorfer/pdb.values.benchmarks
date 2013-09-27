@@ -2,16 +2,16 @@ package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.util.Iterator;
 
-import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.IMap;
 import org.eclipse.imp.pdb.facts.IMapWriter;
 import org.eclipse.imp.pdb.facts.IValue;
 import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Test;
 
+import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Param;
 
-public class CaliperAEMapBenchmark extends Benchmark {
+public class CaliperAEMapBenchmark {
 
 	private IValueFactory valueFactory; 
 	
@@ -28,7 +28,7 @@ public class CaliperAEMapBenchmark extends Benchmark {
 	private IValue VALUE_NOT_EXISTING;
 	
 	// TODO: parameterize by map size
-	@Override
+	@BeforeExperiment
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		

@@ -14,7 +14,6 @@ package org.eclipse.imp.pdb.values.benchmarks;
 import java.util.Collection;
 import java.util.Collections;
 
-import com.google.caliper.legacy.Benchmark;
 import org.eclipse.imp.pdb.facts.IMap;
 import org.eclipse.imp.pdb.facts.IMapWriter;
 import org.eclipse.imp.pdb.facts.ITuple;
@@ -23,9 +22,10 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Param;
 
-public class CaliperAEMapWriterBenchmark extends Benchmark {
+public class CaliperAEMapWriterBenchmark {
 	
 	private IValueFactory valueFactory; 
 	
@@ -38,7 +38,7 @@ public class CaliperAEMapWriterBenchmark extends Benchmark {
 	private static IMap testMap;	
 	private static Iterable<ITuple> testTuples;
 	
-	@Override
+	@BeforeExperiment
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		

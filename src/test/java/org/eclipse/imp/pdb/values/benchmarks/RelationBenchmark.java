@@ -13,6 +13,7 @@ package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.eclipse.imp.pdb.facts.ISet;
 import org.eclipse.imp.pdb.facts.ISetWriter;
@@ -44,18 +45,30 @@ public class RelationBenchmark extends AbstractJUnitBenchmark {
 	
 //	protected IValueFactory valueFactory; 
 	protected int size;
+	protected boolean isRandom = true;
 	
 	private ISet testSet;
 	
 	@Override
 	public void setUp() throws Exception {	
 		ISetWriter writer = valueFactory.setWriter();
+		Random rand = new Random();
 		
 		for (int i = size; i > 0; i--) {
-			writer.insert(valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i)));
+			if (isRandom) {				
+				writer.insert(
+						valueFactory.tuple(
+								valueFactory.integer(rand.nextInt(1_000)),
+								valueFactory.integer(rand.nextInt(1_000))));
+
+			} else {
+				writer.insert(valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i)));
+			}
+			
 		}
 		
 		testSet = writer.done();
+		System.out.println(testSet.size());
 	}
 		
 	@Test

@@ -66,7 +66,7 @@ public class ModelAggregationBenchmark extends AbstractJUnitBenchmark {
 		List<String> resources = new ArrayList<>();
 		
 		try (
-				InputStream inputStream = CaliperAEModelAggregationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index.txt");
+				InputStream inputStream = ModelAggregationBenchmark.class.getResourceAsStream(resourcePrefixRelativeToClass + "/" + "index.txt");
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 			) {
 

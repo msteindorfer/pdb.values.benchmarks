@@ -26,7 +26,7 @@ import org.junit.runners.Parameterized.Parameters;
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.Clock;
 
-@BenchmarkOptions(clock = Clock.NANO_TIME, benchmarkRounds = 1, warmupRounds = 0)
+@BenchmarkOptions(clock = Clock.NANO_TIME, callgc = true, benchmarkRounds = 1, warmupRounds = 0)
 public class MaximalSharingBenchmark extends AbstractJUnitBenchmark {
 
 	private final int depth;
@@ -40,10 +40,11 @@ public class MaximalSharingBenchmark extends AbstractJUnitBenchmark {
 	public static List<Object[]> getTestParameters() throws Exception {
 		List<Object[]> singleValueSetsCountValues = Arrays
 				.asList(new Object[][] {
-						{  0 }, {  1}, {  2 }, {  3 }, {  4 }, {  5 }, {  6 }, {  7 }, {  8 }, {  9 },
-						{ 10 }, { 11}, { 12 }, { 13 }, { 14 }, { 15 }, { 16 }, { 17 }, { 18 }, { 19 },
-						{ 20 }, { 21}, { 22 }, { 23 }, { 24 }, { 25 }, { 26 }, { 27 }, { 28 }, { 29 },
-						{ 30 }, { 31}
+//						{  0 }, {  1}, {  2 }, {  3 }, {  4 }, {  5 }, {  6 }, {  7 }, {  8 }, {  9 },
+//						{ 10 }, { 11}, { 12 }, { 13 }, { 14 }, { 15 }, { 16 }, { 17 }, { 18 }, { 19 },
+//						{ 20 }, { 21}, { 22 }, { 23 }, { 24 }, { 25 }, { 26 }, { 27 }, { 28 }, { 29 },
+//						{ 30 }, { 31}
+						{ 20 }, // VALUES 2 and 1 are good for calibrating
 						});
 
 		return AbstractJUnitBenchmark.productOfTestParameters(
@@ -57,7 +58,26 @@ public class MaximalSharingBenchmark extends AbstractJUnitBenchmark {
 	 */
 	@Test
 	public void testTreeWithShareableElements() {
-		Queue<IValue> queue = new LinkedList<>();
+		final IValue one = createTreeWithShareableElements();
+		final IValue two = createTreeWithShareableElements();
+		final IValue thr = createTreeWithShareableElements();
+				
+		one.equals(two);		
+		one.equals(thr);
+		two.equals(one);
+		two.equals(thr);		
+		thr.equals(one);
+		thr.equals(two);		
+//		one.equals(two);
+//		one.equals(two);
+	}
+	
+	/**
+	 * Baseline benchmark that creates a tree with a given {@link #depth}. All
+	 * leaf nodes are the same and therefore do not have hash collisions.
+	 */
+	public IValue createTreeWithShareableElements() {
+		final Queue<IValue> queue = new LinkedList<>();
 				
 		final long count = (long) Math.pow(2, depth);
 		assertTrue(count > 0);
@@ -69,24 +89,47 @@ public class MaximalSharingBenchmark extends AbstractJUnitBenchmark {
 		
 		// reduce (INode)
 		boolean exhausted = false;
+		IValue result = null;
 		do {
 			IValue one = queue.poll();
 			IValue two = queue.poll();
 			
 			if (two == null) {
-				exhausted = true;				
+				exhausted = true;
+				result = one;
 			} else {
 				queue.offer(valueFactory.node("treeNode", one, two));
 			}			
 		} while (!exhausted);
+		
+		return result;
 	}
-
+	
+	/**
+	 * Baseline benchmark that creates a tree with a given {@link #depth}. All
+	 * leaf nodes are the same and therefore do not have hash collisions.
+	 */
+	@Test
+	public void testTreeWithUniqueElements() {
+		final IValue one = createTreeWithUniqueElements();
+		final IValue two = createTreeWithUniqueElements();
+		final IValue thr = createTreeWithUniqueElements();
+				
+		one.equals(two);		
+		one.equals(thr);
+		two.equals(one);
+		two.equals(thr);		
+		thr.equals(one);
+		thr.equals(two);		
+//		one.equals(two);
+//		one.equals(two);
+	}
+	
 	/**
 	 * Baseline benchmark that creates a tree with a given {@link #depth}. All
 	 * leaf nodes are distinct integers and therefore do not have hash collisions.
 	 */
-	@Test
-	public void testTreeWithUniqueElements() { 
+	public IValue createTreeWithUniqueElements() { 
 		Queue<IValue> queue = new LinkedList<>();
 		
 		final long count = (long) Math.pow(2, depth);
@@ -99,16 +142,20 @@ public class MaximalSharingBenchmark extends AbstractJUnitBenchmark {
 		
 		// reduce (INode)
 		boolean exhausted = false;
+		IValue result = null;
 		do {
 			IValue one = queue.poll();
 			IValue two = queue.poll();
 			
 			if (two == null) {
-				exhausted = true;				
+				exhausted = true;
+				result = one;
 			} else {
 				queue.offer(valueFactory.node("treeNode", one, two));
 			}			
 		} while (!exhausted);
+		
+		return result;
 	}
 	
 }

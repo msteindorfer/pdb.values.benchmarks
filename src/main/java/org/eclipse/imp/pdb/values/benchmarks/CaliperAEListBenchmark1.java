@@ -71,7 +71,7 @@ public class CaliperAEListBenchmark1 {
 	}
 	
 	@Benchmark
-	public void timeGetElementType(int reps) {
+	public void timeGetElementType(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testGetElementType();
 		}
@@ -83,7 +83,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeLength(int reps) {
+	public void timeLength(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.length();
 		}
@@ -95,7 +95,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeReverse(int reps) {
+	public void timeReverse(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.reverse();
 		}
@@ -107,7 +107,7 @@ public class CaliperAEListBenchmark1 {
 	}	
 
 	@Benchmark
-	public void timeAppend(int reps) {
+	public void timeAppend(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.append(DUMMY);
 		}
@@ -119,7 +119,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeInsert(int reps) {
+	public void timeInsert(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.insert(DUMMY);
 		}
@@ -131,7 +131,7 @@ public class CaliperAEListBenchmark1 {
 	}
 	
 	@Benchmark
-	public void timeConcat(int reps) {
+	public void timeConcat(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.concat(testList);
 		}
@@ -143,7 +143,7 @@ public class CaliperAEListBenchmark1 {
 	}
 	
 	@Benchmark
-	public void timePutFront(int reps) {
+	public void timePutFront(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.put(INDEX_FRONT, DUMMY);
 		}
@@ -155,7 +155,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timePutMiddle(int reps) {
+	public void timePutMiddle(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.put(INDEX_MIDDLE, DUMMY);
 		}
@@ -167,7 +167,7 @@ public class CaliperAEListBenchmark1 {
 	}	
 	
 	@Benchmark
-	public void timePutEnd(int reps) {
+	public void timePutEnd(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.put(INDEX_END, DUMMY);
 		}
@@ -179,7 +179,7 @@ public class CaliperAEListBenchmark1 {
 	}
 	
 	@Benchmark
-	public void timeGetFront(int reps) {
+	public void timeGetFront(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.get(INDEX_FRONT);
 		}
@@ -191,7 +191,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeGetMiddle(int reps) {
+	public void timeGetMiddle(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.get(INDEX_MIDDLE);
 		}
@@ -203,7 +203,7 @@ public class CaliperAEListBenchmark1 {
 	}	
 	
 	@Benchmark
-	public void timeGetEnd(int reps) {
+	public void timeGetEnd(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.get(INDEX_END);
 		}
@@ -215,7 +215,7 @@ public class CaliperAEListBenchmark1 {
 	}
 	
 	@Benchmark
-	public void timeSublist(int reps) {
+	public void timeSublist(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testSublist();
 		}		
@@ -227,7 +227,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeIsEmpty(int reps) {
+	public void timeIsEmpty(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.isEmpty();
 		}
@@ -259,7 +259,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeIsSubListOfTrue(int reps) {
+	public void timeIsSubListOfTrue(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testIsSubListOfTrue();
 		}
@@ -271,7 +271,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeIsSubListOfFalse(int reps) {
+	public void timeIsSubListOfFalse(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testIsSubListOfFalse();
 		}
@@ -283,7 +283,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeEquals(int reps) {
+	public void timeEquals(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.equals(testList);
 		}
@@ -295,7 +295,7 @@ public class CaliperAEListBenchmark1 {
 	}
 	
 	@Benchmark
-	public void timeEqualsEndFalse(int reps) {
+	public void timeEqualsEndFalse(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.equals(testListDifferent);
 		}
@@ -307,7 +307,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeIsEqual(int reps) {
+	public void timeIsEqual(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.isEqual(testList);
 		}
@@ -322,7 +322,7 @@ public class CaliperAEListBenchmark1 {
 	}
 	
 	@Benchmark
-	public void timeIteration(int reps) {
+	public void timeIteration(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testIteration();
 		}
@@ -334,7 +334,7 @@ public class CaliperAEListBenchmark1 {
 	}
 
 	@Benchmark
-	public void timeHashCode(int reps) {
+	public void timeHashCode(long reps) {
 		for (int i = 0; i < reps; i++) {
 			testList.hashCode();
 		}

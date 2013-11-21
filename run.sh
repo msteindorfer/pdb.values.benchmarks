@@ -1,13 +1,16 @@
 #export ALLOCATION_JAR=~/.m2/repository/com/google/code/java-allocation-instrumenter/java-allocation-instrumenter/2.1/java-allocation-instrumenter-2.1.jar
-#export ALLOCATION_JAR=~/Temporary/allocation.jar
-export BENCHMARK_JAR=target/org.eclipse.imp.pdb.values.benchmarks-0.0.1-SNAPSHOT.jar
+export BENCHMARK_JAR=target/org.eclipse.imp.pdb.values.benchmarks-0.1.0-SNAPSHOT.jar
 
 export BENCHMARK_RUNNER=com.google.caliper.runner.CaliperMain
-export JAVA_ARGS=-Xmx4g
+export JAVA_ARGS='-Xmx4g'
+# Options for enabling FlightRecoreder and memory tracking features.
+# See http://hirt.se/blog/?p=401 and other posts on same site.
+#export JAVA_ARGS='-Xmx4g -XX:NativeMemoryTracking=detail -XX:+UnlockDiagnosticVMOptions -XX:+PrintNMTStatistics -XX:-AutoShutdownNMT'
+#export JAVA_ARGS='-XX:+UnlockCommercialFeatures -XX:+FlightRecorder -XX:FlightRecorderOptions=defaultrecording=true,dumponexit=true,settings=custom' 
 
-#export OBJECT_EXPLORER_JAR=~/Temporary/object-explorer.jar
-
-java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetBenchmark $*
+export OBJECT_EXPLORER_JAR=~/.m2/repository/com/google/memory-measurer/1.0-SNAPSHOT/memory-measurer-1.0-SNAPSHOT.jar
+# NOTE: run with --dry-run to experiment with instrumentation (i.e. doesn't spwawn new JVM instance)
+java $JAVA_ARGS -javaagent:$OBJECT_EXPLORER_JAR -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEModelAggregationBenchmark $*
 
 # java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAEValueFactoryBenchmark $*
 # java $JAVA_ARGS -cp $BENCHMARK_JAR $BENCHMARK_RUNNER org.eclipse.imp.pdb.values.benchmarks.CaliperAESetBenchmark $*

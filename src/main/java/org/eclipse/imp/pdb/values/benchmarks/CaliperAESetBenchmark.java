@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 CWI
+ * Copyright (c) 2014 CWI
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,7 +21,6 @@ import org.junit.Test;
 
 import com.google.caliper.BeforeExperiment;
 import com.google.caliper.Param;
-import com.google.caliper.api.Macrobenchmark;
 
 public class CaliperAESetBenchmark {
 	
@@ -67,7 +66,6 @@ public class CaliperAESetBenchmark {
 		SET1_INTERRELATED = valueFactory.set(VALUE_EXISTING);
 	}
 
-	@Macrobenchmark
 	@Test
 	public void testGetElementType() {
 		testSet.getElementType();
@@ -81,7 +79,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testIsEmpty() {
 		testSet.isEmpty();
@@ -95,7 +92,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 
-	@Macrobenchmark
 	@Test
 	public void testSize() {
 		testSet.size();
@@ -109,7 +105,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 	
-	@Macrobenchmark
 	@Test
 	public void testContainsValue() {
 		testSet.contains(VALUE_EXISTING);
@@ -121,7 +116,6 @@ public class CaliperAESetBenchmark {
 		}
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testContainsValueNotExisting() {
 		testSet.contains(VALUE_NOT_EXISTING);
@@ -133,7 +127,6 @@ public class CaliperAESetBenchmark {
 		}
 	}
 	
-	@Macrobenchmark
 	@Test
 	public void testInsert() {
 		testSet.insert(VALUE_NOT_EXISTING);
@@ -147,7 +140,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 
-	@Macrobenchmark
 	@Test
 	public void testInsertExisting() {
 		testSet.insert(VALUE_EXISTING);
@@ -161,7 +153,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testDelete() {
 		testSet.delete(VALUE_EXISTING);
@@ -175,7 +166,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 	
-	@Macrobenchmark
 	@Test
 	public void testDeleteNonExisting() {
 		testSet.delete(VALUE_NOT_EXISTING);
@@ -191,7 +181,6 @@ public class CaliperAESetBenchmark {
 	
 	/* SET OPERATIONS */
 	
-	@Macrobenchmark
 	@Test
 	public void testUnionSelf() {
 		testSet.union(testSet);
@@ -205,7 +194,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 
-	@Macrobenchmark
 	@Test
 	public void testUnionDifferent() {
 		testSet.union(testSetDifferent);
@@ -219,7 +207,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testUnionSet1Disjoint() {
 		testSet.union(SET1_DISJOINT);
@@ -233,7 +220,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 
-	@Macrobenchmark
 	@Test
 	public void testUnionSet1Interrelated() {
 		testSet.union(SET1_INTERRELATED);
@@ -247,7 +233,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testIntersectSelf() {
 		testSet.intersect(testSet);
@@ -261,7 +246,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 
-	@Macrobenchmark
 	@Test
 	public void testIntersectDifferent() {
 		testSet.intersect(testSetDifferent);
@@ -275,7 +259,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 
-	@Macrobenchmark
 	@Test
 	public void testIntersectSet1Disjoint() {
 		testSet.intersect(SET1_DISJOINT);
@@ -289,7 +272,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testIntersectSet1Interrelated() {
 		testSet.intersect(SET1_INTERRELATED);
@@ -303,7 +285,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testSubstractSelf() {
 		testSet.subtract(testSet);
@@ -317,7 +298,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}		
 
-	@Macrobenchmark
 	@Test
 	public void testSubstractDifferent() {
 		testSet.subtract(testSetDifferent);
@@ -331,7 +311,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 	
-	@Macrobenchmark
 	@Test
 	public void testSubtractSet1Disjoint() {
 		testSet.subtract(SET1_DISJOINT);
@@ -345,7 +324,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 
-	@Macrobenchmark
 	@Test
 	public void testSubtractSet1Interrelated() {
 		testSet.subtract(SET1_INTERRELATED);
@@ -359,7 +337,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 
-	@Macrobenchmark
 	@Test
 	public void testProductSelf() {
 		testSet.product(testSet);
@@ -373,7 +350,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 	
-	@Macrobenchmark
 	@Test
 	public void testProductDifferent() {
 		testSet.product(testSetDifferent);
@@ -387,7 +363,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}			
 	
-	@Macrobenchmark
 	@Test
 	public void testProductSet1Disjoint() {
 		testSet.product(SET1_DISJOINT);
@@ -401,7 +376,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 
-	@Macrobenchmark
 	@Test
 	public void testProductSet1Interrelated() {
 		testSet.product(SET1_INTERRELATED);
@@ -415,7 +389,6 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testEquals() {
 		testSet.equals(testSet);
@@ -427,7 +400,6 @@ public class CaliperAESetBenchmark {
 		}
 	}
 
-	@Macrobenchmark
 	@Test
 	public void testEqualsEndFalse() {
 		testSet.equals(testSetDifferent);
@@ -439,7 +411,6 @@ public class CaliperAESetBenchmark {
 		}
 	}
 	
-	@Macrobenchmark
 	@Test
 	public void testEqualsDuplicate() {
 		testSet.equals(testSetDuplicate);
@@ -451,7 +422,6 @@ public class CaliperAESetBenchmark {
 		}
 	}
 
-	@Macrobenchmark
 	@Test
 	public void testIsEqual() {
 		testSet.isEqual(testSet);
@@ -463,7 +433,6 @@ public class CaliperAESetBenchmark {
 		}
 	}
 	
-	@Macrobenchmark
 	@Test
 	public void testIteration() {
 		for (Iterator<IValue> iterator = testSet.iterator(); iterator.hasNext();) {
@@ -478,7 +447,6 @@ public class CaliperAESetBenchmark {
 		}
 	}	
 	
-	@Macrobenchmark
 	@Test
 	public void testHashCode() {
 		testSet.hashCode();

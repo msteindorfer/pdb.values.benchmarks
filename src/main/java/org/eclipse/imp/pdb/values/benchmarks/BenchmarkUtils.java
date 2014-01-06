@@ -15,15 +15,21 @@ import org.eclipse.imp.pdb.facts.IValueFactory;
 
 public class BenchmarkUtils {
 	public static enum ValueFactoryFactory {
-		VF_PDB_REFERENCE {
-			@Override IValueFactory getInstance() {
-				return org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance();
-			}
-		},
+//		VF_PDB_REFERENCE {
+//			@Override IValueFactory getInstance() {
+//				return org.eclipse.imp.pdb.facts.impl.reference.ValueFactory.getInstance();
+//			}
+//		},
 		VF_PDB_FAST {
 			@Override
 			IValueFactory getInstance() {
 				return org.eclipse.imp.pdb.facts.impl.fast.ValueFactory.getInstance();
+			}
+		},
+		VF_PDB_PERSISTENT {
+			@Override
+			IValueFactory getInstance() {
+				return org.eclipse.imp.pdb.facts.impl.persistent.ValueFactory.getInstance();
 			}
 		},
 		VF_CLOJURE {

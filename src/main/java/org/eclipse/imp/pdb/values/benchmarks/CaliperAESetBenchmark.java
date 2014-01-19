@@ -29,12 +29,15 @@ public class CaliperAESetBenchmark {
 	@Param
 	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 
-	@Param({"10", "100", "1000", "10000"})
+	@Param({"10", "100", "1000", "10000"}) // , "100000", "1000000"
 	protected int size;	
 
-	private ISet testSet;	
+	private ISet testSet;
+	private ISet testSetEvenHalf;
+	private ISet testSetOddHalf;
+	
 	private ISet testSetDuplicate;	
-	private ISet testSetDifferent;	
+	private ISet testSetOneSmaller;	
 		
 	private IValue VALUE_EXISTING;
 	private IValue VALUE_NOT_EXISTING;
@@ -46,21 +49,39 @@ public class CaliperAESetBenchmark {
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		
-		ISetWriter writer = valueFactory.setWriter();
+		ISetWriter writer1 = valueFactory.setWriter();
+		ISetWriter writer2 = valueFactory.setWriter();
+
+		ISetWriter writerEven = valueFactory.setWriter();
+		ISetWriter writerOdd = valueFactory.setWriter();
 		
 		for (int i = size; i > 0; i--) {
-			writer.insert(valueFactory.integer(i));
+			final IValue current = valueFactory.integer(i);
+			
+			writer1.insert(current);
+			writer2.insert(current);
+
+			if (i % 2 == 0) {
+				writerEven.insert(current);
+			} else {
+				writerOdd.insert();
+			}
 		}
 		
-		testSet = writer.done();
+		testSet = writer1.done();
+		testSetDuplicate = writer2.done();
+		
+		testSetEvenHalf = writerEven.done();
+		testSetOddHalf = writerOdd.done();
 	
 		VALUE_EXISTING = valueFactory.integer(size - 1);
 		VALUE_NOT_EXISTING = valueFactory.integer(size + 1);
 	
-		testSetDifferent = testSet.delete(VALUE_EXISTING); // ~ one smaller
+		testSetOneSmaller = testSet.delete(VALUE_EXISTING);
 
-		testSetDuplicate = testSet.insert(VALUE_NOT_EXISTING);
-		testSetDuplicate = testSetDuplicate.delete(VALUE_NOT_EXISTING);
+		// TODO: test case with small change
+//		testSetDuplicate = testSet.insert(VALUE_NOT_EXISTING);
+//		testSetDuplicate = testSetDuplicate.delete(VALUE_NOT_EXISTING);
 		
 		SET1_DISJOINT = valueFactory.set(VALUE_NOT_EXISTING);
 		SET1_INTERRELATED = valueFactory.set(VALUE_EXISTING);
@@ -180,7 +201,20 @@ public class CaliperAESetBenchmark {
 	}	
 	
 	/* SET OPERATIONS */
+
+	@Test
+	public void testUnionEvenOdd() {
+		testSetEvenHalf.union(testSetOddHalf);
+	}	
 	
+	public Object timeUnionEvenOdd(long reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testSetEvenHalf.union(testSetOddHalf);
+		}
+		return result;
+	}
+		
 	@Test
 	public void testUnionSelf() {
 		testSet.union(testSet);
@@ -195,14 +229,14 @@ public class CaliperAESetBenchmark {
 	}
 
 	@Test
-	public void testUnionDifferent() {
-		testSet.union(testSetDifferent);
+	public void testUnionOneSmaller() {
+		testSet.union(testSetOneSmaller);
 	}
 	
-	public Object timeUnionDifferent(long reps) {
+	public Object timeUnionOneSmaller(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.union(testSetDifferent);
+			result = testSet.union(testSetOneSmaller);
 		}
 		return result;
 	}	
@@ -234,6 +268,19 @@ public class CaliperAESetBenchmark {
 	}	
 	
 	@Test
+	public void testIntersectEvenOdd() {
+		testSetEvenHalf.intersect(testSetOddHalf);
+	}	
+	
+	public Object timeIntersectEvenOdd(long reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testSetEvenHalf.intersect(testSetOddHalf);
+		}
+		return result;
+	}
+	
+	@Test
 	public void testIntersectSelf() {
 		testSet.intersect(testSet);
 	}	
@@ -248,13 +295,13 @@ public class CaliperAESetBenchmark {
 
 	@Test
 	public void testIntersectDifferent() {
-		testSet.intersect(testSetDifferent);
+		testSet.intersect(testSetOneSmaller);
 	}
 	
 	public Object timeIntersectDifferent(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.intersect(testSetDifferent);
+			result = testSet.intersect(testSetOneSmaller);
 		}
 		return result;
 	}	
@@ -286,6 +333,19 @@ public class CaliperAESetBenchmark {
 	}	
 	
 	@Test
+	public void testSubtractEvenOdd() {
+		testSetEvenHalf.subtract(testSetOddHalf);
+	}	
+	
+	public Object timeSubtractEvenOdd(long reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testSetEvenHalf.subtract(testSetOddHalf);
+		}
+		return result;
+	}	
+	
+	@Test
 	public void testSubstractSelf() {
 		testSet.subtract(testSet);
 	}		
@@ -300,13 +360,13 @@ public class CaliperAESetBenchmark {
 
 	@Test
 	public void testSubstractDifferent() {
-		testSet.subtract(testSetDifferent);
+		testSet.subtract(testSetOneSmaller);
 	}	
 	
 	public Object timeSubstractDifferent(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.subtract(testSetDifferent);
+			result = testSet.subtract(testSetOneSmaller);
 		}
 		return result;
 	}
@@ -338,6 +398,19 @@ public class CaliperAESetBenchmark {
 	}	
 
 	@Test
+	public void testProductEvenOdd() {
+		testSetEvenHalf.product(testSetOddHalf);
+	}	
+	
+	public Object timeProductEvenOdd(long reps) {
+		Object result = null;
+		for (int r = 0; r < reps; r++) {
+			result = testSetEvenHalf.product(testSetOddHalf);
+		}
+		return result;
+	}
+
+	@Test
 	public void testProductSelf() {
 		testSet.product(testSet);
 	}	
@@ -352,13 +425,13 @@ public class CaliperAESetBenchmark {
 	
 	@Test
 	public void testProductDifferent() {
-		testSet.product(testSetDifferent);
+		testSet.product(testSetOneSmaller);
 	}
 	
 	public Object timeProductDifferent(long reps) {
 		Object result = null;
 		for (int r = 0; r < reps; r++) {
-			result = testSet.product(testSetDifferent);
+			result = testSet.product(testSetOneSmaller);
 		}
 		return result;
 	}			
@@ -402,12 +475,12 @@ public class CaliperAESetBenchmark {
 
 	@Test
 	public void testEqualsEndFalse() {
-		testSet.equals(testSetDifferent);
+		testSet.equals(testSetOneSmaller);
 	}
 	
 	public void timeEqualsEndFalse(long reps) {
 		for (int i = 0; i < reps; i++) {
-			testSet.equals(testSetDifferent);
+			testSet.equals(testSetOneSmaller);
 		}
 	}
 	

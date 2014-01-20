@@ -37,13 +37,13 @@ public class CaliperAERelationBenchmark {
 		ISetWriter writer = valueFactory.setWriter();
 		
 		for (int i = size; i > 0; i--) {
-			writer.insert(valueFactory.integer(i));
+			writer.insert(valueFactory.tuple(valueFactory.integer(i), valueFactory.integer(i)));
 		}
 		
 		testSet = writer.done();
 	
-//		VALUE_EXISTING = valueFactory.integer(size - 1);
-//		VALUE_NOT_EXISTING = valueFactory.integer(size + 1);
+//		VALUE_EXISTING = valueFactory.tuple(valueFactory.integer(size - 1), valueFactory.integer(size - 1));
+//		VALUE_NOT_EXISTING = valueFactory.tuple(valueFactory.integer(size + 1), valueFactory.integer(size + 1));
 //	
 //		testSetDifferent = testSet.delete(VALUE_EXISTING); // ~ one smaller
 //

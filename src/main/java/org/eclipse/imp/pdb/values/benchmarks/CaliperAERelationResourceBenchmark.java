@@ -39,7 +39,8 @@ public class CaliperAERelationResourceBenchmark {
 
 	private ISet testRelation;	
 
-	@Param
+	@Param({ "rsf/Eclipse202a.rsf_CALL", "rsf/jdk14v2.rsf_CALL", "rsf/JDK140AWT.rsf_CALL", "rsf/JHotDraw52.rsf_CALL",
+			"rsf/JWAM16FullAndreas.rsf_CALL" })
 	private String resource;
 	
 	public static List<String> resourceValues() throws IOException {

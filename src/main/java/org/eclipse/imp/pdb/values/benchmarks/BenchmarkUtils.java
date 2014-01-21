@@ -44,11 +44,11 @@ public class BenchmarkUtils {
 //				return org.eclipse.imp.pdb.facts.impl.persistent.ValueFactory3.getInstance();
 //			}
 //		},
-//		VF_CLOJURE {
-//			@Override IValueFactory getInstance() {
-//				return org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance();
-//			}
-//		},
+		VF_CLOJURE {
+			@Override IValueFactory getInstance() {
+				return org.eclipse.imp.pdb.facts.impl.persistent.clojure.ValueFactory.getInstance();
+			}
+		},
 		VF_SCALA {
 			@Override IValueFactory getInstance() {
 				return new org.eclipse.imp.pdb.facts.impl.persistent.scala.ValueFactory();

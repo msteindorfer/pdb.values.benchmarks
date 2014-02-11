@@ -87,44 +87,44 @@ public class CaliperAESetBenchmark {
 		SET1_INTERRELATED = valueFactory.set(VALUE_EXISTING);
 	}
 
-	@Test
-	public void testGetElementType() {
-		testSet.getElementType();
-	}
-	
-	public Object timeGetElementType(long reps) {
-		Object result = null;
-		for (int i = 0; i < reps; i++) {
-			result = testSet.getElementType();
-		}
-		return result;
-	}	
-	
-	@Test
-	public void testIsEmpty() {
-		testSet.isEmpty();
-	}	
-	
-	public Object timeIsEmpty(long reps) {
-		boolean result = false;
-		for (long r = 0; r < reps; r++) {
-			result = testSet.isEmpty();
-		}
-		return result;
-	}
-
-	@Test
-	public void testSize() {
-		testSet.size();
-	}
-	
-	public Object timeSize(long reps) {
-		Object result = null;
-		for (long r = 0; r < reps; r++) {
-			result = testSet.size();
-		}
-		return result;
-	}
+//	@Test
+//	public void testGetElementType() {
+//		testSet.getElementType();
+//	}
+//	
+//	public Object timeGetElementType(long reps) {
+//		Object result = null;
+//		for (int i = 0; i < reps; i++) {
+//			result = testSet.getElementType();
+//		}
+//		return result;
+//	}	
+//	
+//	@Test
+//	public void testIsEmpty() {
+//		testSet.isEmpty();
+//	}	
+//	
+//	public Object timeIsEmpty(long reps) {
+//		boolean result = false;
+//		for (long r = 0; r < reps; r++) {
+//			result = testSet.isEmpty();
+//		}
+//		return result;
+//	}
+//
+//	@Test
+//	public void testSize() {
+//		testSet.size();
+//	}
+//	
+//	public Object timeSize(long reps) {
+//		Object result = null;
+//		for (long r = 0; r < reps; r++) {
+//			result = testSet.size();
+//		}
+//		return result;
+//	}
 	
 	@Test
 	public void testContainsValue() {
@@ -215,18 +215,18 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 		
-	@Test
-	public void testUnionSelf() {
-		testSet.union(testSet);
-	}	
-	
-	public Object timeUnionSelf(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.union(testSet);
-		}
-		return result;
-	}
+//	@Test
+//	public void testUnionSelf() {
+//		testSet.union(testSet);
+//	}	
+//	
+//	public Object timeUnionSelf(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.union(testSet);
+//		}
+//		return result;
+//	}
 
 	@Test
 	public void testUnionOneSmaller() {
@@ -241,31 +241,31 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Test
-	public void testUnionSet1Disjoint() {
-		testSet.union(SET1_DISJOINT);
-	}	
-	
-	public Object timeUnionSet1Disjoint(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.union(SET1_DISJOINT);
-		}
-		return result;
-	}	
-
-	@Test
-	public void testUnionSet1Interrelated() {
-		testSet.union(SET1_INTERRELATED);
-	}	
-	
-	public Object timeUnionSet1Interrelated(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.union(SET1_INTERRELATED);
-		}
-		return result;
-	}	
+//	@Test
+//	public void testUnionSet1Disjoint() {
+//		testSet.union(SET1_DISJOINT);
+//	}	
+//	
+//	public Object timeUnionSet1Disjoint(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.union(SET1_DISJOINT);
+//		}
+//		return result;
+//	}	
+//
+//	@Test
+//	public void testUnionSet1Interrelated() {
+//		testSet.union(SET1_INTERRELATED);
+//	}	
+//	
+//	public Object timeUnionSet1Interrelated(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.union(SET1_INTERRELATED);
+//		}
+//		return result;
+//	}	
 	
 	@Test
 	public void testIntersectEvenOdd() {
@@ -285,52 +285,52 @@ public class CaliperAESetBenchmark {
 		testSet.intersect(testSet);
 	}	
 	
-	public Object timeIntersectSelf(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.intersect(testSet);
-		}
-		return result;
-	}	
-
-	@Test
-	public void testIntersectDifferent() {
-		testSet.intersect(testSetOneSmaller);
-	}
-	
-	public Object timeIntersectDifferent(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.intersect(testSetOneSmaller);
-		}
-		return result;
-	}	
-
-	@Test
-	public void testIntersectSet1Disjoint() {
-		testSet.intersect(SET1_DISJOINT);
-	}	
-	
-	public Object timeIntersectSet1Disjoint(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.intersect(SET1_DISJOINT);
-		}
-		return result;
-	}	
-	
-	@Test
-	public void testIntersectSet1Interrelated() {
-		testSet.intersect(SET1_INTERRELATED);
-	}	
-
-	public Object timeIntersectSet1Interrelated(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.intersect(SET1_INTERRELATED);
-		}
-		return result;
-	}	
+//	public Object timeIntersectSelf(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.intersect(testSet);
+//		}
+//		return result;
+//	}	
+//
+//	@Test
+//	public void testIntersectDifferent() {
+//		testSet.intersect(testSetOneSmaller);
+//	}
+//	
+//	public Object timeIntersectDifferent(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.intersect(testSetOneSmaller);
+//		}
+//		return result;
+//	}	
+//
+//	@Test
+//	public void testIntersectSet1Disjoint() {
+//		testSet.intersect(SET1_DISJOINT);
+//	}	
+//	
+//	public Object timeIntersectSet1Disjoint(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.intersect(SET1_DISJOINT);
+//		}
+//		return result;
+//	}	
+//	
+//	@Test
+//	public void testIntersectSet1Interrelated() {
+//		testSet.intersect(SET1_INTERRELATED);
+//	}	
+//
+//	public Object timeIntersectSet1Interrelated(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.intersect(SET1_INTERRELATED);
+//		}
+//		return result;
+//	}	
 	
 	@Test
 	public void testSubtractEvenOdd() {
@@ -345,57 +345,57 @@ public class CaliperAESetBenchmark {
 		return result;
 	}	
 	
-	@Test
-	public void testSubstractSelf() {
-		testSet.subtract(testSet);
-	}		
-	
-	public Object timeSubstractSelf(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.subtract(testSet);
-		}
-		return result;
-	}		
-
-	@Test
-	public void testSubstractDifferent() {
-		testSet.subtract(testSetOneSmaller);
-	}	
-	
-	public Object timeSubstractDifferent(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.subtract(testSetOneSmaller);
-		}
-		return result;
-	}
-	
-	@Test
-	public void testSubtractSet1Disjoint() {
-		testSet.subtract(SET1_DISJOINT);
-	}	
-	
-	public Object timeSubtractSet1Disjoint(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.subtract(SET1_DISJOINT);
-		}
-		return result;
-	}	
-
-	@Test
-	public void testSubtractSet1Interrelated() {
-		testSet.subtract(SET1_INTERRELATED);
-	}
-	
-	public Object timeSubtractSet1Interrelated(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.subtract(SET1_INTERRELATED);
-		}
-		return result;
-	}	
+//	@Test
+//	public void testSubstractSelf() {
+//		testSet.subtract(testSet);
+//	}		
+//	
+//	public Object timeSubstractSelf(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.subtract(testSet);
+//		}
+//		return result;
+//	}		
+//
+//	@Test
+//	public void testSubstractDifferent() {
+//		testSet.subtract(testSetOneSmaller);
+//	}	
+//	
+//	public Object timeSubstractDifferent(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.subtract(testSetOneSmaller);
+//		}
+//		return result;
+//	}
+//	
+//	@Test
+//	public void testSubtractSet1Disjoint() {
+//		testSet.subtract(SET1_DISJOINT);
+//	}	
+//	
+//	public Object timeSubtractSet1Disjoint(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.subtract(SET1_DISJOINT);
+//		}
+//		return result;
+//	}	
+//
+//	@Test
+//	public void testSubtractSet1Interrelated() {
+//		testSet.subtract(SET1_INTERRELATED);
+//	}
+//	
+//	public Object timeSubtractSet1Interrelated(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.subtract(SET1_INTERRELATED);
+//		}
+//		return result;
+//	}	
 
 	@Test
 	public void testProductEvenOdd() {
@@ -423,55 +423,55 @@ public class CaliperAESetBenchmark {
 		return result;
 	}
 	
-	@Test
-	public void testProductDifferent() {
-		testSet.product(testSetOneSmaller);
-	}
-	
-	public Object timeProductDifferent(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.product(testSetOneSmaller);
-		}
-		return result;
-	}			
-	
-	@Test
-	public void testProductSet1Disjoint() {
-		testSet.product(SET1_DISJOINT);
-	}	
-	
-	public Object timeProductSet1Disjoint(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.product(SET1_DISJOINT);
-		}
-		return result;
-	}	
-
-	@Test
-	public void testProductSet1Interrelated() {
-		testSet.product(SET1_INTERRELATED);
-	}
-	
-	public Object timeProductSet1Interrelated(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSet.product(SET1_INTERRELATED);
-		}
-		return result;
-	}	
-	
-	@Test
-	public void testEquals() {
-		testSet.equals(testSet);
-	}
-	
-	public void timeEquals(long reps) {
-		for (int i = 0; i < reps; i++) {
-			testSet.equals(testSet);
-		}
-	}
+//	@Test
+//	public void testProductDifferent() {
+//		testSet.product(testSetOneSmaller);
+//	}
+//	
+//	public Object timeProductDifferent(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.product(testSetOneSmaller);
+//		}
+//		return result;
+//	}			
+//	
+//	@Test
+//	public void testProductSet1Disjoint() {
+//		testSet.product(SET1_DISJOINT);
+//	}	
+//	
+//	public Object timeProductSet1Disjoint(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.product(SET1_DISJOINT);
+//		}
+//		return result;
+//	}	
+//
+//	@Test
+//	public void testProductSet1Interrelated() {
+//		testSet.product(SET1_INTERRELATED);
+//	}
+//	
+//	public Object timeProductSet1Interrelated(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSet.product(SET1_INTERRELATED);
+//		}
+//		return result;
+//	}	
+//	
+//	@Test
+//	public void testEquals() {
+//		testSet.equals(testSet);
+//	}
+//	
+//	public void timeEquals(long reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testSet.equals(testSet);
+//		}
+//	}
 
 	@Test
 	public void testEqualsEndFalse() {
@@ -495,16 +495,16 @@ public class CaliperAESetBenchmark {
 		}
 	}
 
-	@Test
-	public void testIsEqual() {
-		testSet.isEqual(testSet);
-	}
-	
-	public void timeIsEqual(long reps) {
-		for (int i = 0; i < reps; i++) {
-			testSet.isEqual(testSet);
-		}
-	}
+//	@Test
+//	public void testIsEqual() {
+//		testSet.isEqual(testSet);
+//	}
+//	
+//	public void timeIsEqual(long reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testSet.isEqual(testSet);
+//		}
+//	}
 	
 	@Test
 	public void testIteration() {

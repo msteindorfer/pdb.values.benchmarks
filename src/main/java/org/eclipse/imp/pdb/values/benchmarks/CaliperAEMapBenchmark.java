@@ -18,21 +18,18 @@ public class CaliperAEMapBenchmark {
 	@Param
 	private BenchmarkUtils.ValueFactoryFactory valueFactoryFactory;
 
-	@Param({"10", "100", "1000", "10000"})
+	@Param({"10", "100", "1000", "10000"}) // , "100000", "1000000"
 	protected int size;	
 	
 	private IMap testMap;
 	
 	private IValue VALUE_EXISTING;
-	
 	private IValue VALUE_NOT_EXISTING;
 	
-	// TODO: parameterize by map size
 	@BeforeExperiment
 	protected void setUp() throws Exception {	
 		valueFactory = valueFactoryFactory.getInstance();
 		
-		// TODO: parameterize test data generation
 		IMapWriter writer = valueFactory.mapWriter();
 		
 		for (int i = size; i > 0; i--) {
@@ -43,6 +40,28 @@ public class CaliperAEMapBenchmark {
 		
 		VALUE_EXISTING = valueFactory.integer(size - 1);
 		VALUE_NOT_EXISTING = valueFactory.integer(size + 1);
+	}
+	
+	@Test
+	public void testGetKeyType() {
+		testMap.getKeyType();
+	}
+	
+	public void timeGetKeyType(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testGetKeyType();
+		}
+	}	
+
+	@Test
+	public void testGetValueType() {
+		testMap.getValueType();
+	}
+	
+	public void timeGetValueType(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testGetValueType();
+		}
 	}
 	
 	@Test
@@ -122,84 +141,62 @@ public class CaliperAEMapBenchmark {
 		for (int i = 0; i < reps; i++) {
 			testContainsValueNotExisting();
 		}
-	}	
-
-	@Test
-	public void testGetKeyType() {
-		testMap.getKeyType();
-	}
-	
-	public void timeGetKeyType(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testGetKeyType();
-		}
-	}	
-
-	@Test
-	public void testGetValueType() {
-		testMap.getValueType();
-	}
-	
-	public void timeGetValueType(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testGetValueType();
-		}
-	}	
-
-	@Test
-	public void testJoin() {
-		testMap.join(testMap);
-	}	
-
-	public void timeJoin(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testJoin();
-		}
-	}	
-	
-	@Test
-	public void testRemove() {
-		testMap.remove(testMap);
 	}
 
-	public void timeRemove(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testRemove();
-		}
-	}		
-
-	@Test
-	public void testCompose() {
-		testMap.compose(testMap);
-	}
-	
-	public void timeCompose(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testCompose();
-		}
-	}		
-	
-	@Test
-	public void testCommon() {
-		testMap.common(testMap);
-	}	
-	
-	public void timeCommon(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testCommon();
-		}
-	}	
-	
-	@Test
-	public void testIsSubMap() {
-		testMap.isSubMap(testMap);
-	}
-
-	public void timeIsSubMap(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testIsSubMap();
-		}
-	}	
+//	@Test
+//	public void testJoin() {
+//		testMap.join(testMap);
+//	}	
+//
+//	public void timeJoin(int reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testJoin();
+//		}
+//	}
+//	
+//	@Test
+//	public void testRemove() {
+//		testMap.remove(testMap);
+//	}
+//
+//	public void timeRemove(int reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testRemove();
+//		}
+//	}		
+//
+//	@Test
+//	public void testCompose() {
+//		testMap.compose(testMap);
+//	}
+//	
+//	public void timeCompose(int reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testCompose();
+//		}
+//	}		
+//	
+//	@Test
+//	public void testCommon() {
+//		testMap.common(testMap);
+//	}	
+//	
+//	public void timeCommon(int reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testCommon();
+//		}
+//	}	
+//	
+//	@Test
+//	public void testIsSubMap() {
+//		testMap.isSubMap(testMap);
+//	}
+//
+//	public void timeIsSubMap(int reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testIsSubMap();
+//		}
+//	}	
 	
 	@Test
 	public void testIterator() {
@@ -237,30 +234,26 @@ public class CaliperAEMapBenchmark {
 		}
 	}	
 	
-	@Test
-	public void testEquals() {
-		testMap.equals(testMap);
-	}
-	
-	public void timeEquals(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testEquals();
-		}
-	}
-	
-	@Test
-	public void testIsEqual() {
-		testMap.isEqual(testMap);
-	}
-	
-	public void timeIsEqual(int reps) {
-		for (int i = 0; i < reps; i++) {
-			testIsEqual();
-		}
-	}
-
-	public static void main(String[] args) throws Exception {
-		com.google.caliper.runner.CaliperMain.main(CaliperAEMapBenchmark.class, args);
-	}	
+//	@Test
+//	public void testEquals() {
+//		testMap.equals(testMap);
+//	}
+//	
+//	public void timeEquals(int reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testEquals();
+//		}
+//	}
+//	
+//	@Test
+//	public void testIsEqual() {
+//		testMap.isEqual(testMap);
+//	}
+//	
+//	public void timeIsEqual(int reps) {
+//		for (int i = 0; i < reps; i++) {
+//			testIsEqual();
+//		}
+//	}
 	
 }

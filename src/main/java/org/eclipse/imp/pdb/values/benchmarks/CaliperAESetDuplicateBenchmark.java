@@ -76,5 +76,27 @@ public class CaliperAESetDuplicateBenchmark {
 			testSet.equals(testSetDeltaDuplicate);
 		}
 	}
+
+	@Test
+	public void testIsEqualRealDuplicate() {
+		testSet.isEqual(testSetRealDuplicate);
+	}
+	
+	public void timeIsEqualRealDuplicate(long reps) {
+		for (int i = 0; i < reps; i++) {
+			testSet.isEqual(testSetRealDuplicate);
+		}
+	}
+
+	@Test
+	public void testIsEqualDeltaDuplicate() {
+		testSet.isEqual(testSetDeltaDuplicate);
+	}
+	
+	public void timeIsEqualDeltaDuplicate(long reps) {
+		for (int i = 0; i < reps; i++) {
+			testSet.isEqual(testSetDeltaDuplicate);
+		}
+	}
 	
 }

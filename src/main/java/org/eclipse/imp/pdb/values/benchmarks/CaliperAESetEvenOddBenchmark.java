@@ -107,27 +107,5 @@ public class CaliperAESetEvenOddBenchmark {
 		}
 		return result;
 	}
-	
-	@Test
-	public void testEqualsEvenOdd() {
-		testSetEvenHalf.equals(testSetOddHalf);
-	}
-	
-	public void timeEqualsEvenOdd(long reps) {
-		for (int i = 0; i < reps; i++) {
-			testSetEvenHalf.equals(testSetOddHalf);
-		}
-	}
-
-	@Test
-	public void testIsEqualEvenOdd() {
-		testSetEvenHalf.isEqual(testSetOddHalf);
-	}
-	
-	public void timeIsEqualEvenOdd(long reps) {
-		for (int i = 0; i < reps; i++) {
-			testSetEvenHalf.isEqual(testSetOddHalf);
-		}
-	}
 
 }

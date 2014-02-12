@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 CWI
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *
+ *   * Michael Steindorfer - Michael.Steindorfer@cwi.nl - CWI  
+ *******************************************************************************/
 package org.eclipse.imp.pdb.values.benchmarks;
 
 import java.util.Iterator;
@@ -143,60 +154,16 @@ public class CaliperAEMapBenchmark {
 		}
 	}
 
-//	@Test
-//	public void testJoin() {
-//		testMap.join(testMap);
-//	}	
-//
-//	public void timeJoin(int reps) {
-//		for (int i = 0; i < reps; i++) {
-//			testJoin();
-//		}
-//	}
-//	
-//	@Test
-//	public void testRemove() {
-//		testMap.remove(testMap);
-//	}
-//
-//	public void timeRemove(int reps) {
-//		for (int i = 0; i < reps; i++) {
-//			testRemove();
-//		}
-//	}		
-//
-//	@Test
-//	public void testCompose() {
-//		testMap.compose(testMap);
-//	}
-//	
-//	public void timeCompose(int reps) {
-//		for (int i = 0; i < reps; i++) {
-//			testCompose();
-//		}
-//	}		
-//	
-//	@Test
-//	public void testCommon() {
-//		testMap.common(testMap);
-//	}	
-//	
-//	public void timeCommon(int reps) {
-//		for (int i = 0; i < reps; i++) {
-//			testCommon();
-//		}
-//	}	
-//	
-//	@Test
-//	public void testIsSubMap() {
-//		testMap.isSubMap(testMap);
-//	}
-//
-//	public void timeIsSubMap(int reps) {
-//		for (int i = 0; i < reps; i++) {
-//			testIsSubMap();
-//		}
-//	}	
+	@Test
+	public void testIsSubMap() {
+		testMap.isSubMap(testMap);
+	}
+
+	public void timeIsSubMap(int reps) {
+		for (int i = 0; i < reps; i++) {
+			testIsSubMap();
+		}
+	}	
 	
 	@Test
 	public void testIterator() {
@@ -232,28 +199,6 @@ public class CaliperAEMapBenchmark {
 		for (int i = 0; i < reps; i++) {
 			testEntryIterator();
 		}
-	}	
-	
-//	@Test
-//	public void testEquals() {
-//		testMap.equals(testMap);
-//	}
-//	
-//	public void timeEquals(int reps) {
-//		for (int i = 0; i < reps; i++) {
-//			testEquals();
-//		}
-//	}
-//	
-//	@Test
-//	public void testIsEqual() {
-//		testMap.isEqual(testMap);
-//	}
-//	
-//	public void timeIsEqual(int reps) {
-//		for (int i = 0; i < reps; i++) {
-//			testIsEqual();
-//		}
-//	}
+	}
 	
 }

@@ -95,17 +95,17 @@ public class CaliperAESetEvenOddBenchmark {
 		return result;
 	}	
 	
-	@Test
-	public void testProductEvenOdd() {
-		testSetEvenHalf.product(testSetOddHalf);
-	}	
-	
-	public Object timeProductEvenOdd(long reps) {
-		Object result = null;
-		for (int r = 0; r < reps; r++) {
-			result = testSetEvenHalf.product(testSetOddHalf);
-		}
-		return result;
-	}
+//	@Test
+//	public void testProductEvenOdd() {
+//		testSetEvenHalf.product(testSetOddHalf);
+//	}	
+//	
+//	public Object timeProductEvenOdd(long reps) {
+//		Object result = null;
+//		for (int r = 0; r < reps; r++) {
+//			result = testSetEvenHalf.product(testSetOddHalf);
+//		}
+//		return result;
+//	}
 
 }

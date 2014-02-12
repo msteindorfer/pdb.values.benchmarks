@@ -46,7 +46,7 @@ public class CaliperAESetEvenOddBenchmark {
 			if (i % 2 == 0) {
 				writerEven.insert(current);
 			} else {
-				writerOdd.insert();
+				writerOdd.insert(current);
 			}
 		}
 		

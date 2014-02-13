@@ -166,38 +166,38 @@ public class CaliperAEMapBenchmark {
 	}	
 	
 	@Test
-	public void testIterator() {
+	public void testIteration() {
 		Iterator<?> iterator = testMap.iterator();		
 		while (iterator.hasNext() && (iterator.next() == null || iterator.next() != null));
 	}
 
-	public void timeIterator(int reps) {
+	public void timeIteration(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testIterator();
+			testIteration();
 		}
 	}		
 	
 	@Test
-	public void testValueIterator() {
+	public void testValueIteration() {
 		Iterator<?> iterator = testMap.valueIterator();		
 		while (iterator.hasNext() && (iterator.next() == null || iterator.next() != null));
 	}
 
-	public void timeValueIterator(int reps) {
+	public void timeValueIteration(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testValueIterator();
+			testValueIteration();
 		}
 	}		
 	
 	@Test
-	public void testEntryIterator() {
+	public void testEntryIteration() {
 		Iterator<?> iterator = testMap.entryIterator();		
 		while (iterator.hasNext() && (iterator.next() == null || iterator.next() != null));
 	}
 		
-	public void timeEntryIterator(int reps) {
+	public void timeEntryIteration(int reps) {
 		for (int i = 0; i < reps; i++) {
-			testEntryIterator();
+			testEntryIteration();
 		}
 	}
 	
